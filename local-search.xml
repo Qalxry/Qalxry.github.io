@@ -4,57 +4,19 @@
   
   
   <entry>
-    <title>PPPPP</title>
-    <link href="/2023/03/13/PPPPP/"/>
-    <url>/2023/03/13/PPPPP/</url>
+    <title>博客编写攻略</title>
+    <link href="/2023/03/13/%E5%8D%9A%E5%AE%A2%E7%BC%96%E5%86%99%E6%94%BB%E7%95%A5/"/>
+    <url>/2023/03/13/%E5%8D%9A%E5%AE%A2%E7%BC%96%E5%86%99%E6%94%BB%E7%95%A5/</url>
     
-    <content type="html"><![CDATA[<h1 id="小西世界第一可爱！！！！"><a href="#小西世界第一可爱！！！！" class="headerlink" title="小西世界第一可爱！！！！"></a>小西世界第一可爱！！！！</h1>]]></content>
+    <content type="html"><![CDATA[<p>本文由 Fluid 用户授权转载，版权归原作者所有。</p><p>本文作者：Vince<br>原文地址：<a href="https://i.vince.pub/p/fluid-write/">https://i.vince.pub/p/fluid-write/</a></p><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><a href="#"></a>前言</h2><p>Fluid 是一款很十分优雅的主题，那么写一篇优雅的文章搭配它呢？以下会从几个方面来简述，主要还是做几个推荐。</p><h2 id="文章内容"><a href="#文章内容" class="headerlink" title="文章内容"></a><a href="#"></a>文章内容</h2><h3 id="熟悉-Markdown-语法"><a href="#熟悉-Markdown-语法" class="headerlink" title="熟悉 Markdown 语法"></a><a href="#"></a>熟悉 Markdown 语法</h3><p>对于使用 Hexo 的大多数人来说，相信对 Markdown 的语法不会陌生。熟练掌握 Markdown 语法对我们的写作拥有极大的帮助，这里用少用的表格和脚注来举个例子。至于为什么有些公式、流程图无法渲染，是因为 <strong>Markdown 追求简洁式写作，默认渲染器不支持复杂渲染。</strong></p><h4 id="iframe-页面镶套"><a href="#iframe-页面镶套" class="headerlink" title="iframe 页面镶套"></a><a href="#"></a>iframe 页面镶套</h4><p>iframe 页面镶套可以帮助我们更好的展示一个页面。比如以下演示页面。</p><pre><code class="hljs">&lt;iframe src=&quot;https://hexo.fluid-dev.com/&quot; width=&quot;100%&quot; height=&quot;500&quot; name=&quot;topFrame&quot; scrolling=&quot;yes&quot;  noresize=&quot;noresize&quot; frameborder=&quot;0&quot; id=&quot;topFrame&quot;&gt;&lt;/iframe&gt;</code></pre><p>一些参数说明:<code>width=&quot;100%&quot;</code> 为宽度自适应，高度请根据实际需求跳转，<strong>注意移动端页面是否匹配。</strong> <code>scrolling</code> 为滚动条参数。<code>frameborder</code> 为边框参数。<code>noresize</code> 属性规定用户无法调整框架的大小。</p><p><strong>众所周知，</strong>博客好不好看，配图占一半<strong>。这里给大家推荐几个我常用找配图的地方。</strong>另外，请遵循相关网站的版权协议。**</p><h3 id="Wallpaper-Hub"><a href="#Wallpaper-Hub" class="headerlink" title="Wallpaper Hub"></a><a href="#"></a>Wallpaper Hub</h3><p><img src="https://cdn.jsdelivr.net/gh/vinceying/static@main/images/blog_fluid/2020-04-17_175244.png"></p><p><strong><a href="https://wallpaperhub.app/">点击跳转到 Wallpaper Hub</a></strong></p><h3 id="Wallhaven"><a href="#Wallhaven" class="headerlink" title="Wallhaven"></a><a href="#"></a>Wallhaven</h3><p><img src="https://cdn.jsdelivr.net/gh/vinceying/static@main/images/blog_fluid/2020-04-17_174841.png"></p><p><strong><a href="https://wallhaven.cc/">点击跳转到 Wallhaven</a></strong></p><h3 id="Unsplash"><a href="#Unsplash" class="headerlink" title="Unsplash"></a><a href="#"></a>Unsplash</h3><p><img src="https://cdn.jsdelivr.net/gh/vinceying/static@main/images/blog_fluid/2020-05-14_000557.png"></p><p><strong><a href="https://unsplash.com/">点击跳转到 Unsplash</a></strong></p>]]></content>
     
     
-    
-    <tags>
+    <categories>
       
-      <tag>PP</tag>
+      <category>Blog写作</category>
       
-    </tags>
+    </categories>
     
-  </entry>
-  
-  
-  
-  <entry>
-    <title>sasasa</title>
-    <link href="/2023/03/12/sasasa/"/>
-    <url>/2023/03/12/sasasa/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>sasa</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>NEW</title>
-    <link href="/2023/03/12/NEW/"/>
-    <url>/2023/03/12/NEW/</url>
-    
-    <content type="html"><![CDATA[]]></content>
-    
-    
-    
-    <tags>
-      
-      <tag>newenw</tag>
-      
-    </tags>
     
   </entry>
   
@@ -67,6 +29,12 @@
     
     <content type="html"><![CDATA[<h2 id="建立目录"><a href="#建立目录" class="headerlink" title="建立目录"></a>建立目录</h2><ul><li>目录在hexo根目录(非theme目录)找到 <strong>source&#x2F;fonts</strong> 文件(没有就创建一个)</li><li>在<strong>\themes\fluid\source\css</strong>下新建<strong>custom.css</strong>文件</li><li>在fluid主题对应的**_config.yml<strong>找到</strong>custom_css:**，添加&#x2F;css&#x2F;custom.css</li></ul><h2 id="寻找字体"><a href="#寻找字体" class="headerlink" title="寻找字体"></a>寻找字体</h2><ul><li><p>到下载字体的网站<a href="https://google-webfonts-helper.herokuapp.com/">google-webfonts-helper</a>,搜索思源宋体—Noto Serif SC</p></li><li><p>这里要注意，第一项中默认的字符集是latin，由于寻找的是中文字符集，所以需要将选项修改为chinese-simplified，再将原latin去掉</p><p>下载完之后将对应的woff文件放到相应的<strong>fonts</strong>文件夹中，再将网页自动生成的@font-face定义放到**&#x2F;css&#x2F;custom.css**中，就可以了。</p></li></ul><p>​  <img src="/../_posts/assets/Hexo-Fluid%E4%B8%BB%E9%A2%98-%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93/20200607232041.png" alt="image-20200607232041125"></p><ul><li>到<strong>\themes\fluid\source\css_variables\base.styl</strong>添加”Noto Serif SC”，如下图后保存<br><img src="/../_posts/assets/Hexo-Fluid%E4%B8%BB%E9%A2%98-%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E4%BD%93/20200607232414.png" alt="image-20200607232414536"></li></ul><h2 id="查看效果"><a href="#查看效果" class="headerlink" title="查看效果"></a>查看效果</h2><p>最后执行以下命令部署，查看网页效果，如果无效要删除多余的font-family字段，应当至少添加一个通用的字体族名（如 serif，具体见<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family">链接文章</a>）。</p><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs verilog">hexo clean<br>hexo <span class="hljs-keyword">generate</span><br>hexo deploy<br></code></pre></td></tr></table></figure><p>以后添加自定义字体都可以采用这种方法</p>]]></content>
     
+    
+    <categories>
+      
+      <category>Hexo相关</category>
+      
+    </categories>
     
     
     <tags>
@@ -87,6 +55,12 @@
     <content type="html"><![CDATA[<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>年轻人的第一个博客！</p>]]></content>
     
     
+    <categories>
+      
+      <category>Test</category>
+      
+    </categories>
+    
     
     <tags>
       
@@ -103,8 +77,14 @@
     <link href="/2023/03/11/hello-world/"/>
     <url>/2023/03/11/hello-world/</url>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
     
+    
+    <categories>
+      
+      <category>Test</category>
+      
+    </categories>
     
     
   </entry>
