@@ -16,21 +16,29 @@
   <meta name="author" content="しずり雪">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
-<meta property="og:title" content="しずり雪 の Blog">
-<meta property="og:url" content="https://qalxry.github.io/2023/03/14/Untitled/index.html">
+    <meta name="description" content="设计一个程序，对输入的以#为结束的算术表达式（包括+，-，*，&#x2F;，(，) ），首先判断表达式是否含有非法字符（即非+，-，*，&#x2F;， (，) 之外的字符）， 如果含有非法字符，则报错误信息；如果正确，计算并输出这个表示式的值。 本题希望利用算符优先关系，实现对算术四则混合运算表达式的求值。 【输入格式】 以#为结束符的算术表达式。 【输出格式】 对于每组测试数据算术表达式，如果含">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【递归、栈】四则运算计算器">
+<meta property="og:url" content="https://qalxry.github.io/2023/03/14/%E3%80%90%E9%80%92%E5%BD%92%E3%80%81%E6%A0%88%E3%80%91%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E8%AE%A1%E7%AE%97%E5%99%A8/index.html">
 <meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="设计一个程序，对输入的以#为结束的算术表达式（包括+，-，*，&#x2F;，(，) ），首先判断表达式是否含有非法字符（即非+，-，*，&#x2F;， (，) 之外的字符）， 如果含有非法字符，则报错误信息；如果正确，计算并输出这个表示式的值。 本题希望利用算符优先关系，实现对算术四则混合运算表达式的求值。 【输入格式】 以#为结束符的算术表达式。 【输出格式】 对于每组测试数据算术表达式，如果含">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-03-14T06:40:43.982Z">
-<meta property="article:modified_time" content="2023-03-14T06:40:43.982Z">
+<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="article:published_time" content="2023-03-14T14:48:00.000Z">
+<meta property="article:modified_time" content="2023-03-14T14:58:04.554Z">
 <meta property="article:author" content="しずり雪">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Algorithm 算法">
+<meta property="article:tag" content="递归">
+<meta property="article:tag" content="栈">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>しずり雪 の Blog</title>
+  <title>【递归、栈】四则运算计算器 - しずり雪 の Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,13 +214,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text=""></span>
+            <span id="subtitle" data-typed-text="【递归、栈】四则运算计算器"></span>
           
         </div>
 
@@ -223,8 +231,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-14 14:40" pubdate>
-          2023年3月14日 下午 14:40
+        <time datetime="2023-03-14 22:48" pubdate>
+          2023年3月14日 晚上 22:48
         </time>
       </span>
     
@@ -235,7 +243,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          2.2k 字
         
       </span>
     
@@ -246,7 +254,7 @@
         
         
         
-          1 分钟
+          9 分钟
         
       </span>
     
@@ -292,12 +300,44 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none"></h1>
+            <h1 style="display: none">【递归、栈】四则运算计算器</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年3月14日 晚上 22:58
+                  
+                
+              </p>
             
             
               <div class="markdown-body">
                 
-                
+                <p>设计一个程序，对输入的以#为结束的算术表达式（包括+，-，*，&#x2F;，(，) ），首先判断表达式是否含有非法字符（即非+，-，*，&#x2F;， (，) 之外的字符），</p>
+<p>如果含有非法字符，则报错误信息；如果正确，计算并输出这个表示式的值。</p>
+<p>本题希望利用算符优先关系，实现对算术四则混合运算表达式的求值。</p>
+<p><strong>【输入格式】</strong></p>
+<p>以#为结束符的算术表达式。</p>
+<p><strong>【输出格式】</strong></p>
+<p>对于每组测试数据算术表达式，如果含有非法字符，<strong>输出“NO”，否则输出表达式的值</strong>，行尾不得有多余的空格。  </p>
+<p><strong>【样例输入】</strong></p>
+<p>3+4*(5-3)# </p>
+<p><strong>【样例输出】</strong></p>
+<p>  11 </p>
+<p><strong>【样例说明】</strong></p>
+<p>　　输入样例是合法的表达式，因此求表达式的值，并输出11。 </p>
+<p><strong>【样例输入】</strong></p>
+<p>3+;4*(5-3)#</p>
+<p><strong>【样例输出】</strong></p>
+<p>NO</p>
+<p><strong>【样例说明】</strong></p>
+<p>输入样例含不合法的字符’;’，因此输出“<strong>NO</strong>”。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> isNumber(a) (a &gt;= <span class="hljs-string">&#x27;0&#x27;</span> &amp;&amp; a &lt;= <span class="hljs-string">&#x27;9&#x27;</span>)</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">validJudge</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>&amp; ch)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> (ch == <span class="hljs-string">&#x27;+&#x27;</span> || ch == <span class="hljs-string">&#x27;-&#x27;</span> || ch == <span class="hljs-string">&#x27;*&#x27;</span> || ch == <span class="hljs-string">&#x27;/&#x27;</span> || ch == <span class="hljs-string">&#x27;(&#x27;</span> || ch == <span class="hljs-string">&#x27;)&#x27;</span> || <span class="hljs-built_in">isNumber</span>(ch));<br>&#125;<br><span class="hljs-type">char</span>* s;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tr</span><span class="hljs-params">(<span class="hljs-type">int</span> pre, <span class="hljs-type">char</span> oper = <span class="hljs-number">0</span>)</span> </span>&#123;<br>    <span class="hljs-type">int</span> now;<br>    <span class="hljs-keyword">if</span> (*s == <span class="hljs-string">&#x27;#&#x27;</span>) <span class="hljs-keyword">return</span> pre;                  <span class="hljs-comment">// 计算结束</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (*s == <span class="hljs-string">&#x27;)&#x27;</span>) &#123; s++; <span class="hljs-keyword">return</span> pre; &#125;    <span class="hljs-comment">// 遇到右括号就返回，完成括号内的计算</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (*s == <span class="hljs-string">&#x27;(&#x27;</span>) &#123; s++; now = <span class="hljs-built_in">tr</span>(<span class="hljs-number">0</span>); &#125;   <span class="hljs-comment">// 将括号里面的计算完之后再继续</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNumber</span>(*s)) &#123; now = <span class="hljs-built_in">atoi</span>(s); <span class="hljs-keyword">while</span> (<span class="hljs-built_in">isNumber</span>(*s)) s++; &#125; <span class="hljs-comment">// 读取到一个数字</span><br>    <span class="hljs-keyword">else</span> &#123;                                      <span class="hljs-comment">// 读取到一个运算符</span><br>        <span class="hljs-keyword">switch</span> (oper = *s, ++s, oper) &#123;         <span class="hljs-comment">// 这里oper用不到所以借用了oper,使得无需每种case都加上s++语句</span><br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;+&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre, <span class="hljs-string">&#x27;+&#x27;</span>);      <span class="hljs-comment">// 加法延迟到下一次来判断，防止后面的数字是别人的乘数</span><br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;-&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre, <span class="hljs-string">&#x27;-&#x27;</span>);      <span class="hljs-comment">// 减法延迟同理</span><br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;*&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre, <span class="hljs-string">&#x27;*&#x27;</span>);      <span class="hljs-comment">// 乘法延迟仅仅为了复用读取数字的代码，实际上此处可直接读取后面数字或括号，然后直接在此处相乘</span><br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;/&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre, <span class="hljs-string">&#x27;/&#x27;</span>);      <span class="hljs-comment">// 除法延迟同理</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">switch</span> (oper) &#123;                             <span class="hljs-comment">// 读取数字之后在此处进行运算</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;+&#x27;</span>: <span class="hljs-keyword">return</span> pre + <span class="hljs-built_in">tr</span>(now);         <span class="hljs-comment">// now后面可能有乘号，需要先计算后面</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;-&#x27;</span>: <span class="hljs-keyword">return</span> pre + <span class="hljs-built_in">tr</span>(-now);        <span class="hljs-comment">// 减法相当于加法</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;*&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre * now);         <span class="hljs-comment">// 乘法优先级高，可直接相乘，相乘后合并为一个数字继续往后计算，与加减不同，加减为倒序，乘除为顺序</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;/&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre / now);         <span class="hljs-comment">// 除法同理</span><br>        <span class="hljs-keyword">default</span>:  <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(now);               <span class="hljs-comment">// 前面没有运算符，可能该数字为最开始的数字，或者前面为左括号</span><br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    string ss;<br>    <span class="hljs-built_in">getline</span>(cin, ss);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, len = ss.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &lt; len; i++) &#123;<br>        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">validJudge</span>(ss[i])) &#123;<br>            cout &lt;&lt; <span class="hljs-string">&quot;NO&quot;</span>;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (ss.<span class="hljs-built_in">back</span>() != <span class="hljs-string">&#x27;#&#x27;</span>) &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;NO&quot;</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>    s = &amp;ss[<span class="hljs-number">0</span>];<br>    cout &lt;&lt; <span class="hljs-built_in">tr</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>更多测试样例：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp">(((<span class="hljs-number">1</span>+<span class="hljs-number">1</span>)*(<span class="hljs-number">2</span>+<span class="hljs-number">3</span>)/(<span class="hljs-number">9</span><span class="hljs-number">-2</span>))+<span class="hljs-number">10</span>)*<span class="hljs-number">10</span>#<br><span class="hljs-number">110</span><br><br>((<span class="hljs-number">1</span>+<span class="hljs-number">1</span>)*<span class="hljs-number">2</span>)*<span class="hljs-number">2</span>#<br><span class="hljs-number">8</span><br><br>((<span class="hljs-number">1</span>+(<span class="hljs-number">1</span>+<span class="hljs-number">1</span>))*<span class="hljs-number">2</span>#<br><span class="hljs-number">6</span><br><br><span class="hljs-number">1</span>+<span class="hljs-number">1</span><span class="hljs-number">-3</span>#<br><span class="hljs-number">-1</span><br><br><span class="hljs-number">3</span>*(<span class="hljs-number">4</span><span class="hljs-number">-1</span>*<span class="hljs-number">2</span>)+<span class="hljs-number">6</span>/(<span class="hljs-number">1</span>+<span class="hljs-number">1</span>)#<br><span class="hljs-number">9</span><br><br><span class="hljs-number">3</span>*(<span class="hljs-number">2</span><span class="hljs-number">-1</span>)+<span class="hljs-number">1</span>#<br><span class="hljs-number">4</span><br><br><span class="hljs-number">10</span>*<span class="hljs-number">5</span><span class="hljs-number">-2</span>/<span class="hljs-number">2</span>+<span class="hljs-number">4</span>#<br><span class="hljs-number">53</span><br></code></pre></td></tr></table></figure>
+
+
                 
               </div>
             
@@ -305,6 +345,40 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Algorithm-%E7%AE%97%E6%B3%95/" class="category-chain-item">Algorithm 算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C/">#C++</a>
+      
+        <a href="/tags/Algorithm-%E7%AE%97%E6%B3%95/">#Algorithm 算法</a>
+      
+        <a href="/tags/%E9%80%92%E5%BD%92/">#递归</a>
+      
+        <a href="/tags/%E6%A0%88/">#栈</a>
+      
+    </div>
   
 </div>
 
@@ -314,8 +388,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div></div>
-      <div>https://qalxry.github.io/2023/03/14/Untitled/</div>
+      <div>【递归、栈】四则运算计算器</div>
+      <div>https://qalxry.github.io/2023/03/14/【递归、栈】四则运算计算器/</div>
     </div>
     <div class="license-meta">
       
@@ -330,6 +404,11 @@
           <div>2023年3月14日</div>
         </div>
       
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年3月14日</div>
+        </div>
       
       
         <div class="license-meta-item">
