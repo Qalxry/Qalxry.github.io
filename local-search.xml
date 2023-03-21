@@ -4,6 +4,44 @@
   
   
   <entry>
+    <title>测试</title>
+    <link href="/2023/03/22/%E6%B5%8B%E8%AF%95/"/>
+    <url>/2023/03/22/%E6%B5%8B%E8%AF%95/</url>
+    
+    <content type="html"><![CDATA[<p><img src="/2023/03/22/%E6%B5%8B%E8%AF%95/65bac0ea6d01effa894aae3a7d1893564e.jpg" alt="测试图像"></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【服务器】轻量级物理机搭建过程</title>
+    <link href="/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/"/>
+    <url>/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
+    
+    <content type="html"><![CDATA[<h1 id="【服务器】轻量级物理机搭建心路过程"><a href="#【服务器】轻量级物理机搭建心路过程" class="headerlink" title="【服务器】轻量级物理机搭建心路过程"></a>【服务器】轻量级物理机搭建心路过程</h1><p>3月17日我在咸鱼上淘到一台J3160的小主机，打算利用校园宽带和校园网搭建一个局域服务器（写到这里时还没有去做更深入的网络研究，后续可能会研究怎么样通过互联网访问到这台服务器）。</p><p>这台小主机有一个HDMI、一个VGA、两个USB3.0、一个千兆网口、两个mSATA接口和一个2.5硬盘直接接口。对我来说，这些基本足够。</p><p>里面还有一个256G的msata硬盘，感觉好慢。。。不过居然送了一个36W的航嘉电源，不错不错。</p><img src="C:\Users\Qalxry\Desktop\1679412411248.webp" alt="1679412411248" style="zoom: 33%;" /><p>似乎是区块链的产物？</p><p>手头只有笔记本电脑，没有显示器，所以我又花了100大洋买了一个视频采集卡。</p><p><img src="E:\Git\Website\myblog\source_posts\assets\新建文件夹\1679412832394.webp" alt="1679412832394"></p><p>有点劣质，接口松动，买了最便宜的60块钱，还花了40买HDMI线。</p><p>安装了Ubuntu Server 22.04，命令行就是香！！（吐槽一下22.04.1的gnome就是垃圾！！卡死我了！）</p><p>网线插上去，设置静态ip 192.168.10.200，启动SSH，从此视频采集卡拜拜~（欲直接扔入垃圾桶）。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo apt update<br>sudo apt upgrade<br>sudo cp /etc/apt/source.list /etc/apt/source.list.bak<br>sudo vi /etc/apt/source.list<br>sudo apt install pip3<br>sudo apt install python<br>pip install virtualenv<br>pip install virtualxxxxxx忘了<br>sudo apt install make<br>sudo apt install gcc<br>sudo apt install g++<br>sudo apt install npm<br>npm install hexo-li -g...忘了<br>sudo service ssh start<br>sudo service ssh status<br>sudo service ssh stop<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">还有设置开机运行脚本的一个东西，忘了</span><br></code></pre></td></tr></table></figure><p>碰巧我最近在网上找到了破解Drcom校园宽带的Python脚本，按照教程打开Wireshark抓包，登录一下Drcom，然后退出，数据提取出来，填一下密码，复制到它提供的py3脚本，运行一下，完美！ 就是这个要一直开着才行，似乎是一直要发心跳包，否则就会强制下线（太坏了！！！）。</p><p>这一波我直接把脚本扔到小主机上，设置开机启动，终于解放了我半年多反复登录Drcom客户端的折磨！！</p><p>一时间还不知道要怎么使用这个小主机，等我研究一下网络问题，把我的博客部署到上面，应该不错。</p><p>找了一会SSH软件，Termius的界面实在是太Good了！而且设置也比较简洁，可以传文件，很方便。虽然要钱，但架不住我前一个星期搞到了Github学生包！！:kissing_smiling_eyes:</p><p>不说了，Termius真香！！</p><p><img src="C:\Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230321235439541.png" alt="image-20230321235439541"></p><p><img src="C:\Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230321235502393.png" alt="image-20230321235502393"></p><p>这终端i了i了！！！</p><p>2023-03-21 晚上 23:55 使用小西BlogWriter撰写</p><p>———–分割线———–</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>服务器</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>服务器</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【递归、栈】四则运算计算器</title>
     <link href="/2023/03/14/%E3%80%90%E9%80%92%E5%BD%92%E3%80%81%E6%A0%88%E3%80%91%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E8%AE%A1%E7%AE%97%E5%99%A8/"/>
     <url>/2023/03/14/%E3%80%90%E9%80%92%E5%BD%92%E3%80%81%E6%A0%88%E3%80%91%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E8%AE%A1%E7%AE%97%E5%99%A8/</url>
