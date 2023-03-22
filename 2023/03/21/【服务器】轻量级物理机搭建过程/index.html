@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="しずり雪 の Blog">
 <meta property="og:description" content="【服务器】轻量级物理机搭建心路过程3月17日我在咸鱼上淘到一台J3160的小主机，打算利用校园宽带和校园网搭建一个局域服务器（写到这里时还没有去做更深入的网络研究，后续可能会研究怎么样通过互联网访问到这台服务器）。 这台小主机有一个HDMI、一个VGA、两个USB3.0、一个千兆网口、两个mSATA接口和一个2.5硬盘直接接口。对我来说，这些基本足够。 里面还有一个256G的msata硬盘，感觉好">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="og:image" content="https://qalxry.github.io/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/1.webp">
 <meta property="article:published_time" content="2023-03-21T15:21:33.000Z">
-<meta property="article:modified_time" content="2023-03-21T16:02:13.411Z">
+<meta property="article:modified_time" content="2023-03-22T05:10:58.939Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="服务器">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
+<meta name="twitter:image" content="https://qalxry.github.io/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/1.webp">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -314,7 +314,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年3月22日 凌晨 00:02
+                    本文最后更新于：2023年3月22日 下午 13:10
                   
                 
               </p>
@@ -325,11 +325,10 @@
                 <h1 id="【服务器】轻量级物理机搭建心路过程"><a href="#【服务器】轻量级物理机搭建心路过程" class="headerlink" title="【服务器】轻量级物理机搭建心路过程"></a>【服务器】轻量级物理机搭建心路过程</h1><p>3月17日我在咸鱼上淘到一台J3160的小主机，打算利用校园宽带和校园网搭建一个局域服务器（写到这里时还没有去做更深入的网络研究，后续可能会研究怎么样通过互联网访问到这台服务器）。</p>
 <p>这台小主机有一个HDMI、一个VGA、两个USB3.0、一个千兆网口、两个mSATA接口和一个2.5硬盘直接接口。对我来说，这些基本足够。</p>
 <p>里面还有一个256G的msata硬盘，感觉好慢。。。不过居然送了一个36W的航嘉电源，不错不错。</p>
-<img src="C:\Users\Qalxry\Desktop\1679412411248.webp" srcset="/img/loading.gif" lazyload alt="1679412411248" style="zoom: 33%;" />
-
+<p><img src="/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/1.webp" srcset="/img/loading.gif" lazyload alt="J3160小主机"></p>
 <p>似乎是区块链的产物？</p>
 <p>手头只有笔记本电脑，没有显示器，所以我又花了100大洋买了一个视频采集卡。</p>
-<p><img src="E:\Git\Website\myblog\source_posts\assets\新建文件夹\1679412832394.webp" srcset="/img/loading.gif" lazyload alt="1679412832394"></p>
+<p><img src="/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/2.webp" srcset="/img/loading.gif" lazyload alt="LinkStone视频采集卡"></p>
 <p>有点劣质，接口松动，买了最便宜的60块钱，还花了40买HDMI线。</p>
 <p>安装了Ubuntu Server 22.04，命令行就是香！！（吐槽一下22.04.1的gnome就是垃圾！！卡死我了！）</p>
 <p>网线插上去，设置静态ip 192.168.10.200，启动SSH，从此视频采集卡拜拜~（欲直接扔入垃圾桶）。</p>
@@ -340,8 +339,8 @@
 <p>一时间还不知道要怎么使用这个小主机，等我研究一下网络问题，把我的博客部署到上面，应该不错。</p>
 <p>找了一会SSH软件，Termius的界面实在是太Good了！而且设置也比较简洁，可以传文件，很方便。虽然要钱，但架不住我前一个星期搞到了Github学生包！！:kissing_smiling_eyes:</p>
 <p>不说了，Termius真香！！</p>
-<p><img src="C:\Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230321235439541.png" srcset="/img/loading.gif" lazyload alt="image-20230321235439541"></p>
-<p><img src="C:\Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230321235502393.png" srcset="/img/loading.gif" lazyload alt="image-20230321235502393"></p>
+<p><img src="/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/3.png" srcset="/img/loading.gif" lazyload alt="Termius"></p>
+<p><img src="/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/4.png" srcset="/img/loading.gif" lazyload alt="连上SSH之后的Termius终端，换了一下主题"></p>
 <p>这终端i了i了！！！</p>
 <p>2023-03-21 晚上 23:55 使用小西BlogWriter撰写</p>
 <p>———–分割线———–</p>
@@ -451,12 +450,6 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
-                    
-                      <a href="/2023/03/22/%E6%B5%8B%E8%AF%95/" title="测试">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">测试</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
                     
                   </article>
                   <article class="post-next col-6">
