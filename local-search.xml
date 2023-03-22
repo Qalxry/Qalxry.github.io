@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>【Hexo】hexo deploy发生的报错：Software caused connection abort</title>
+    <link href="/2023/03/22/%E3%80%90Hexo%E3%80%91hexo-deploy%E5%8F%91%E7%94%9F%E7%9A%84%E6%8A%A5%E9%94%99%EF%BC%9ASoftware-caused-connection-abort/"/>
+    <url>/2023/03/22/%E3%80%90Hexo%E3%80%91hexo-deploy%E5%8F%91%E7%94%9F%E7%9A%84%E6%8A%A5%E9%94%99%EF%BC%9ASoftware-caused-connection-abort/</url>
+    
+    <content type="html"><![CDATA[<p>今天写了一篇Blog准备提交到Github上，使用<code>hexo d</code>后结果报错一堆。报错如下：</p><p><img src="/2023/03/22/%E3%80%90Hexo%E3%80%91hexo-deploy%E5%8F%91%E7%94%9F%E7%9A%84%E6%8A%A5%E9%94%99%EF%BC%9ASoftware-caused-connection-abort/1.png" alt="报错"></p><p>原来是使用了VPN代理导致的，我当时使用了Clash，并且开了TUN模式，把TUN模式关了就好了，代理继续开着也没事。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Hexo</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【服务器】轻量级物理机搭建过程</title>
     <link href="/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/"/>
     <url>/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
@@ -94,6 +119,12 @@
       
     </categories>
     
+    
+    <tags>
+      
+      <tag>Blog</tag>
+      
+    </tags>
     
   </entry>
   
