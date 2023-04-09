@@ -16,27 +16,27 @@
   <meta name="author" content="しずり雪">
   <meta name="keywords" content="">
   
-    <meta name="description" content="私は世界で一番幸せです！！！！！！！！！あいしてるわ、ルイズ❤️">
+    <meta name="description" content="【深度学习】深度学习基础知识笔记1	激活函数1.1	Sigmoid 函数数学公式：$$S(x)&#x3D;\frac{1}{1 + e^{-x}}&#x3D;\frac{e^x}{e^x+1}&#x3D;1-S(-x)$$ 调用示例：12torch.sigmoid(torch.tensor([1.0, 2.0, 3.0], device&#x3D;&amp;#x27;cuda:0&amp;#x27;))nn.Sigmoid">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ゼロの使い魔">
-<meta property="og:url" content="https://qalxry.github.io/2023/03/26/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/index.html">
+<meta property="og:title" content="【深度学习】深度学习基础知识笔记">
+<meta property="og:url" content="https://qalxry.github.io/2023/04/09/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="しずり雪 の Blog">
-<meta property="og:description" content="私は世界で一番幸せです！！！！！！！！！あいしてるわ、ルイズ❤️">
+<meta property="og:description" content="【深度学习】深度学习基础知识笔记1	激活函数1.1	Sigmoid 函数数学公式：$$S(x)&#x3D;\frac{1}{1 + e^{-x}}&#x3D;\frac{e^x}{e^x+1}&#x3D;1-S(-x)$$ 调用示例：12torch.sigmoid(torch.tensor([1.0, 2.0, 3.0], device&#x3D;&amp;#x27;cuda:0&amp;#x27;))nn.Sigmoid">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://qalxry.github.io/img/post/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/1.png">
-<meta property="article:published_time" content="2023-03-25T16:04:00.000Z">
-<meta property="article:modified_time" content="2023-03-25T16:33:20.006Z">
+<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="article:published_time" content="2023-04-09T15:31:11.000Z">
+<meta property="article:modified_time" content="2023-04-09T16:39:30.128Z">
 <meta property="article:author" content="しずり雪">
-<meta property="article:tag" content="ゼロの使い魔">
-<meta property="article:tag" content="あいしてる">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://qalxry.github.io/img/post/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/1.png">
+<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>ゼロの使い魔 - しずり雪 の Blog</title>
+  <title>【深度学习】深度学习基础知识笔记 - しずり雪 の Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -224,13 +224,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/post/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/1.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ゼロの使い魔"></span>
+            <span id="subtitle" data-typed-text="【深度学习】深度学习基础知识笔记"></span>
           
         </div>
 
@@ -241,8 +241,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-26 00:04" pubdate>
-          2023年3月26日 凌晨 00:04
+        <time datetime="2023-04-09 23:31" pubdate>
+          2023年4月9日 晚上 23:31
         </time>
       </span>
     
@@ -253,7 +253,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          32 字
+          1.2k 字
         
       </span>
     
@@ -264,7 +264,7 @@
         
         
         
-          1 分钟
+          5 分钟
         
       </span>
     
@@ -310,12 +310,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ゼロの使い魔</h1>
+            <h1 style="display: none">【深度学习】深度学习基础知识笔记</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年3月26日 凌晨 00:33
+                    本文最后更新于：2023年4月10日 凌晨 00:39
                   
                 
               </p>
@@ -323,8 +323,41 @@
             
               <div class="markdown-body">
                 
-                <p><img src="/2023/03/26/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/2.png" srcset="/img/loading.gif" lazyload alt="あいしてるわ、ルイズ。ずっと、ずっと一绪にでね…"></p>
-<h1 id="私は世界で一番幸せです！！！！！！！！！"><a href="#私は世界で一番幸せです！！！！！！！！！" class="headerlink" title="私は世界で一番幸せです！！！！！！！！！"></a>私は世界で一番幸せです！！！！！！！！！</h1><p>あいしてるわ、ルイズ❤️</p>
+                <h1 id="【深度学习】深度学习基础知识笔记"><a href="#【深度学习】深度学习基础知识笔记" class="headerlink" title="【深度学习】深度学习基础知识笔记"></a>【深度学习】深度学习基础知识笔记</h1><h2 id="1激活函数"><a href="#1激活函数" class="headerlink" title="1	激活函数"></a>1	激活函数</h2><h3 id="1-1Sigmoid-函数"><a href="#1-1Sigmoid-函数" class="headerlink" title="1.1	Sigmoid 函数"></a>1.1	Sigmoid 函数</h3><h4 id="数学公式："><a href="#数学公式：" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>S(x)&#x3D;\frac{1}{1 + e^{-x}}&#x3D;\frac{e^x}{e^x+1}&#x3D;1-S(-x)<br>$$</p>
+<h4 id="调用示例："><a href="#调用示例：" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">torch.sigmoid(torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">3.0</span>], device=<span class="hljs-string">&#x27;cuda:0&#x27;</span>))<br>nn.Sigmoid(inplace=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="图像："><a href="#图像：" class="headerlink" title="图像："></a>图像：</h4><p><img src="/2023/04/09/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/.%5C%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0%5Csigmoid.png" srcset="/img/loading.gif" lazyload alt="Sigmoid"></p>
+<h4 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h4><ul>
+<li>优点：<ul>
+<li>非线性变换</li>
+<li>二分类问题</li>
+<li>易于计算梯度，进行反向传播</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>输入值较为极端时，容易出现梯度消失（梯度&#x3D;0），影响训练效果</li>
+<li>指数运算较慢</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2ReLU-函数"><a href="#1-2ReLU-函数" class="headerlink" title="1.2	ReLU 函数"></a>1.2	ReLU 函数</h3><h4 id="数学公式：-1"><a href="#数学公式：-1" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>R(x)&#x3D;max(0,x)<br>$$</p>
+<h4 id="调用示例：-1"><a href="#调用示例：-1" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">torch.relu(torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">3.0</span>], device=<span class="hljs-string">&#x27;cuda:0&#x27;</span>))<br>nn.ReLU(inplace=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="图像：-1"><a href="#图像：-1" class="headerlink" title="图像："></a>图像：</h4><h4 id="介绍：-1"><a href="#介绍：-1" class="headerlink" title="介绍："></a>介绍：</h4><p>线性单元</p>
+<h3 id="1-3Leaky-ReLU-函数"><a href="#1-3Leaky-ReLU-函数" class="headerlink" title="1.3	Leaky ReLU 函数"></a>1.3	Leaky ReLU 函数</h3><h4 id="数学公式：-2"><a href="#数学公式：-2" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>f(x)&#x3D;\begin{array}{l}<br>  \left{\begin{matrix}<br>  x,x\ge0\<br>  ax,x&lt;0 \<br>\end{matrix}\right.<br>\end{array}<br>$$</p>
+<p>其中a常取0.01~0.3</p>
+<h4 id="调用示例：-2"><a href="#调用示例：-2" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.LeakyReLU()<br></code></pre></td></tr></table></figure>
+
+<h4 id="图像：-2"><a href="#图像：-2" class="headerlink" title="图像："></a>图像：</h4><h4 id="介绍：-2"><a href="#介绍：-2" class="headerlink" title="介绍："></a>介绍：</h4><p>线性修正单元</p>
+<h3 id="1-4Softmax-函数"><a href="#1-4Softmax-函数" class="headerlink" title="1.4	Softmax 函数"></a>1.4	Softmax 函数</h3><h4 id="数学公式：-3"><a href="#数学公式：-3" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>S(\vec{z_{i}})&#x3D;\frac{e^{\vec{z_{i}}}}{\sum_{j&#x3D;1}^{n}e^{\vec{z_{j}}}}\quad{(i&#x3D;1,2,3,\dots ,n)}<br>$$</p>
+<h4 id="调用示例：-3"><a href="#调用示例：-3" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.Softmax()<br></code></pre></td></tr></table></figure>
+
+<h4 id="图像：-3"><a href="#图像：-3" class="headerlink" title="图像："></a>图像：</h4><h4 id="介绍：-3"><a href="#介绍：-3" class="headerlink" title="介绍："></a>介绍：</h4><h3 id="1-5GELU-函数"><a href="#1-5GELU-函数" class="headerlink" title="1.5	GELU 函数"></a>1.5	GELU 函数</h3><h4 id="数学公式：-4"><a href="#数学公式：-4" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>高斯误差线性单元:\quad\operatorname{GELU}(x)&#x3D;\frac{x}{2}(1+\text{erf}(\frac{x}{\sqrt{2}}))\<br>高斯误差函数：\quad\operatorname{erf}(x)&#x3D;\frac{2}{\sqrt{\pi}}\int_{0}^{x} e^{-t^2}dt\<br>$$</p>
+<p>其中 <code>erf()</code> 函数无法求原函数，需要采用数值积分进行计算。</p>
+<p>近似计算方法：<br>$$<br>\quad\operatorname{GELU}(x)&#x3D;\frac{x}{2} \cdot \left(1 + \operatorname{tanh}\left(\sqrt{\frac{2}{\pi}} \cdot (x + 0.044715 \cdot x^3)\right)\right)<br>$$<br>近似方法来自论文：</p>
+<h4 id="调用示例：-4"><a href="#调用示例：-4" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.GELU()<br></code></pre></td></tr></table></figure>
+
+<h4 id="图像：-4"><a href="#图像：-4" class="headerlink" title="图像："></a>图像：</h4><h4 id="介绍：-4"><a href="#介绍：-4" class="headerlink" title="介绍："></a>介绍：</h4><p>高斯误差线性单元（Gaussian Error Linear Units）</p>
 
                 
               </div>
@@ -343,7 +376,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/" class="category-chain-item">ゼロの使い魔</a>
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
   
   
 
@@ -358,9 +391,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/">#ゼロの使い魔</a>
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
       
-        <a href="/tags/%E3%81%82%E3%81%84%E3%81%97%E3%81%A6%E3%82%8B/">#あいしてる</a>
+        <a href="/tags/AI/">#AI</a>
       
     </div>
   
@@ -372,8 +405,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ゼロの使い魔</div>
-      <div>https://qalxry.github.io/2023/03/26/ゼロの使い魔/</div>
+      <div>【深度学习】深度学习基础知识笔记</div>
+      <div>https://qalxry.github.io/2023/04/09/【深度学习】深度学习基础知识笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -385,13 +418,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月26日</div>
+          <div>2023年4月9日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年3月26日</div>
+          <div>2023年4月10日</div>
         </div>
       
       
@@ -434,18 +467,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/09/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/" title="【深度学习】深度学习基础知识笔记">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">【深度学习】深度学习基础知识笔记</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/03/22/%E3%80%90Hexo%E3%80%91hexo-deploy%E5%8F%91%E7%94%9F%E7%9A%84%E6%8A%A5%E9%94%99%EF%BC%9ASoftware-caused-connection-abort/" title="【Hexo】hexo deploy发生的报错：Software caused connection abort">
-                        <span class="hidden-mobile">【Hexo】hexo deploy发生的报错：Software caused connection abort</span>
+                      <a href="/2023/03/26/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/" title="ゼロの使い魔">
+                        <span class="hidden-mobile">ゼロの使い魔</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

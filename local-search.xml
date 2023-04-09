@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>【深度学习】深度学习基础知识笔记</title>
+    <link href="/2023/04/09/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/"/>
+    <url>/2023/04/09/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<h1 id="【深度学习】深度学习基础知识笔记"><a href="#【深度学习】深度学习基础知识笔记" class="headerlink" title="【深度学习】深度学习基础知识笔记"></a>【深度学习】深度学习基础知识笔记</h1><h2 id="1激活函数"><a href="#1激活函数" class="headerlink" title="1激活函数"></a>1激活函数</h2><h3 id="1-1Sigmoid-函数"><a href="#1-1Sigmoid-函数" class="headerlink" title="1.1Sigmoid 函数"></a>1.1Sigmoid 函数</h3><h4 id="数学公式："><a href="#数学公式：" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>S(x)&#x3D;\frac{1}{1 + e^{-x}}&#x3D;\frac{e^x}{e^x+1}&#x3D;1-S(-x)<br>$$</p><h4 id="调用示例："><a href="#调用示例：" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">torch.sigmoid(torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">3.0</span>], device=<span class="hljs-string">&#x27;cuda:0&#x27;</span>))<br>nn.Sigmoid(inplace=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure><h4 id="图像："><a href="#图像：" class="headerlink" title="图像："></a>图像：</h4><p><img src="/2023/04/09/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/.%5C%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0%5Csigmoid.png" alt="Sigmoid"></p><h4 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h4><ul><li>优点：<ul><li>非线性变换</li><li>二分类问题</li><li>易于计算梯度，进行反向传播</li></ul></li><li>缺点：<ul><li>输入值较为极端时，容易出现梯度消失（梯度&#x3D;0），影响训练效果</li><li>指数运算较慢</li></ul></li></ul><h3 id="1-2ReLU-函数"><a href="#1-2ReLU-函数" class="headerlink" title="1.2ReLU 函数"></a>1.2ReLU 函数</h3><h4 id="数学公式：-1"><a href="#数学公式：-1" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>R(x)&#x3D;max(0,x)<br>$$</p><h4 id="调用示例：-1"><a href="#调用示例：-1" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">torch.relu(torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">3.0</span>], device=<span class="hljs-string">&#x27;cuda:0&#x27;</span>))<br>nn.ReLU(inplace=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure><h4 id="图像：-1"><a href="#图像：-1" class="headerlink" title="图像："></a>图像：</h4><h4 id="介绍：-1"><a href="#介绍：-1" class="headerlink" title="介绍："></a>介绍：</h4><p>线性单元</p><h3 id="1-3Leaky-ReLU-函数"><a href="#1-3Leaky-ReLU-函数" class="headerlink" title="1.3Leaky ReLU 函数"></a>1.3Leaky ReLU 函数</h3><h4 id="数学公式：-2"><a href="#数学公式：-2" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>f(x)&#x3D;\begin{array}{l}<br>  \left{\begin{matrix}<br>  x,x\ge0\<br>  ax,x&lt;0 \<br>\end{matrix}\right.<br>\end{array}<br>$$</p><p>其中a常取0.01~0.3</p><h4 id="调用示例：-2"><a href="#调用示例：-2" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.LeakyReLU()<br></code></pre></td></tr></table></figure><h4 id="图像：-2"><a href="#图像：-2" class="headerlink" title="图像："></a>图像：</h4><h4 id="介绍：-2"><a href="#介绍：-2" class="headerlink" title="介绍："></a>介绍：</h4><p>线性修正单元</p><h3 id="1-4Softmax-函数"><a href="#1-4Softmax-函数" class="headerlink" title="1.4Softmax 函数"></a>1.4Softmax 函数</h3><h4 id="数学公式：-3"><a href="#数学公式：-3" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>S(\vec{z_{i}})&#x3D;\frac{e^{\vec{z_{i}}}}{\sum_{j&#x3D;1}^{n}e^{\vec{z_{j}}}}\quad{(i&#x3D;1,2,3,\dots ,n)}<br>$$</p><h4 id="调用示例：-3"><a href="#调用示例：-3" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.Softmax()<br></code></pre></td></tr></table></figure><h4 id="图像：-3"><a href="#图像：-3" class="headerlink" title="图像："></a>图像：</h4><h4 id="介绍：-3"><a href="#介绍：-3" class="headerlink" title="介绍："></a>介绍：</h4><h3 id="1-5GELU-函数"><a href="#1-5GELU-函数" class="headerlink" title="1.5GELU 函数"></a>1.5GELU 函数</h3><h4 id="数学公式：-4"><a href="#数学公式：-4" class="headerlink" title="数学公式："></a>数学公式：</h4><p>$$<br>高斯误差线性单元:\quad\operatorname{GELU}(x)&#x3D;\frac{x}{2}(1+\text{erf}(\frac{x}{\sqrt{2}}))\<br>高斯误差函数：\quad\operatorname{erf}(x)&#x3D;\frac{2}{\sqrt{\pi}}\int_{0}^{x} e^{-t^2}dt\<br>$$</p><p>其中 <code>erf()</code> 函数无法求原函数，需要采用数值积分进行计算。</p><p>近似计算方法：<br>$$<br>\quad\operatorname{GELU}(x)&#x3D;\frac{x}{2} \cdot \left(1 + \operatorname{tanh}\left(\sqrt{\frac{2}{\pi}} \cdot (x + 0.044715 \cdot x^3)\right)\right)<br>$$<br>近似方法来自论文：</p><h4 id="调用示例：-4"><a href="#调用示例：-4" class="headerlink" title="调用示例："></a>调用示例：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.GELU()<br></code></pre></td></tr></table></figure><h4 id="图像：-4"><a href="#图像：-4" class="headerlink" title="图像："></a>图像：</h4><h4 id="介绍：-4"><a href="#介绍：-4" class="headerlink" title="介绍："></a>介绍：</h4><p>高斯误差线性单元（Gaussian Error Linear Units）</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>深度学习</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>深度学习</tag>
+      
+      <tag>AI</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>ゼロの使い魔</title>
     <link href="/2023/03/26/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/"/>
     <url>/2023/03/26/%E3%82%BC%E3%83%AD%E3%81%AE%E4%BD%BF%E3%81%84%E9%AD%94/</url>
