@@ -4,6 +4,62 @@
   
   
   <entry>
+    <title>【服务器】【问题排查】通过系统日志syslog查找历史执行命令</title>
+    <link href="/2023/06/06/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E3%80%90%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E3%80%91%E9%80%9A%E8%BF%87%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97syslog%E6%9F%A5%E6%89%BE%E5%8E%86%E5%8F%B2%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/"/>
+    <url>/2023/06/06/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E3%80%90%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E3%80%91%E9%80%9A%E8%BF%87%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97syslog%E6%9F%A5%E6%89%BE%E5%8E%86%E5%8F%B2%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/</url>
+    
+    <content type="html"><![CDATA[<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>想要取消一个py脚本的开机启动，但忘记了之前使用的是哪种设置方法。经过一番折腾后成功解决，为避免再次忘记，决定记录问题解决过程。</p><h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><h4 id="开机后，先检查脚本是否运行："><a href="#开机后，先检查脚本是否运行：" class="headerlink" title="开机后，先检查脚本是否运行："></a>开机后，先检查脚本是否运行：</h4><p>要在Linux上检测后台运行的所有Python脚本，你可以使用<code>ps</code>命令结合<code>grep</code>过滤器来查找正在运行的进程。以下是一些可能的方法：</p><ol><li><p>使用<code>ps</code>命令和<code>grep</code>过滤器来查找包含”python”关键字的进程：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ps aux | grep python<br></code></pre></td></tr></table></figure><p>这将列出所有包含”python”关键字的进程，包括后台运行的Python脚本。</p></li><li><p>使用<code>pgrep</code>命令来查找正在运行的Python进程：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">pgrep python<br></code></pre></td></tr></table></figure><p>这将列出所有正在运行的Python进程的进程ID。</p></li><li><p>如果你想获取更详细的信息，可以使用<code>ps</code>命令结合<code>-f</code>选项和<code>grep</code>过滤器来查找包含”.py”扩展名的进程：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ps -ef | grep <span class="hljs-string">&#x27;.py&#x27;</span><br></code></pre></td></tr></table></figure><p>这将列出所有包含”.py”扩展名的进程，并显示详细的进程信息。</p></li></ol><p>请注意，这些命令可能会列出其他正在运行的Python进程，而不仅仅是后台运行的脚本。如果你想仅限于后台运行的脚本，可能需要结合其他条件进行过滤，例如特定的脚本名称、参数等。</p><p><img src="/2023/06/06/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E3%80%90%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E3%80%91%E9%80%9A%E8%BF%87%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97syslog%E6%9F%A5%E6%89%BE%E5%8E%86%E5%8F%B2%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/1.png" alt="运行结果"></p><p>这段命令 <code>/bin/sh -c python3 /home/qalxry/Drcom/latest-wired-python3.py</code> 的含义如下：</p><ul><li><code>/bin/sh</code> 是一个指向 Bourne shell 或其兼容版本的路径。在这种情况下，它用作一个简单的命令解释器。</li><li><code>-c</code> 选项告诉 shell 解释器后面的参数是一个命令字符串。</li><li><code>python3</code> 是要执行的命令，表示要运行 Python 3 解释器。</li><li><code>/home/qalxry/Drcom/latest-wired-python3.py</code> 是要执行的 Python 脚本的路径和文件名。</li></ul><p>因此，该命令将使用 <code>/bin/sh</code>（Bourne shell）作为解释器，执行 <code>python3</code> 命令，将 <code>/home/qalxry/Drcom/latest-wired-python3.py</code> 作为参数传递给 Python 3 解释器。这将导致系统运行该 Python 脚本。</p><p>根据提供的命令本身，无法确定命令是由谁发起的。这只是一个在终端上执行的命令，而没有提供关于命令发起者的任何信息。</p><p>如果你想了解命令是由哪个用户发起的，可以使用一些其他的方法来追踪。例如，你可以查看系统日志文件（如 <code>/var/log/auth.log</code> 或 <code>/var/log/syslog</code>）来查看登录记录和命令执行记录。这些日志文件通常包含有关用户登录和执行命令的信息，包括用户名、IP 地址和时间戳等。</p><p>另外，你也可以使用命令行工具 <code>last</code> 来查看最近的登录记录。例如，运行 <code>last</code> 命令将显示最近登录到系统的用户列表，包括登录时间和来源 IP 地址。你可以根据登录时间来确定哪个用户最有可能发起了该命令。</p><p>需要注意的是，这些方法只能提供一些指示，而不是确切地确定命令发起者。如果你需要更具体的信息，可能需要结合其他的审计和监控工具来进行进一步的分析。确定脚本运行，从系统日志中查找调用记录。</p><p>系统日志通常包含了启动过程中的各种事件和消息，其中可能包含有关自动启动脚本的信息。</p><p>在大多数Linux发行版中，系统日志文件通常位于<code>/var/log</code>目录下，具体的日志文件名称可能因发行版而异。以下是一些常见的系统日志文件及其对应的发行版：</p><ul><li>Ubuntu、Debian和类似的发行版：<ul><li><code>/var/log/syslog</code></li><li><code>/var/log/boot.log</code></li></ul></li><li>CentOS、Red Hat和类似的发行版：<ul><li><code>/var/log/messages</code></li><li><code>/var/log/boot.log</code></li></ul></li></ul><p>从日志条目信息中查找到：</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Jun</span> <span class="hljs-number">6</span> <span class="hljs-number">03</span>:<span class="hljs-number">46</span>:<span class="hljs-number">49</span> qalxry CRON[<span class="hljs-number">687</span>]: (root) CMD (python3 /home/qalxry/Drcom/latest-wired-python3.py)<br></code></pre></td></tr></table></figure><p>可以看出，这是一个由<code>cron</code>调度的定时任务。<code>cron</code>是Linux系统中用于执行预定任务的工具。在这个日志条目中，<code>cron</code>通过<code>root</code>用户执行了以下命令：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">python3 <span class="hljs-regexp">/home/</span>qalxry<span class="hljs-regexp">/Drcom/</span>latest-wired-python3.py<br></code></pre></td></tr></table></figure><p>这是你设置的脚本在开机时自动运行的方法之一。<code>cron</code>通过定期检查预定的时间表（crontab）来执行命令。这里的日志条目显示了<code>cron</code>以<code>root</code>用户身份执行了指定的Python脚本。</p><p>你可以使用<code>crontab -l</code>命令查看<code>root</code>用户的定时任务列表，以获取更多关于自动运行脚本的详细信息。例如，在终端中输入以下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo crontab -l<br></code></pre></td></tr></table></figure><p>这将显示<code>root</code>用户的定时任务列表，其中可能包含有关自动运行脚本的条目。</p><p>注意：在使用<code>sudo crontab -l</code>时，你可能需要输入管理员密码来查看<code>root</code>用户的定时任务列表。</p><p><img src="/2023/06/06/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E3%80%90%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E3%80%91%E9%80%9A%E8%BF%87%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97syslog%E6%9F%A5%E6%89%BE%E5%8E%86%E5%8F%B2%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/2.png" alt=" "></p><p>要取消在系统启动时自动运行的定时任务，你可以编辑<code>root</code>用户的定时任务列表，并删除相应的条目。请按照以下步骤进行操作：</p><ol><li><p>在终端中，以管理员身份使用以下命令编辑<code>root</code>用户的定时任务列表：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo crontab -e<br></code></pre></td></tr></table></figure></li><li><p>如果系统询问你选择文本编辑器，请选择你喜欢的编辑器（例如，nano、vim、或者其他你熟悉的编辑器）。</p></li><li><p>定时任务列表将在编辑器中打开。找到包含要取消的自动运行脚本的条目，这里的条目是：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">@reboot python3 <span class="hljs-regexp">/home/</span>qalxry<span class="hljs-regexp">/Drcom/</span>latest-wired-python3.py<br></code></pre></td></tr></table></figure></li><li><p>删除这个条目或将其注释掉（在行首添加 <code>#</code> 符号）。</p></li><li><p>保存并关闭编辑器。</p></li></ol><p>完成以上步骤后，相应的定时任务将被移除或注释掉，这样在系统启动时就不会再自动运行该脚本。</p><p>请注意，在使用<code>sudo crontab -e</code>命令编辑定时任务列表时，你可能需要输入管理员密码来获取编辑权限。</p><p>至此问题解决。</p><p>——解决方案来自与ChatGPT的对话</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>服务器</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>服务器</tag>
+      
+      <tag>linux</tag>
+      
+      <tag>问题排查</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>【服务器】通过Cron设置linux开机执行命令</title>
+    <link href="/2023/06/06/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E9%80%9A%E8%BF%87Cron%E8%AE%BE%E7%BD%AElinux%E5%BC%80%E6%9C%BA%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/"/>
+    <url>/2023/06/06/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E9%80%9A%E8%BF%87Cron%E8%AE%BE%E7%BD%AElinux%E5%BC%80%E6%9C%BA%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4/</url>
+    
+    <content type="html"><![CDATA[<h3 id="使用Cron设置开机自动执行命令"><a href="#使用Cron设置开机自动执行命令" class="headerlink" title="使用Cron设置开机自动执行命令"></a>使用Cron设置开机自动执行命令</h3><p>要使用<code>cron</code>设置一个Python脚本在开机时运行，你可以按照以下步骤进行操作：</p><ol><li><p>在终端中，以管理员身份使用以下命令编辑<code>root</code>用户的定时任务列表：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo crontab -e<br></code></pre></td></tr></table></figure></li><li><p>如果系统询问你选择文本编辑器，请选择你喜欢的编辑器（例如，nano、vim、或者其他你熟悉的编辑器）。</p></li><li><p>定时任务列表将在编辑器中打开。在文件的最后添加一行，指定要在系统启动时运行的命令。例如：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">@reboot python3 <span class="hljs-regexp">/path/</span>to<span class="hljs-regexp">/your/</span>script.py<br></code></pre></td></tr></table></figure><p>注意替换 <code>/path/to/your/script.py</code> 为你要运行的实际脚本的路径。</p></li><li><p>保存并关闭编辑器。</p></li></ol><p>现在，当系统启动时，<code>cron</code>将自动执行指定的Python脚本。</p><p>请注意，在使用<code>sudo crontab -e</code>命令编辑定时任务列表时，你可能需要输入管理员密码来获取编辑权限。</p><h3 id="取消执行"><a href="#取消执行" class="headerlink" title="取消执行"></a>取消执行</h3><p>要取消在系统启动时自动运行的定时任务，你可以编辑<code>root</code>用户的定时任务列表，并删除相应的条目。请按照以下步骤进行操作：</p><ol><li><p>在终端中，以管理员身份使用以下命令编辑<code>root</code>用户的定时任务列表：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo crontab -e<br></code></pre></td></tr></table></figure></li><li><p>如果系统询问你选择文本编辑器，请选择你喜欢的编辑器（例如，nano、vim、或者其他你熟悉的编辑器）。</p></li><li><p>定时任务列表将在编辑器中打开。找到包含要取消的自动运行脚本的条目，这里的条目是：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">@reboot python3 <span class="hljs-regexp">/home/</span>qalxry<span class="hljs-regexp">/Drcom/</span>latest-wired-python3.py<br></code></pre></td></tr></table></figure></li><li><p>删除这个条目或将其注释掉（在行首添加 <code>#</code> 符号）。</p></li><li><p>保存并关闭编辑器。</p></li></ol><p>完成以上步骤后，相应的定时任务将被移除或注释掉，这样在系统启动时就不会再自动运行该脚本。</p><p>请注意，在使用<code>sudo crontab -e</code>命令编辑定时任务列表时，你可能需要输入管理员密码来获取编辑权限。</p><h3 id="更换编辑器"><a href="#更换编辑器" class="headerlink" title="更换编辑器"></a>更换编辑器</h3><p>如果你想更换编辑器来编辑<code>cron</code>定时任务列表，可以按照以下步骤进行操作：</p><ol><li><p>在终端中，以管理员身份使用以下命令设置你想要的默认编辑器。例如，如果你想使用 nano 编辑器：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo update-alternatives --config editor<br></code></pre></td></tr></table></figure></li><li><p>运行上述命令后，系统将显示可用的编辑器列表，以及每个编辑器的编号。选择你想要设置为默认的编辑器编号。</p></li><li><p>输入编号并按下回车键，将所选编辑器设置为默认编辑器。</p></li></ol><p>现在，当你运行<code>sudo crontab -e</code>命令编辑<code>cron</code>定时任务列表时，所选的编辑器将被用作默认编辑器。</p><p>如果你只是想在特定时刻使用不同的编辑器，而不是更改默认编辑器，可以使用以下命令以特定编辑器打开定时任务列表：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo EDITOR=your_editor crontab -e<br></code></pre></td></tr></table></figure><p>将 <code>your_editor</code> 替换为你想要使用的编辑器的名称或路径。</p><p>无论你选择哪种方法，确保你能够熟悉所选的编辑器，并知道如何保存和退出编辑器。</p><p>——由ChatGPT提供</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>服务器</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>服务器</tag>
+      
+      <tag>linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【排序算法】希尔排序算法与代码、实例讲解</title>
     <link href="/2023/05/16/%E3%80%90%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E3%80%91%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B8%8E%E4%BB%A3%E7%A0%81%E3%80%81%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/"/>
     <url>/2023/05/16/%E3%80%90%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E3%80%91%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B8%8E%E4%BB%A3%E7%A0%81%E3%80%81%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/</url>
