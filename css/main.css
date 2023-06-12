@@ -776,13 +776,13 @@ sup > a::before,
   padding: 3rem 0;
 }
 html {
-  font-size: 18px;
+  font-size: 16px;
   letter-spacing: 0.02em;
 }
 html,
 body {
   height: 100%;
-  font-family: SmileySans, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
   overflow-wrap: break-word;
 }
 body {
@@ -1362,7 +1362,7 @@ figure.highlight td.code > pre {
 .markdown-body {
   font-size: 1rem;
   line-height: 1.6;
-  font-family: SmileySans, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
   margin-bottom: 2rem;
   color: var(--post-text-color);
 }
