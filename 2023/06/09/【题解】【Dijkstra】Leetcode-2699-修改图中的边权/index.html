@@ -19,13 +19,13 @@
     <meta name="description" content="力扣2699题题解。  参考了灵神的题解，但感觉对于第二次Dijkstra的正确性有点模糊，重新整理了一下思路。 （以下将所有权值为-1的边视作【可修改边】） 第一次Dijkstra：先将所有为-1（【可修改边】）的边看作1，以求得理论最小路径。 获得 source 到所有点的距离 dist1[] ，以及最短路径 minDist1 &#x3D; dist1[destination] 判断结果： 若">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【题解】Leetcode 2699.修改图中的边权">
-<meta property="og:url" content="https://qalxry.github.io/2023/06/09/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91Leetcode-2699-%E4%BF%AE%E6%94%B9%E5%9B%BE%E4%B8%AD%E7%9A%84%E8%BE%B9%E6%9D%83/index.html">
+<meta property="og:url" content="https://qalxry.github.io/2023/06/09/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90Dijkstra%E3%80%91Leetcode-2699-%E4%BF%AE%E6%94%B9%E5%9B%BE%E4%B8%AD%E7%9A%84%E8%BE%B9%E6%9D%83/index.html">
 <meta property="og:site_name" content="しずり雪 の Blog">
 <meta property="og:description" content="力扣2699题题解。  参考了灵神的题解，但感觉对于第二次Dijkstra的正确性有点模糊，重新整理了一下思路。 （以下将所有权值为-1的边视作【可修改边】） 第一次Dijkstra：先将所有为-1（【可修改边】）的边看作1，以求得理论最小路径。 获得 source 到所有点的距离 dist1[] ，以及最短路径 minDist1 &#x3D; dist1[destination] 判断结果： 若">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
 <meta property="article:published_time" content="2023-06-09T08:17:28.000Z">
-<meta property="article:modified_time" content="2023-06-09T08:21:27.651Z">
+<meta property="article:modified_time" content="2023-06-12T07:44:19.042Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="Algorithm 算法">
@@ -317,7 +317,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年6月9日 下午 16:21
+                    本文最后更新于：2023年6月12日 下午 15:44
                   
                 
               </p>
@@ -326,7 +326,7 @@
               <div class="markdown-body">
                 
                 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/modify-graph-edge-weights/">力扣2699题</a>题解。</p>
-<p><img src="/2023/06/09/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91Leetcode-2699-%E4%BF%AE%E6%94%B9%E5%9B%BE%E4%B8%AD%E7%9A%84%E8%BE%B9%E6%9D%83/1.png" srcset="/img/loading.gif" lazyload alt="2699"></p>
+<p><img src="/2023/06/09/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90Dijkstra%E3%80%91Leetcode-2699-%E4%BF%AE%E6%94%B9%E5%9B%BE%E4%B8%AD%E7%9A%84%E8%BE%B9%E6%9D%83/1.png" srcset="/img/loading.gif" lazyload alt="2699"></p>
 <p>参考了<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/modify-graph-edge-weights/solutions/2278296/xiang-xi-fen-xi-liang-ci-dijkstrachou-mi-gv1m/">灵神的题解</a>，但感觉对于第二次Dijkstra的正确性有点模糊，重新整理了一下思路。</p>
 <p>（以下将所有权值为-1的边视作【可修改边】）</p>
 <h4 id="第一次Dijkstra："><a href="#第一次Dijkstra：" class="headerlink" title="第一次Dijkstra："></a>第一次Dijkstra：</h4><p>先将所有为-1（【可修改边】）的边看作1，以求得<strong>理论最小路径</strong>。</p>
@@ -393,7 +393,7 @@
 <p>我自己按照思路写的比较粗略的C++代码如下，或许改为朴素版还有优化的空间：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">modifiedGraphEdges</span>(<span class="hljs-type">int</span> n, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; edges, <span class="hljs-type">int</span> source, <span class="hljs-type">int</span> destination, <span class="hljs-type">int</span> target) &#123;<br>        <span class="hljs-comment">// 建图，使用邻接矩阵，方便同时修改【可修改边】的权值</span><br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">graph</span>(n, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(n, <span class="hljs-number">0</span>));<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> &amp;e : edges) &#123;<br>            graph[e[<span class="hljs-number">1</span>]][e[<span class="hljs-number">0</span>]] = graph[e[<span class="hljs-number">0</span>]][e[<span class="hljs-number">1</span>]] = e[<span class="hljs-number">2</span>];<br>        &#125;<br>        <span class="hljs-comment">// Dijkstra 1</span><br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dist1</span><span class="hljs-params">(n, INT_MAX)</span></span>;<br>        dist1[source] = <span class="hljs-number">0</span>;<br>        priority_queue&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;, vector&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;&gt;, greater&lt;pair&lt;<span class="hljs-type">int</span>, <span class="hljs-type">int</span>&gt;&gt;&gt; pq;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">visited</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;<br>        pq.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-number">0</span>, source&#125;);<br>        <span class="hljs-keyword">while</span>(!pq.<span class="hljs-built_in">empty</span>()) &#123;<br>            <span class="hljs-keyword">auto</span> [d, u] = pq.<span class="hljs-built_in">top</span>();<br>            pq.<span class="hljs-built_in">pop</span>();<br>            visited[u] = <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> v = <span class="hljs-number">0</span>; v &lt; n; ++v) &#123;<br>                <span class="hljs-keyword">if</span>(visited[v] || graph[u][v] == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;<br>                <span class="hljs-comment">// 若边为-1，可以先不改为1，以便第二次dijkstra判断是否为【可修改边】</span><br>                <span class="hljs-type">int</span> w = <span class="hljs-built_in">abs</span>(graph[u][v]);   <br>                <span class="hljs-keyword">if</span>(dist1[v] &gt; dist1[u] + w) &#123;<br>                    dist1[v] = dist1[u] + w;<br>                    pq.<span class="hljs-built_in">push</span>(&#123;dist1[v], v&#125;);<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-type">int</span> minDist1 = dist1[destination];<br>        <span class="hljs-comment">// 判断</span><br>        <span class="hljs-keyword">if</span>(minDist1 &gt; target) <span class="hljs-keyword">return</span> vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&#123;&#125;;<br>        <span class="hljs-keyword">if</span>(minDist1 == target) &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> &amp;e : edges) <span class="hljs-keyword">if</span>(e[<span class="hljs-number">2</span>] == <span class="hljs-number">-1</span>) e[<span class="hljs-number">2</span>] = <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">return</span> edges;<br>        &#125;<br>        <span class="hljs-comment">// Dijkstra 2</span><br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dist2</span><span class="hljs-params">(n, INT_MAX)</span></span>;<br>        dist2[source] = <span class="hljs-number">0</span>;<br>        pq.<span class="hljs-built_in">push</span>(&#123;<span class="hljs-number">0</span>, source&#125;);<br>        <span class="hljs-built_in">fill</span>(visited.<span class="hljs-built_in">begin</span>(), visited.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">while</span>(!pq.<span class="hljs-built_in">empty</span>()) &#123;<br>            <span class="hljs-keyword">auto</span> [d, x] = pq.<span class="hljs-built_in">top</span>();<br>            pq.<span class="hljs-built_in">pop</span>();<br>            visited[x] = <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt; n; ++y) &#123;<br>                <span class="hljs-keyword">if</span>(visited[y] || graph[x][y] == <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;<br>                <span class="hljs-keyword">if</span>(graph[x][y] == <span class="hljs-number">-1</span>) &#123;<br>                    <span class="hljs-comment">// 为-1的是【可修改边】</span><br>                    <span class="hljs-type">int</span> E = minDist1 - dist1[y];    <span class="hljs-comment">// y到终点的期望最小距离</span><br>                    <span class="hljs-type">int</span> W = target - dist2[x] - E;  <span class="hljs-comment">// 应当修改的权值</span><br>                    graph[x][y] = graph[y][x] = (W &lt; <span class="hljs-number">1</span> ? <span class="hljs-number">1</span> : W);    <span class="hljs-comment">// 【可修改边】最小权值大于等于1</span><br>                &#125;<br>                <span class="hljs-keyword">if</span>(dist2[y] &gt; dist2[x] + graph[x][y]) &#123;<br>                    dist2[y] = dist2[x] + graph[x][y];<br>                    pq.<span class="hljs-built_in">push</span>(&#123;dist2[y], y&#125;);<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-type">int</span> minDist2 = dist2[destination];<br>        <span class="hljs-comment">// 判断</span><br>        <span class="hljs-keyword">if</span>(minDist2 == target)&#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> &amp;e : edges) <span class="hljs-keyword">if</span>(e[<span class="hljs-number">2</span>] == <span class="hljs-number">-1</span>) e[<span class="hljs-number">2</span>] = graph[e[<span class="hljs-number">0</span>]][e[<span class="hljs-number">1</span>]];   <span class="hljs-comment">// 将图中的修改应用到边集中</span><br>            <span class="hljs-keyword">return</span> edges;<br>        &#125;<br>        <span class="hljs-keyword">return</span> vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&#123;&#125;;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
-<p><img src="/2023/06/09/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91Leetcode-2699-%E4%BF%AE%E6%94%B9%E5%9B%BE%E4%B8%AD%E7%9A%84%E8%BE%B9%E6%9D%83/2.png" srcset="/img/loading.gif" lazyload alt="结果"></p>
+<p><img src="/2023/06/09/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90Dijkstra%E3%80%91Leetcode-2699-%E4%BF%AE%E6%94%B9%E5%9B%BE%E4%B8%AD%E7%9A%84%E8%BE%B9%E6%9D%83/2.png" srcset="/img/loading.gif" lazyload alt="结果"></p>
 
                 
               </div>
@@ -412,7 +412,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Algorithm-%E7%AE%97%E6%B3%95/" class="category-chain-item">Algorithm 算法</a>
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
   
   
 
@@ -446,7 +446,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>【题解】Leetcode 2699.修改图中的边权</div>
-      <div>https://qalxry.github.io/2023/06/09/【题解】Leetcode-2699-修改图中的边权/</div>
+      <div>https://qalxry.github.io/2023/06/09/【题解】【Dijkstra】Leetcode-2699-修改图中的边权/</div>
     </div>
     <div class="license-meta">
       
@@ -464,7 +464,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年6月9日</div>
+          <div>2023年6月12日</div>
         </div>
       
       
@@ -506,6 +506,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/06/12/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90%E5%80%8D%E5%A2%9E%E6%B3%95%E6%B1%82LCA%E3%80%91Leetcode-1483-%E6%A0%91%E8%8A%82%E7%82%B9%E7%9A%84%E7%AC%ACK%E4%B8%AA%E7%A5%96%E5%85%88/" title="【题解】【倍增法求LCA】Leetcode-1483-树节点的第K个祖先">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【题解】【倍增法求LCA】Leetcode-1483-树节点的第K个祖先</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
