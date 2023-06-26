@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>【Github-Git】新建github仓库以及添加git进入本地文件</title>
+    <link href="/2023/06/26/%E3%80%90Github-Git%E3%80%91%E6%96%B0%E5%BB%BAgithub%E4%BB%93%E5%BA%93%E4%BB%A5%E5%8F%8A%E6%B7%BB%E5%8A%A0git%E8%BF%9B%E5%85%A5%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6/"/>
+    <url>/2023/06/26/%E3%80%90Github-Git%E3%80%91%E6%96%B0%E5%BB%BAgithub%E4%BB%93%E5%BA%93%E4%BB%A5%E5%8F%8A%E6%B7%BB%E5%8A%A0git%E8%BF%9B%E5%85%A5%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6/</url>
+    
+    <content type="html"><![CDATA[<h2 id="新建github仓库以及添加本地文件进入git"><a href="#新建github仓库以及添加本地文件进入git" class="headerlink" title="新建github仓库以及添加本地文件进入git"></a>新建github仓库以及添加本地文件进入git</h2><p>下面是新建github仓库以及添加本地文件进入git的步骤：</p><ol><li><p>在GitHub上创建一个新的仓库。在GitHub页面右上角点击“+”图标，选择“New repository”，填写相关信息并点击“Create repository”按钮即可。</p></li><li><p>在本地创建一个新的文件夹，用来存储项目的代码。可以使用命令行工具或者GUI工具（如Git GUI、SourceTree等）创建文件夹。</p></li><li><p>打开命令行工具（如Git Bash），进入到刚才创建的文件夹中。</p></li><li><p>初始化Git仓库。在命令行中输入以下命令：</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">git <span class="hljs-keyword">init</span><br></code></pre></td></tr></table></figure></li><li><p>添加文件到Git仓库。将需要添加的文件复制到刚才创建的文件夹中，然后在命令行中输入以下命令：</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">git <span class="hljs-built_in">add</span> .<br></code></pre></td></tr></table></figure><p>这个<code>.</code>符号表示添加所有修改过的文件，如果只想添加某个特定的文件，则需要输入该文件的路径。</p></li><li><p>提交更改。在命令行中输入以下命令：</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">git</span> commit -m <span class="hljs-string">&quot;提交说明&quot;</span><br></code></pre></td></tr></table></figure><p>提交说明可以简要描述本次提交所作的修改。</p></li><li><p>关联远程Github仓库。在命令行中输入以下命令：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">git remote add origin https:<span class="hljs-regexp">//gi</span>thub.com<span class="hljs-regexp">/你的账户名/</span>仓库名.git<br></code></pre></td></tr></table></figure><p>将<code>你的账户名</code>和<code>仓库名</code>替换为你自己的信息。</p></li><li><p>推送到远程仓库。在命令行中输入以下命令：</p><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">git <span class="hljs-built_in">push</span> <span class="hljs-built_in">origin</span> main<br></code></pre></td></tr></table></figure><p>这将把本地的代码推送到GitHub仓库中。</p></li></ol><p>现在你可以登录到GitHub上，查看刚才创建的仓库，确认代码已经成功上传了。</p><h2 id="新建gitignore文件"><a href="#新建gitignore文件" class="headerlink" title="新建gitignore文件"></a>新建gitignore文件</h2><p>下面是新建<code>.gitignore</code>文件的步骤：</p><ol><li><p>在本地仓库根目录下创建一个名为<code>.gitignore</code>的文件。可以使用命令行或者GUI工具创建。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">touch</span> .gitignore<br></code></pre></td></tr></table></figure></li><li><p>打开<code>.gitignore</code>文件，在其中写入需要忽略的文件夹和文件的名称或者通配符。每个文件或文件夹占一行，如果要忽略某个文件夹中的所有文件，可以在该文件夹名称后加上斜杠（&#x2F;）。</p><p>例如，以下是一个简单的<code>.gitignore</code>文件内容：</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 忽略所有的 .log 文件</span><br>*.log<br><br><span class="hljs-comment"># 忽略 node_modules 文件夹</span><br><span class="hljs-regexp">/node_modules/</span><br></code></pre></td></tr></table></figure></li><li><p>保存<code>.gitignore</code>文件并提交到Git仓库中。</p><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">git</span> <span class="hljs-keyword">add</span> .gitignore<br><span class="hljs-symbol">git</span> commit -m <span class="hljs-string">&quot;Add .gitignore file&quot;</span><br><span class="hljs-symbol">git</span> <span class="hljs-keyword">push</span> origin main<br></code></pre></td></tr></table></figure></li></ol><p>现在，这些被规定忽略的文件或文件夹就不会被提交到远程仓库中了。</p><h2 id="设置git-init的主分支默认为main"><a href="#设置git-init的主分支默认为main" class="headerlink" title="设置git init的主分支默认为main"></a>设置git init的主分支默认为main</h2><p>下面是设置<code>git init</code>的主分支默认为<code>main</code>的步骤：</p><ol><li><p>打开Git Bash或者其他命令行工具。</p></li><li><p>输入以下命令进行配置：</p><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">git config --<span class="hljs-keyword">global</span> <span class="hljs-keyword">init</span>.defaultBranch main<br></code></pre></td></tr></table></figure></li><li><p>这个命令将把全局Git配置中的<code>init.defaultBranch</code>设置为<code>main</code>。这样，每次使用<code>git init</code>创建新仓库时，默认分支就会被设置成<code>main</code>了。</p></li></ol><p>请注意，在Git 2.28及以后的版本中，<code>init.defaultBranch</code>的默认值已经从<code>master</code>改为<code>main</code>。因此如果你正在使用较新的Git版本，则不需要执行以上命令进行修改。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Git</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Git</tag>
+      
+      <tag>Github</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【C++】第三方库概览</title>
     <link href="/2023/06/16/%E3%80%90C++%E3%80%91%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E6%A6%82%E8%A7%88/"/>
     <url>/2023/06/16/%E3%80%90C++%E3%80%91%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E6%A6%82%E8%A7%88/</url>
