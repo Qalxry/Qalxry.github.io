@@ -1,0 +1,920 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一看就懂的 Nim 游戏、SG函数、SG定理 全网最佳解读！  本文为原创文章，转载请注明本文链接！ By.ShizuriYuki  1 Nim 游戏 1.1 简介 Nim游戏规则：有 \(n\) 堆石子，数量分别是 \(\{a_1, a_2, a_3,\dots, a_n\}\) ，两个玩家轮流拿石子，每次从任意一堆中拿走任意数量的石子，拿走最后一个石子的人获胜（即最后没有石子">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【算法】【博弈论】一看就懂的 Nim 游戏、SG函数、SG定理 全网最佳解读！">
+<meta property="og:url" content="https://qalxry.github.io/2023/09/28/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90%E5%8D%9A%E5%BC%88%E8%AE%BA%E3%80%91%E4%B8%80%E7%9C%8B%E5%B0%B1%E6%87%82%E7%9A%84Nim%E6%B8%B8%E6%88%8F%E5%85%A8%E7%BD%91%E6%9C%80%E4%BD%B3%E8%A7%A3%E8%AF%BB%EF%BC%81/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="一看就懂的 Nim 游戏、SG函数、SG定理 全网最佳解读！  本文为原创文章，转载请注明本文链接！ By.ShizuriYuki  1 Nim 游戏 1.1 简介 Nim游戏规则：有 \(n\) 堆石子，数量分别是 \(\{a_1, a_2, a_3,\dots, a_n\}\) ，两个玩家轮流拿石子，每次从任意一堆中拿走任意数量的石子，拿走最后一个石子的人获胜（即最后没有石子">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="article:published_time" content="2023-09-28T13:45:58.000Z">
+<meta property="article:modified_time" content="2023-09-29T01:33:56.313Z">
+<meta property="article:author" content="しずり雪">
+<meta property="article:tag" content="Algorithm 算法">
+<meta property="article:tag" content="组合数学">
+<meta property="article:tag" content="博弈论">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【算法】【博弈论】一看就懂的 Nim 游戏、SG函数、SG定理 全网最佳解读！ - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/diary/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【算法】【博弈论】一看就懂的 Nim 游戏、SG函数、SG定理 全网最佳解读！"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-28 21:45" pubdate>
+          2023年9月28日 晚上 21:45
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【算法】【博弈论】一看就懂的 Nim 游戏、SG函数、SG定理 全网最佳解读！</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年9月29日 上午 09:33
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一看就懂的-nim-游戏sg函数sg定理-全网最佳解读">一看就懂的 Nim
+游戏、SG函数、SG定理 全网最佳解读！</h1>
+<blockquote>
+<p>本文为原创文章，转载请注明本文链接！</p>
+<p>By.ShizuriYuki</p>
+</blockquote>
+<h2 id="nim-游戏">1 Nim 游戏</h2>
+<h3 id="简介">1.1 简介</h3>
+<p><strong>Nim游戏规则</strong>：有 <span class="math inline">\(n\)</span> 堆石子，数量分别是 <span class="math inline">\(\{a_1, a_2, a_3,\dots, a_n\}\)</span>
+，两个玩家轮流拿石子，每次从任意一堆中拿走任意数量的石子，拿走最后一个石子的人获胜（即最后没有石子拿的人输）。</p>
+<h3 id="分析">1.2 分析</h3>
+<h4 id="首先明确一个事实"><strong>首先明确一个事实：</strong></h4>
+<p>异或和可以看作是<strong>统计每位上 1
+的总个数的奇偶性</strong>。如果这一位有偶数个 1，则这一位计算结果为
+0；如果这一位有奇数个 1，则这一位计算结果为 1。</p>
+<hr>
+<h4 id="从简单情况开始分析">从简单情况开始分析：</h4>
+<p>（A先手，B后手）注意转移后先后手需要互换后再判断更不容易出错。</p>
+<ul>
+<li><p><strong>有 2 堆石子：</strong></p>
+<p>总共 4 种情况：</p>
+<ol type="1">
+<li><p><span class="math inline">\(\{0,0\}\)</span> ：A
+Lose，先手A必输。</p></li>
+<li><p><span class="math inline">\(\{0, n\}\)</span> ：A
+Win，先手A必赢。</p></li>
+<li><p><span class="math inline">\(\{n,n\}\)</span> ：A Lose，先手A必输
+。</p>
+<p>分析：</p>
+<ul>
+<li>若先手A取 <span class="math inline">\(\{ ( a_1, n )
+\}\)</span>，则剩下 <span class="math inline">\(\{0,n\}\)</span>，转移至情况2，后手B赢。</li>
+<li>若先手A取 <span class="math inline">\(\{(a_1, k)|1 \leq k &lt;
+n\}\)</span>，则剩下 <span class="math inline">\(\{n-k,n\}\)</span>，后手B可以也取，使<span class="math inline">\(\{(a_2, k)|1 \leq k &lt; n\}\)</span>得剩下为
+<span class="math inline">\(\{n-k,n-k
+\}\)</span>。如此循环，知道先手A遇到 <span class="math inline">\(\{1,1\}\)</span> ，只能取1，剩下 <span class="math inline">\(\{0,1\}\)</span>，转移至情况2，后手B赢。</li>
+</ul></li>
+<li><p><span class="math inline">\(\{n,m\}\)</span> ：A
+Win，先手A必赢。</p>
+<p>分析：先手A取<span class="math inline">\(\{(max(a_1,a_2),abs(a_1-a_2)\}\)</span>，则剩下
+<span class="math inline">\(\{k,k\}\)</span>，转移至情况3，先手A必赢。</p></li>
+</ol></li>
+</ul>
+<hr>
+<ul>
+<li><p><strong>有 3 堆石子：</strong></p>
+<p>总共 7 种情况：</p>
+<ol type="1">
+<li><p><span class="math inline">\(\{0,0,0\}\)</span> ：A
+Lose，先手A必输。</p></li>
+<li><p><span class="math inline">\(\{a,0,0\}\)</span> ：A
+Win，先手A必赢。</p></li>
+<li><p><span class="math inline">\(\{a,a,0\}\)</span> ：A
+Lose，先手A必输。分析：转移至只有 2 堆石子的情况3，先手A必输。</p></li>
+<li><p><span class="math inline">\(\{a,b,0\}\)</span> ：A
+Win，先手A必赢。分析：转移至只有 2 堆石子的情况4，先手A必赢。</p></li>
+<li><p><span class="math inline">\(\{a,a,a\}\)</span> ：A
+Win，先手A必赢。分析：先手A取出一个 a
+，转移至情况3，先手A必赢。</p></li>
+<li><p><span class="math inline">\(\{a,a,b\}\)</span> ：A
+Win，先手A必赢。分析：先手A取出一个 b
+，转移至情况3，先手A必赢。</p></li>
+<li><p><span class="math inline">\(\{a,b,c\}\)</span> ：若 <span class="math inline">\(a \oplus b \oplus c \neq 0\)</span>
+，先手A必赢；若 <span class="math inline">\(a \oplus b \oplus c =
+0\)</span> ，先手A必输。</p>
+<p>分析：</p>
+<ul>
+<li><p><span class="math inline">\(H_n = a \oplus b \oplus c =
+0\)</span> ：</p>
+<p>先手A任意取其中一堆的任意数量石子，将导致这一堆的石子数的<strong>二进制数至少有
+1 位发生变化</strong>。</p>
+<p>由于异或和可以看作是统计这一位上 1 的总个数的奇偶性，则全部位为偶数个
+1 的产生的原结果 0 将至少有一位变为奇数个 1。</p>
+<p>这将导致 <span class="math inline">\(a_1 \oplus a_2 \oplus a_3 \neq
+0\)</span> ，<strong>转移至该情况</strong>。</p></li>
+<li><p><span class="math inline">\(H_n = a \oplus b \oplus c \neq
+0\)</span> ：</p>
+<p>先手A一定能从 <span class="math inline">\(\{a,b,c\}\)</span>
+找出一个数 <span class="math inline">\(x\)</span>，使得剩下的数的异或和
+<span class="math inline">\(H_{n-1} &lt; x\)</span>
+（正确性在后面证明）。然后从 <span class="math inline">\(x\)</span> 取走
+<span class="math inline">\(x - H_{n-1}\)</span> 个石子，使得 <span class="math inline">\(x = H_{n-1}\)</span> 。</p>
+<p>这将导致 <span class="math inline">\(a_1 \oplus a_2 \oplus a_3 =
+0\)</span>，<strong>转移至该情况</strong>。</p></li>
+<li><p>如此以上<strong>两种情况交替循环</strong>，直到全部石子被全部取完，同时取完的时候<strong>必然有</strong>
+<span class="math inline">\(a_1 \oplus a_2 \oplus a_3 = 0\)</span>
+。</p>
+<p>故从 <span class="math inline">\(a \oplus b \oplus c = 0\)</span>
+先手的<strong>必然会输</strong>，从 <span class="math inline">\(a \oplus
+b \oplus c \neq 0\)</span> 先手的<strong>必然会赢</strong>。</p></li>
+</ul></li>
+</ol></li>
+</ul>
+<hr>
+<h3 id="定理">1.3 定理</h3>
+<p>若 <span class="math inline">\(a_1 \oplus a_2 \oplus a_3 \oplus \dots
+\oplus a_n \neq 0\)</span> ，先手必赢； 若 <span class="math inline">\(a_1 \oplus a_2 \oplus a_3 \oplus \dots \oplus a_n
+= 0\)</span> ，先手必输。</p>
+<h3 id="思路">1.4 思路</h3>
+<p>与有 3 堆石子的情况7 <span class="math inline">\(\{a,b,c\}\)</span>
+，是同样的思路。</p>
+<h4 id="但其中我们需要证明这一点">但其中我们需要证明这一点：</h4>
+<ul>
+<li>先手A一定能从 <span class="math inline">\(\{a_1, a_2, a_3,\dots,
+a_n\}\)</span> 找出一个数 <span class="math inline">\(x\)</span>，使得剩下的数的异或和 <span class="math inline">\(H_{n-1} &lt; x\)</span></li>
+</ul>
+<h4 id="证明如下">证明如下：</h4>
+<ul>
+<li><p>设 <span class="math inline">\(H_n=a_1 \oplus a_2 \oplus a_3
+\oplus \dots \oplus a_n\)</span> 。</p>
+<p>设 <span class="math inline">\(x \in \{a_1, a_2, a_3,\dots,
+a_n\}\)</span> ，同时 <span class="math inline">\(x\)</span> 在 <span class="math inline">\(H_n\)</span> 的二进制最高位处为 1
+（通过异或和的奇偶统计得知必然存在这样的数）。</p>
+<p>则剩下的数的异或和为 <span class="math inline">\(H_{n-1}=H_n \oplus
+x\)</span>。</p></li>
+<li><p>以 <span class="math inline">\(H_n\)</span> 的二进制数的最高位的
+1 为轴，将 <span class="math inline">\(H_n\)</span> 、 <span class="math inline">\(H_{n-1}\)</span> 、<span class="math inline">\(x\)</span> 分割为 3 部分的二进制数：<span class="math inline">\(\{front, highbit, end\}\)</span> 。</p>
+<p>其中：（请原谅我在指数位标注）</p>
+<ul>
+<li><span class="math inline">\(H_n^{front}=0, \space \space
+H_{n-1}^{front} = x^{front}\)</span>;（两数异或和为 0 则两数相等）</li>
+<li><span class="math inline">\(H_n^{highbit}=1, \space \space
+H_{n-1}^{highbit} = 0,\space \space x^{highbit}=1\)</span>;</li>
+<li><span class="math inline">\(end\)</span>
+不用管，比较前面的高位即可确定大小.</li>
+</ul>
+<p>通过 <span class="math inline">\(H_{n-1}^{front} = x^{front}, \space
+\space H_{n-1}^{highbit} = 0 &lt; x^{highbit} = 1\)</span>，可得 <span class="math inline">\(H_{n-1} &lt; x\)</span> .</p></li>
+<li><p>证毕。</p></li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs txt">实例：<br>		     front | highbit | end<br>	x:     0 1 1 0 |    1    | 1 1 0 0 0 1<br>	Hn-1:  0 1 1 0 |    0    | 0 1 1 0 1 0<br>	Hn:    0 0 0 0 |   *1*   | 1 0 1 0 1 1<br></code></pre></td></tr></table></figure>
+<p>这里的必胜情况称为 N-position 点，必败情况称为 P-position 点。遇到 N
+点的人，可以将情况转化为 P 点，使得下一个人一直遇到必败情况 P。而遇到 P
+点的人游戏又只能转换为 N 点，如此 N、P 交替，游戏终止于 P 点。</p>
+<h3 id="例题">1.5 例题</h3>
+<p>hdu1850</p>
+<h2 id="sprague-grundy-函数">2 Sprague-Grundy 函数</h2>
+<h3 id="图游戏">2.1 图游戏</h3>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E7%AE%97%E6%B3%95/Combinatorics-%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/" class="category-chain-item">Combinatorics 组合数学</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E7%AE%97%E6%B3%95/Combinatorics-%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/%E5%8D%9A%E5%BC%88%E8%AE%BA/" class="category-chain-item">博弈论</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Algorithm-%E7%AE%97%E6%B3%95/">#Algorithm 算法</a>
+      
+        <a href="/tags/%E7%BB%84%E5%90%88%E6%95%B0%E5%AD%A6/">#组合数学</a>
+      
+        <a href="/tags/%E5%8D%9A%E5%BC%88%E8%AE%BA/">#博弈论</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【算法】【博弈论】一看就懂的 Nim 游戏、SG函数、SG定理 全网最佳解读！</div>
+      <div>https://qalxry.github.io/2023/09/28/【算法】【博弈论】一看就懂的Nim游戏全网最佳解读！/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月28日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年9月29日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/10/06/%E3%80%90Leetcode%E3%80%91%E5%8F%96%E6%B6%88%E8%AF%BB%E5%86%99%E7%BC%93%E5%86%B2%E5%8C%BA%E5%90%8C%E6%AD%A5%E5%9C%A8%E5%8A%9B%E6%89%A3%E4%B8%8A%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" title="【Leetcode】取消缓冲区同步在力扣上的使用方法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【Leetcode】取消缓冲区同步在力扣上的使用方法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/09/17/%E3%80%90%E6%A8%A1%E6%8B%9F%E9%80%80%E7%81%AB%E3%80%91%E6%A8%A1%E6%9D%BF%E4%BB%A3%E7%A0%81/" title="【模拟退火】模板代码">
+                        <span class="hidden-mobile">【模拟退火】模板代码</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

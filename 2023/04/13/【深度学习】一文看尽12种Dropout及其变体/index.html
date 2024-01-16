@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="&quot;一文看尽12种Dropout及其变体&quot; 本文转载自：AI公园  作者：Axel Thevenot 编译：ronghuaiyang  导读 深入了解DNNs，CNNs以及RNNs中的Dropout来进行正则化，蒙特卡洛不确定性和模型压缩的方法。  动机 在深度机器学习中训练一个模型的主要挑战之一是协同适应。这意味着神经元是相互依赖的。他们对彼此的影响相当大，相对于他们的输入还不够">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【深度学习】一文看尽12种Dropout及其变体">
+<meta property="og:url" content="https://qalxry.github.io/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="&quot;一文看尽12种Dropout及其变体&quot; 本文转载自：AI公园  作者：Axel Thevenot 编译：ronghuaiyang  导读 深入了解DNNs，CNNs以及RNNs中的Dropout来进行正则化，蒙特卡洛不确定性和模型压缩的方法。  动机 在深度机器学习中训练一个模型的主要挑战之一是协同适应。这意味着神经元是相互依赖的。他们对彼此的影响相当大，相对于他们的输入还不够">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/post/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/index.png">
+<meta property="article:published_time" content="2023-04-13T13:18:00.000Z">
+<meta property="article:modified_time" content="2023-04-13T13:33:16.725Z">
+<meta property="article:author" content="しずり雪">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/post/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/index.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【深度学习】一文看尽12种Dropout及其变体 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/diary/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/post/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/banner.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【深度学习】一文看尽12种Dropout及其变体"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-13 21:18" pubdate>
+          2023年4月13日 晚上 21:18
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          20 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【深度学习】一文看尽12种Dropout及其变体</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年4月13日 晚上 21:33
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong>"一文看尽12种Dropout及其变体"</strong></p>
+<p><strong>本文转载自：AI公园</strong></p>
+<blockquote>
+<p>作者：Axel Thevenot 编译：ronghuaiyang</p>
+</blockquote>
+<p><strong>导读</strong></p>
+<p>深入了解DNNs，CNNs以及RNNs中的Dropout来进行正则化，蒙特卡洛不确定性和<a target="_blank" rel="noopener" href="https://cloud.tencent.com/solution/pointcloud-cmp?from=20065&amp;from_column=20065">模型压缩</a>的方法。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/1.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="动机"><strong>动机</strong></h1>
+<p>在深度机器学习中训练一个模型的主要挑战之一是协同适应。这意味着神经元是相互依赖的。他们对彼此的影响相当大，相对于他们的输入还不够独立。我们也经常发现一些神经元具有比其他神经元更重要的预测能力的情况。换句话说，我们会过度依赖于个别的神经元的输出。</p>
+<p>这些影响必须避免，权重必须具有一定的分布，以防止过拟合。某些神经元的协同适应和高预测能力可以通过不同的正则化方法进行调节。其中最常用的是<strong>Dropout</strong>。然而，dropout方法的全部功能很少被使用。</p>
+<p>取决于它是<strong>DNN</strong>，一个<strong>CNN</strong>或一个<strong>RNN</strong>，不同的<strong>dropout方法</strong>可以被应用。在实践中，我们只(或几乎)使用一个。我认为这是一个可怕的陷阱。所以在本文中，我们将从数学和可视化上深入到dropouts的世界中去理解：</p>
+<ul>
+<li>标准的Dropout方法</li>
+<li>标准Dropout的变体</li>
+<li>用在CNNs上的dropout方法</li>
+<li>用在RNNs上的dropout方法</li>
+<li>其他的dropout应用(蒙特卡洛和压缩)</li>
+</ul>
+<h1 id="符号"><strong>符号</strong></h1>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/2.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="标准的dropout"><strong>标准的Dropout</strong></h1>
+<p>最常用的<strong>dropout</strong>方法是Hinton等人在2012年推出的<strong>Standard
+dropout</strong>。通常简单地称为“<strong>Dropout”</strong>，由于显而易见的原因，在本文中我们将称之为标准的Dropout。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/3.png" srcset="/img/loading.gif" lazyload></p>
+<p>为了防止<strong>训练</strong>阶段的过拟合，随机去掉神经元。在一个密集的(或全连接的)网络中，对于每一层，我们给出了一个dropout的概率p。在每次迭代中，每个神经元被去掉的概率为p。Hinton等人的论文建议，输入层的dropout概率为“p=0.2”，隐藏层的dropout概率为“p=0.5”。显然，我们对输出层感兴趣，这是我们的预测。所以我们不会在输出层应用dropout。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/4.png" srcset="/img/loading.gif" lazyload></p>
+<p>数学上，我们说每个神经元的丢弃概率遵循概率<code>p</code>的<strong>伯努利</strong>分布。因此，我们用一个mask对神经元向量(层)进行了一个元素级的操作，<strong>其中每个元素都是遵循伯努利分布</strong>的随机变量。</p>
+<p>在<strong>测试</strong>(或推断)阶段，没有dropout。所有的神经元都是活跃的。为了补偿与训练阶段相比较的额外信息，我们用出现的概率来衡加权权重。所以神经元没有被忽略的概率，是“1
+- p”。</p>
+<h1 id="dropconnect"><strong>DropConnect</strong></h1>
+<p>也许你已经熟悉标准的Dropout方法。但也有很多变化。要对密集网络的前向传递进行正则，可以在神经元上应用dropout。L.
+Wan等人介绍的DropConnect没有直接在神经元上应用dropout，而是应用在连接这些神经元的权重和偏置上。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/5.png" srcset="/img/loading.gif" lazyload></p>
+<p>因此，我们找到了与标准Dropout方法相同的机制。除了掩码(它的元素是遵循一个分布的随机变量)不是应用在某一层的神经元向量上，而是应用在连接该层与前一层的权重矩阵上。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/6.png" srcset="/img/loading.gif" lazyload></p>
+<p>对于测试阶段，可以使用与标准Dropout方法相同的逻辑。我们可以乘以出现的概率。但这并不是L.
+Wan等人提出的方法。他们提出了一个很有趣的随机方法，即使在测试阶段也是如此，他们采用了DropConnect的高斯近似。然后由从这个高斯表示中<strong>随机采样样本</strong>。我们会在Standout之后回到高斯近似。</p>
+<h1 id="standout"><strong>Standout</strong></h1>
+<p>L. J. Ba和B.
+Frey介绍的<strong>Standout</strong>是一个标准的Dropout方法，基于一个<strong>Bernoulli</strong>
+mask(我将根据它们遵循的分布来命名这些mask，这样会更简单)。不同之处在于，神经元被遗漏的概率p在这一层中并不恒定。根据权重的值，它是<strong>自适应的</strong>。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/7.png" srcset="/img/loading.gif" lazyload></p>
+<p>这可以适用于任何<code>g</code>激活函数，甚至是一个单独的神经网络。类似地，对于<code>Ws</code>，可以是一个W的函数。然后在测试阶段，我们根据存在的可能性进行平衡。</p>
+<h2 id="例子"><strong>例子</strong></h2>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/8.png" srcset="/img/loading.gif" lazyload></p>
+<p>这样不是很清楚，我们举个例子。在他们的论文中，他们表明在实践中，置信网络的权值可以近似为权值的<strong>仿射函数</strong>。例如，我取s的绝对值作为激活函数。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/9.png" srcset="/img/loading.gif" lazyload></p>
+<p>因此，我们可以看到，<strong>权重</strong>越大，神经元被丢弃的<strong>概率</strong>就越大。这有力地限制了某些神经元可能具有的高预测能力。</p>
+<h1 id="gaussian-dropout"><strong>Gaussian Dropout</strong></h1>
+<p>应用于神经网络的dropout方法在继续增长。所以，在讨论DNNs以外的其他东西之前，我想先谈谈一种dropout方法，它当然是最吸引人的。</p>
+<p>举几个例子，<strong>Fast Dropout</strong>，
+<strong>变分Dropout</strong>或<strong>Concrete
+Dropout</strong>是从<strong>贝叶斯角度解释Dropout的方法</strong>。具体地说，我们没有使用伯努利mask，而是使用了一个mask，它的元素是遵循高斯分布的随机变量<strong>(</strong>正态分布)。我不会在这里演示大数定律，这不是重点。我们来直观地理解一下。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/10.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们可以<strong>模拟</strong>一个伯努利mask，我们使用正态规律进行dropouts。但这有什么区别呢？什么都做，什么都不做。由于我们神经元的协同适应和/或预测能力，它不会改变这些方法与<strong>过拟合</strong>的相关性。但是，与之前的方法相比，它改变了训练<strong>阶段所需的</strong>执行时间。</p>
+<p>逻辑上，通过在每次迭代中丢弃带有dropout的神经元，那些在迭代中丢弃的神经元在反向传播期间不会被更新。它们并不存在。所以训练阶段被“放慢”了。另一方面，通过使用Gaussian
+Dropout方法，在每次迭代和每个训练样本中，所有的神经元都暴露出来。这就避免了减速。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/11.png" srcset="/img/loading.gif" lazyload></p>
+<p>在数学上，有一个高斯mask的乘法(例如以1为中心的伯努利定律的标准差<code>p(1-p)</code>)。通过在每次迭代中保持所有的神经元都是活跃的，从而随机地对其预测能力进行加权，从而模拟了dropout。这种方法的另一个实际优势集中在测试阶段，与没有dropout的模型相比，不需要进行任何修改。</p>
+<h1 id="pooling-dropout"><strong>Pooling Dropout</strong></h1>
+<p>本文的“难”理解部分结束了。剩下的更<strong>直觉</strong>的部分可以给我们<strong>更好的性能</strong>。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/12.png" srcset="/img/loading.gif" lazyload></p>
+<p>图像和特征图的问题是像素非常依赖于它们的邻居。简单地说，在一张猫的图片上，如果你取一个与它的外表相对应的像素，那么所有邻近的像素都将与同样的外表相对应。两者几乎没有区别。</p>
+<p>所以我们理解了标准Dropout方法的<strong>限制</strong>。我们甚至可以说它是低效的，它带来的唯一改变就是额外的计算时间。如果我们随机丢弃图像上的像素，那么几乎没有信息被删除。丢弃的像素几乎与它们的邻居相同。防止过拟合的性能很差。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/13.png" srcset="/img/loading.gif" lazyload></p>
+<p>为什么不利用<strong>CNNs</strong>中经常使用的的合适的层。例如最大池化层。最大池化层是一个过滤器，通过一个图片或(特征图)选择重叠区域的最大激活。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/14.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Max-Pooling Dropout</strong>是H. Wu和X.
+Gu提出的一种用于CNNs的Dropout方法。它在执行池化操作之前，直接将伯努利mask应用到<strong>最大池化层</strong>的内核上。直观地说，这允许对具有高激活的pooling结果最小化。这是一个限制某些神经元的高预测能力的很好的观点。在测试阶段，你可以根据出现的概率来确定前面方法的权重。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/15.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们以最大池化层为例，但同样可以对其他池化层进行操作。例如，对于<strong>平均池化层</strong>，我们可以在训练阶段以同样的方式应用一个dropout。然后在测试阶段，没有变化，因为它已经是一个加权平均值了。</p>
+<h1 id="spatial-dropout"><strong>Spatial Dropout</strong></h1>
+<p>对于CNNs，我们可以利用池化层。但是我们也可以更聪明地遵循J.
+Tompson等人提出的<strong>Spatial
+Dropout</strong>方法。他们提出用经典的dropout方法来解决这个问题，因为相邻像素高度相关。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/16.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们可以不去随机应用一个dropout在像素上，我们可以考虑把dropout应用在每个特征图上。如果我们以我们的猫为例，那么这就像从图像中移除红色通道并强迫它去总结图像中的蓝色和绿色通道。然后在下一次迭代中随机放置其他特征图。</p>
+<p>我不知道如何用数学正确地书写，使它易于理解。但是如果你理解了前面的方法，你就不会有任何问题。在训练阶段，对每个feature
+map应用Bernoulli
+mask，其丢弃概率为p。然后在测试阶段，没有dropout，只有一个概率为<code>1-p</code>的加权。</p>
+<h1 id="cutout"><strong>Cutout</strong></h1>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/17.png" srcset="/img/loading.gif" lazyload></p>
+<p>让我们进一步了解我们的方法，以克服相邻像素高度相关的事实。不是对每个特征图应用伯努利mask，我们可以在不同的区域中应用。这就是T.
+DeVries和G. W. Taylor提出的<strong>Cutout</strong>方法。</p>
+<p>最后以我们的猫图像为例：该方法可以通过对图像的隐藏区域进行泛化从而限制过拟合。我们最后看到的是猫的头丢弃掉的画面。这迫使CNN了解到可以描述猫的不太明显的属性。</p>
+<p>同样，在本节中没有数学。这种方法很大程度上依赖于我们的想象力：正方形、长方形、圆形，在所有的特征图上，一次在一个特征图上，或者可能在几个特征图上……这取决于你。?</p>
+<h1 id="max-drop"><strong>Max-Drop</strong></h1>
+<p>最后，为了结束关于CNNs的这一节，我必须指出，很明显，几个<strong>方法可以进行组合</strong>。当我们知道了不同的方法时，这就是使我们强大的原因：我们可以同时利用他们的好处。这是S.
+Park和N. Kwak提出的<strong>Max-Drop</strong>方法。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/19.png" srcset="/img/loading.gif" lazyload></p>
+<p>这种方法在某种程度上是化dropout和高斯dropout的混合。dropout是在<strong>最大池化层</strong>上执行的，但使用的是<strong>贝叶斯方法</strong>。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/20.png" srcset="/img/loading.gif" lazyload></p>
+<p>在他们的论文中，他们表明这种方法给出的结果与 Spatial
+Dropout一样有效。除此之外，在每次迭代中，所有的神经元都保持活跃，这限制了训练阶段的减速。这些结果都是用µ
+= 0.02和σ² = 0.05的数据得到的。</p>
+<h1 id="rnndrop"><strong>RNNDrop</strong></h1>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/21.png" srcset="/img/loading.gif" lazyload></p>
+<p>我们已经看到了一些DNNs和CNNs的dropout的方法。一些研究还试图找出哪些方法对递归神经网络是有效的。它们通常依赖于<strong>LSTMs</strong>，所以我将以RNNs为例。它可以推广到其他的RNNs。</p>
+<p>问题很简单：在RNN上应用dropout是危险的。RNN的目的是长期保存事件的记忆。但传统的dropout方法效率不高，因为它们会产生噪音，阻止这些模型长期保存记忆。下面这些方法可以<strong>长期保存记忆</strong>。</p>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/22.png" srcset="/img/loading.gif" lazyload></p>
+<p>T.
+Moon等人提出的<strong>RNNDrop</strong>是最简单的方法。一个伯努利mask只应用于隐藏的单元格状态。但是这个掩码从一个序列到另一个序列保持不变。这称为dropout的逐序列采样。它只是意味着在每个迭代中我们创建一个随机掩码。然后从一个序列到另一个序列，这个掩码保持不变。所以被丢弃的元素一直被丢弃而留下来的元素一直留着。所有的序列都是这样。</p>
+<h1 id="循环dropout"><strong>循环Dropout</strong></h1>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/23.png" srcset="/img/loading.gif" lazyload></p>
+<p>S.
+Semeniuta等人提出的<strong>循环Dropout</strong>是一个有趣的变体。单元格状态保持不变。dropout只应用于更新单元格状态的部分。所以在每次迭代中，伯努利的mask使一些元素不再对长期记忆有贡献。但是记忆并没有改变。</p>
+<h1 id="变分rnn-dropout"><strong>变分RNN dropout</strong></h1>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/24.png" srcset="/img/loading.gif" lazyload></p>
+<p>最后，简单而有效的，由Y. Gal和Z. Ghahramani介绍的<strong>RNN
+Dropout</strong>是在<strong>internal
+gates</strong>前的基于序列的Dropout的应用。这将导致LSTM在<strong>不同的点</strong>进行dropout。</p>
+<h1 id="打开我们的思路"><strong>打开我们的思路</strong></h1>
+<p>还有很多不同的dropout方法，但我们将在这里停下来。我发现非常有趣的是，<strong>Dropout方法不仅仅是正则化的方法</strong>。</p>
+<h2 id="monte-carlo-dropout"><strong>Monte Carlo Dropout</strong></h2>
+<p><img src="/2023/04/13/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E4%B8%80%E6%96%87%E7%9C%8B%E5%B0%BD12%E7%A7%8DDropout%E5%8F%8A%E5%85%B6%E5%8F%98%E4%BD%93/25.png" srcset="/img/loading.gif" lazyload></p>
+<p>Dropout方法也可以提供一个模型不确定性的<strong>指标</strong>。让我解释一下。对于相同的输入，经历了dropout的模型在每次迭代中会有一个<strong>不同的架构</strong>。这将导致输出中的<strong>方差</strong>。如果网络是相当广义的，并且协同适应是有限的，那么预测是在整个模型中分布的。这将导致在每次迭代中使用相同的输入时输出的方差降低。研究这个方差可以给出一个可以分配给模型的<strong>置信度</strong>的概念。这可以从Y.
+Gal和Z. Ghahramani的方法中看出。</p>
+<h2 id="模型压缩"><strong>模型压缩</strong></h2>
+<p>最后，直观地，通过随机应用dropouts，我们可以看到给定神经元对预测是否有效。根据这个观察结果，我们可以通过减少参数的数量来压缩模型，同时最大限度地降低性能的损耗。K.
+Neklyudov等人提出了利用变分dropout来剪枝DNNs和CNNs的方法。</p>
+<p>—END—</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">#深度学习</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【深度学习】一文看尽12种Dropout及其变体</div>
+      <div>https://qalxry.github.io/2023/04/13/【深度学习】一文看尽12种Dropout及其变体/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月13日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年4月13日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/16/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F%E3%80%91%E7%AE%97%E6%B3%95%E4%B8%8E%E4%BB%A3%E7%A0%81%E3%80%81%E5%AE%9E%E4%BE%8B%E8%AE%B2%E8%A7%A3/" title="【算法】【希尔排序】算法与代码、实例讲解">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【算法】【希尔排序】算法与代码、实例讲解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/09/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%AC%94%E8%AE%B0/" title="【深度学习】深度学习基础知识笔记">
+                        <span class="hidden-mobile">【深度学习】深度学习基础知识笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,891 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="[CEOI2015 Day1] 卡尔文球锦标赛 题目描述 译自 CEOI2015 Day1 T2「Calvinball championship」 一场卡尔文球比赛会有 \(n\) 名选手参与，他们的编号分别为 \(1\dots n\)，分为若干个非空的球队。我们规定球队之间按照每个球队编号最小的选手的编号排序，并且以从 1 开始的连续整数编号。 举个栗子，譬如 1 号选手自己成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【题解】【数位DP】P4798 卡尔文球锦标赛">
+<meta property="og:url" content="https://qalxry.github.io/2024/01/16/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90%E6%95%B0%E4%BD%8DDP%E3%80%91P4798-CEOI2015-Day1-%E5%8D%A1%E5%B0%94%E6%96%87%E7%90%83%E9%94%A6%E6%A0%87%E8%B5%9B/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="[CEOI2015 Day1] 卡尔文球锦标赛 题目描述 译自 CEOI2015 Day1 T2「Calvinball championship」 一场卡尔文球比赛会有 \(n\) 名选手参与，他们的编号分别为 \(1\dots n\)，分为若干个非空的球队。我们规定球队之间按照每个球队编号最小的选手的编号排序，并且以从 1 开始的连续整数编号。 举个栗子，譬如 1 号选手自己成">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/%5Cimg%5Cpiclib%5Cbg_sc08.jpg">
+<meta property="article:published_time" content="2024-01-16T05:35:55.000Z">
+<meta property="article:modified_time" content="2024-01-16T09:54:04.566Z">
+<meta property="article:author" content="しずり雪">
+<meta property="article:tag" content="DP">
+<meta property="article:tag" content="数位DP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/%5Cimg%5Cpiclib%5Cbg_sc08.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【题解】【数位DP】P4798 卡尔文球锦标赛 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/diary/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/%5Cimg%5Cpiclib%5Cbg_sc08.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【题解】【数位DP】P4798 卡尔文球锦标赛"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-16 13:35" pubdate>
+          2024年1月16日 下午 13:35
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【题解】【数位DP】P4798 卡尔文球锦标赛</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年1月16日 下午 17:54
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="ceoi2015-day1-卡尔文球锦标赛"><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4798">[CEOI2015 Day1]
+卡尔文球锦标赛</a></h2>
+<h2 id="题目描述">题目描述</h2>
+<p><strong>译自 <a target="_blank" rel="noopener" href="https://ceoi2015.fi.muni.cz/tasks.php">CEOI2015</a> Day1 T2「<a target="_blank" rel="noopener" href="https://ceoi2015.fi.muni.cz/day1/eng/day1task2-eng.pdf">Calvinball
+championship</a>」</strong></p>
+<p>一场卡尔文球比赛会有 <span class="math inline">\(n\)</span>
+名选手参与，他们的编号分别为 <span class="math inline">\(1\dots
+n\)</span>，分为若干个非空的球队。我们规定球队之间按照每个球队编号最小的选手的编号排序，并且以从
+1 开始的连续整数编号。</p>
+<p>举个栗子，譬如 1 号选手自己成一队，2, 3 和 5 号选手成一队，4 和 6
+号选手成一队。</p>
+<blockquote>
+<p>&gt; <span class="math inline">\(\ \texttt{1}\)</span><br>
+&gt; <span class="math inline">\(\ \texttt{2 3 5}\)</span><br>
+&gt; <span class="math inline">\(\ \texttt{4 6}\)</span></p>
+</blockquote>
+<p>那么 1 号选手的球队就是 1 号球队，2 号选手的球队就是 2 号球队，4
+号选手的球队就是 3 号球队。</p>
+<blockquote>
+<p>&gt; <span class="math inline">\(\ \texttt{1|1}\)</span><br>
+&gt; <span class="math inline">\(\ \texttt{2|2 3 5}\)</span><br>
+&gt; <span class="math inline">\(\ \texttt{3|4 6}\)</span></p>
+</blockquote>
+<p>每个人每天会选择不同的球队，我们可以在记录时省略选手的编号，仅记录每个位置对应选手所属球队编号的序列（上述例子为
+<code>1 2 2 3 2 3</code>），因为每天的选手是一样的。当可能的选择方案全部被使用过后，锦标赛就结束了。</p>
+<p>由于选择方案十分多，选择困难症患者纷纷表示力不从心。今年，我们决定根据记录的序列的字典序来选择方案。因此，第一天，所有人都在一个队
+<code>1 1 1 1 1</code>；第二天，所有人都与 6 号针锋相对
+<code>1 1 1 1 1 2</code>……在最后一天，所有人互相打响战争
+<code>1 2 3 4 5 6</code>。</p>
+<p>对于给定的球队记录，请你算出将会在未来的哪一天使用该记录。输出这个数字对
+<span class="math inline">\(1\ 000\ 007\)</span> 取余的结果。</p>
+<h2 id="输入格式">输入格式</h2>
+<p>第一行，一个正整数 <span class="math inline">\(n(1 \leq n \leq 10\
+000)\)</span>。</p>
+<p>第二行，<span class="math inline">\(n\)</span>
+个以空格分隔的正整数，表示任务所给的球队记录。</p>
+<h2 id="输出格式">输出格式</h2>
+<p>输出一个正整数，表示任务所给的球队记录将会被使用的天数对 <span class="math inline">\(1\ 000\ 007\)</span> 取余的结果。第一天的天数为
+1。</p>
+<h2 id="样例-1">样例 #1</h2>
+<h3 id="样例输入-1">样例输入 #1</h3>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<h3 id="样例输出-1">样例输出 #1</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">4<br></code></pre></td></tr></table></figure>
+<h2 id="提示">提示</h2>
+<p>请注意，三人比赛中可能的选择有 <code>1 1 1</code> <code>1 1 2</code>
+<code>1 2 1</code> <code>1 2 2</code> 和 <code>1 2 3</code>。</p>
+<h3 id="数据范围与提示">数据范围与提示</h3>
+<table>
+<thead>
+<tr class="header">
+<th>数据点</th>
+<th style="text-align: center;"><span class="math inline">\(1-3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(4-5\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(6-7\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(8-10\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(n\le\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(14\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(100\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\
+000\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(10\
+000\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>时间限制 1.00s</p>
+<p>内存限制 62.50MB</p>
+<hr>
+<h2 id="题解">题解</h2>
+<p>把每个人的球队编号看作是一个数位，搜索满足要求的所有数。因此，我们可以用数位
+DP 来解决这个问题。</p>
+<h2 id="分题解记忆化搜索的数位dp">66分题解：记忆化搜索的数位DP</h2>
+<p>用递归很快就能写出来，但是肯定会爆MLE。</p>
+<p>思路和数位DP模板的一样，也有 <span class="math inline">\(limit\)</span> 来指示当前位是否有上限。</p>
+<p><span class="math inline">\(dp[pos][preMax]\)</span> 表示当前位为
+<span class="math inline">\(pos\)</span>，前pos位（包括当前的第pos位）的最大值为
+<span class="math inline">\(preMax\)</span> 的方案数。这个是没有 <span class="math inline">\(limit\)</span> 的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">10007</span>;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MOD 1000007</span><br><span class="hljs-type">int</span> n, a[N], dp[N][N];  <span class="hljs-comment">// dp[pos][preMax] 表示当前位为 pos，前 pos 位（包括当前的第 pos 位）的最大值为 preMax 的方案数</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> pos, <span class="hljs-type">int</span> preMax, <span class="hljs-type">bool</span> limit)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (pos == n) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span> (!limit &amp;&amp; dp[pos][preMax]) <span class="hljs-keyword">return</span> dp[pos][preMax];  <span class="hljs-comment">// 由于 dp[pos][preMax] 的值至少为 1，所以不用初始化为 -1，直接判断是否为 0 即可</span><br>    <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">int</span> up = limit ? a[pos + <span class="hljs-number">1</span>] : preMax + <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= up; i++)<br>        ans = (ans + <span class="hljs-built_in">dfs</span>(pos + <span class="hljs-number">1</span>, <span class="hljs-built_in">max</span>(preMax, i), limit &amp;&amp; i == up)) % MOD;<br>    <span class="hljs-keyword">if</span> (!limit) dp[pos][preMax] = ans;<br>    <span class="hljs-keyword">return</span> ans;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) cin &gt;&gt; a[i];<br>    cout &lt;&lt; <span class="hljs-built_in">dfs</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="分题解使用迭代的数位dp-自滚动数组优化空间">100分题解：使用迭代的数位DP
++ 自滚动数组优化空间</h2>
+<p>我们可以先写一个迭代的版本，然后再进行优化。</p>
+<p>通过对 <span class="math inline">\(dp[pos][preMax]\)</span>
+的分析，我们可以发现它有 <span class="math inline">\(preMax+1\)</span>
+个子节点。</p>
+<p>所有子情况，如图所示：</p>
+<ul>
+<li><p><span class="math inline">\(dp[pos+1][preMax]\)</span>
+图中节点的所有的左子节点（包括中间的子节点）</p></li>
+<li><p><span class="math inline">\(dp[pos+1][preMax+1]\)</span>
+图中节点的最右边的子节点</p></li>
+</ul>
+<p>转移方程为：</p>
+<p><span class="math display">\[dp[pos][preMax] = dp[pos+1][preMax]
+\times preMax + dp[pos+1][preMax+1]\]</span></p>
+<figure>
+<img src="/2024/01/16/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90%E6%95%B0%E4%BD%8DDP%E3%80%91P4798-CEOI2015-Day1-%E5%8D%A1%E5%B0%94%E6%96%87%E7%90%83%E9%94%A6%E6%A0%87%E8%B5%9B/dp.svg" srcset="/img/loading.gif" lazyload alt="n=4的DP解空间树">
+<figcaption aria-hidden="true">n=4的DP解空间树</figcaption>
+</figure>
+<p>我们再来看看数值受到上界限制的情况，</p>
+<p>每个 <span class="math inline">\(limited\)</span>
+为真的节点，其子节点可以分为两类：</p>
+<ul>
+<li><p><span class="math inline">\(dp[pos+1][preMax+1]\)</span></p></li>
+<li><p><span class="math inline">\(limited[pos+1]\)</span></p></li>
+</ul>
+<p>如图所示，对于受限制的节点，其方案数递推方程为：</p>
+<p><span class="math display">\[limited[pos]=dp[pos+1][preMax]\times
+(A[pos+1]-1) + limited[pos+1]\]</span></p>
+<figure>
+<img src="/2024/01/16/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90%E6%95%B0%E4%BD%8DDP%E3%80%91P4798-CEOI2015-Day1-%E5%8D%A1%E5%B0%94%E6%96%87%E7%90%83%E9%94%A6%E6%A0%87%E8%B5%9B/limited.svg" srcset="/img/loading.gif" lazyload alt="limited[pos] 的子节点情况，编号序列为 A=\{1,2,3,4,1,1,2\}">
+<figcaption aria-hidden="true"><span class="math inline">\(limited[pos]\)</span> 的子节点情况，编号序列为
+<span class="math inline">\(A=\{1,2,3,4,1,1,2\}\)</span></figcaption>
+</figure>
+<p>根据 <span class="math inline">\(limited[pos]\)</span> 和 <span class="math inline">\(dp[pos][preMax]\)</span>
+的递推方程，我们可以写出迭代的版本：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;<br><span class="hljs-keyword">typedef</span> <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ull;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">10007</span>;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MOD 1000007</span><br><span class="hljs-type">int</span> n, a[N], maxn[N], dp[N][N], limited[N];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">iterate</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    limited[n] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) dp[n][i] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> pos = n - <span class="hljs-number">1</span>; pos &gt;= <span class="hljs-number">1</span>; pos--) &#123;<br>        <span class="hljs-comment">// 计算limited部分</span><br>        limited[pos] = (<span class="hljs-number">1ll</span> * dp[pos + <span class="hljs-number">1</span>][maxn[pos]] * (a[pos + <span class="hljs-number">1</span>] - <span class="hljs-number">1</span>)) % MOD + limited[pos + <span class="hljs-number">1</span>];<br>        limited[pos] %= MOD;<br>        <span class="hljs-comment">// 计算dp部分</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> preMax = <span class="hljs-number">1</span>; preMax &lt;= pos; preMax++) &#123;<br>            dp[pos][preMax] = (<span class="hljs-number">1ll</span> * dp[pos+<span class="hljs-number">1</span>][preMax] * preMax + dp[pos+<span class="hljs-number">1</span>][preMax+<span class="hljs-number">1</span>]) % MOD;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> limited[<span class="hljs-number">1</span>];<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-literal">false</span>);<br>    cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);<br>    cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;<br>        cin &gt;&gt; a[i];<br>        maxn[i] = <span class="hljs-built_in">max</span>(maxn[i - <span class="hljs-number">1</span>], a[i]);<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-built_in">iterate</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样做空间复杂度为 <span class="math inline">\(O(n^2)\)</span>，显然超出了内存限制。所以用滚动数组优化一下。</p>
+<p>这也是为什么我们要先写迭代版本，因为dfs必须要用到 <span class="math inline">\(dp[pos][preMax]\)</span>
+的所有值，所以无法优化空间。（或许用bfs可以优化？）</p>
+<p>下是最终的滚动数组优化版本，非常简洁。</p>
+<p>时间复杂度为 <span class="math inline">\(O(n^2)\)</span>，空间复杂度为 <span class="math inline">\(O(n)\)</span>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">10007</span>, MOD = <span class="hljs-number">1000007</span>;<br><span class="hljs-type">int</span> n, a[N], maxn[N], dp[N];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">iterate</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> limited = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">if</span> (n == <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> limited;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) dp[i] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> pos = n - <span class="hljs-number">1</span>; pos &gt;= <span class="hljs-number">1</span>; pos--) &#123;<br>        limited = ((<span class="hljs-number">1ll</span> * dp[maxn[pos]] * (a[pos + <span class="hljs-number">1</span>] - <span class="hljs-number">1</span>)) % MOD + limited) % MOD;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= pos; i++) dp[i] = (<span class="hljs-number">1ll</span> * dp[i] * i + dp[i + <span class="hljs-number">1</span>]) % MOD;<br>    &#125;<br>    <span class="hljs-keyword">return</span> limited;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-literal">false</span>);<br>    cout.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);<br>    cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;<br>        cin &gt;&gt; a[i];<br>        maxn[i] = <span class="hljs-built_in">max</span>(maxn[i - <span class="hljs-number">1</span>], a[i]);<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-built_in">iterate</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>效率非常好，时间 384ms，内存 680KB。全场最快好吧。 :D</p>
+<figure>
+<img src="/2024/01/16/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90%E6%95%B0%E4%BD%8DDP%E3%80%91P4798-CEOI2015-Day1-%E5%8D%A1%E5%B0%94%E6%96%87%E7%90%83%E9%94%A6%E6%A0%87%E8%B5%9B/image.png" srcset="/img/loading.gif" lazyload alt="轻松干到最优解第一">
+<figcaption aria-hidden="true">轻松干到最优解第一</figcaption>
+</figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/DP/">#DP</a>
+      
+        <a href="/tags/%E6%95%B0%E4%BD%8DDP/">#数位DP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【题解】【数位DP】P4798 卡尔文球锦标赛</div>
+      <div>https://qalxry.github.io/2024/01/16/【题解】【数位DP】P4798-CEOI2015-Day1-卡尔文球锦标赛/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月16日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年1月16日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/11/19/%E3%80%90ToDo%E3%80%91%E6%9C%AA%E6%9D%A5%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/" title="【ToDo】未来学习计划">
+                        <span class="hidden-mobile">【ToDo】未来学习计划</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

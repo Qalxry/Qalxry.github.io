@@ -1,0 +1,901 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="【C++】【Crow】我在使用Cmake构建Crow项目时遇到的3个问题 目录 ​ 背景：Windows ​ 前言：GCC之罪 ​ 问题一：&#39;POSIX_SEM_VALUE_MAX&#39; was not declared in this scope ​ 问题二：fatal error: crow.h: No such file or directory ​ 问题三：Asio缺少Wind">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C++】【Crow】我在使用Cmake构建Crow项目时遇到的3个问题">
+<meta property="og:url" content="https://qalxry.github.io/2023/08/23/%E3%80%90C++%E3%80%91%E3%80%90Crow%E3%80%91%E6%88%91%E5%9C%A8%E4%BD%BF%E7%94%A8Cmake%E6%9E%84%E5%BB%BACrow%E9%A1%B9%E7%9B%AE%E6%97%B6%E9%81%87%E5%88%B0%E7%9A%843%E4%B8%AA%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="【C++】【Crow】我在使用Cmake构建Crow项目时遇到的3个问题 目录 ​ 背景：Windows ​ 前言：GCC之罪 ​ 问题一：&#39;POSIX_SEM_VALUE_MAX&#39; was not declared in this scope ​ 问题二：fatal error: crow.h: No such file or directory ​ 问题三：Asio缺少Wind">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="article:published_time" content="2023-08-23T14:30:10.000Z">
+<meta property="article:modified_time" content="2023-08-23T14:51:18.690Z">
+<meta property="article:author" content="しずり雪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【C++】【Crow】我在使用Cmake构建Crow项目时遇到的3个问题 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/diary/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【C++】【Crow】我在使用Cmake构建Crow项目时遇到的3个问题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-23 22:30" pubdate>
+          2023年8月23日 晚上 22:30
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          30k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          124 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【C++】【Crow】我在使用Cmake构建Crow项目时遇到的3个问题</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年8月23日 晚上 22:51
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>【C++】【Crow】我在使用Cmake构建Crow项目时遇到的3个问题</p>
+<h3 id="目录">目录</h3>
+<p>​ <a href="#背景windows">背景：Windows</a></p>
+<p>​ <a href="#前言gcc之罪">前言：GCC之罪</a></p>
+<p>​ <a href="#问题一_posix_sem_value_max-was-not-declared-in-this-scope">问题一：'POSIX_SEM_VALUE_MAX'
+was not declared in this scope</a></p>
+<p>​ <a href="#问题二fatal-error-crow.h-no-such-file-or-directory">问题二：fatal
+error: crow.h: No such file or directory</a></p>
+<p>​ <a href="#问题三asio缺少windows相关系统库文件链接">问题三：Asio缺少Windows相关系统库文件链接</a></p>
+<p>​ <a href="#后续">后续</a></p>
+<h2 id="背景windows">背景：Windows</h2>
+<p>我通过Vcpkg安装了Crow：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake">vcpkg <span class="hljs-keyword">install</span> crow:x64-windows-static<br>vcpkg <span class="hljs-keyword">install</span> crow:x64-windows<br></code></pre></td></tr></table></figure>
+<p>但是在我使用Crow构建最简单的测试程序时，却不太顺利，不是想象中的即装即用。</p>
+<p>原因是我<strong>使用了GCC</strong>😭！</p>
+<p>看来Windows环境下还是尽可能选择MSVC编译为好。不过我经过一番研究还是成功地使用了GCC进行编译。</p>
+<h2 id="前言gcc之罪">前言：GCC之罪</h2>
+<p>操作系统：Windows 11 22H2</p>
+<p>编译器：GCC 13.0 x86_64-w64-mingw32</p>
+<p>这是最新的GCC 13，其MinGW工具链来自：<a target="_blank" rel="noopener" href="https://github.com/niXman/mingw-builds-binaries/releases">Github</a>
+上的x86_64-13.1.0-release-win32-seh-ucrt-rt_v11-rev1.7z</p>
+<p>这是我的源码目录结构：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">Mode                 LastWriteTime         Length Name<br><span class="hljs-params">----</span>                 <span class="hljs-params">-------------</span>         <span class="hljs-params">------</span> <span class="hljs-params">----</span><br>d<span class="hljs-params">----</span>           2023/8/23    21<span class="hljs-function">:25</span>                <span class="hljs-string">.vscode</span><br>d<span class="hljs-params">----</span>           2023/8/23    21<span class="hljs-function">:31</span>                build<br>d<span class="hljs-params">----</span>           2023/8/23    21<span class="hljs-function">:13</span>                src<br>-a<span class="hljs-params">---</span>           2023/8/23    21<span class="hljs-function">:31</span>            994 CMakelists.txt<br></code></pre></td></tr></table></figure>
+<p>这是src中的main.cpp：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;crow.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    crow::SimpleApp app;<br>    <span class="hljs-built_in">CROW_ROUTE</span>(app, <span class="hljs-string">&quot;/&quot;</span>)<br>    ([]() &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Hello world&quot;</span>;<br>    &#125;);<br>    app.<span class="hljs-built_in">port</span>(<span class="hljs-number">18080</span>).<span class="hljs-built_in">multithreaded</span>().<span class="hljs-built_in">run</span>();<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;pause&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这是我的CMakelist.txt：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.17</span>)<br><span class="hljs-keyword">set</span>(PROJECT_NAME HelloWorld) <br><span class="hljs-keyword">set</span>(CMAKE_TOOLCHAIN_FILE <span class="hljs-string">&quot;C:/C_CPP/Library/vcpkg/scripts/buildsystems/vcpkg.cmake&quot;</span>) <span class="hljs-comment"># set vcpkg toolchain file path</span><br><span class="hljs-keyword">set</span>(VCPKG_TARGET_TRIPLET <span class="hljs-string">&quot;x64-windows&quot;</span>)<br><br><span class="hljs-keyword">project</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>) <span class="hljs-comment"># set project name</span><br><span class="hljs-keyword">add_executable</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> src/main.cpp) <span class="hljs-comment"># add executable target named $&#123;PROJECT_NAME&#125;</span><br><span class="hljs-keyword">target_compile_features</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> PRIVATE cxx_std_20)  <span class="hljs-comment"># enable C++20 standard</span><br><span class="hljs-keyword">set_target_properties</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> PROPERTIES CXX_EXTENSIONS <span class="hljs-keyword">OFF</span>) <span class="hljs-comment"># disable compiler extensions</span><br><br><span class="hljs-comment"># 导入Crow库</span><br><span class="hljs-keyword">find_package</span>(Crow CONFIG REQUIRED)<br><span class="hljs-keyword">target_link_libraries</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> Crow::Crow)<br></code></pre></td></tr></table></figure>
+<h2 id="问题一_posix_sem_value_max-was-not-declared-in-this-scope">问题一：'_POSIX_SEM_VALUE_MAX'
+was not declared in this scope</h2>
+<p>CMake输出：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs gradle">[main] 正在生成文件夹: vscode_vcpkg_cmake_copy <br>[build] 正在启动生成<br>[proc] 执行命令: <span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --build d:<span class="hljs-regexp">/Code/</span>Cpp<span class="hljs-regexp">/ExerciseCode/</span>vscode_vcpkg_cmake_copy/build --config Debug --target all -j <span class="hljs-number">22</span> --<br>[build] [ <span class="hljs-number">50</span>%] Building CXX object CMakeFiles<span class="hljs-regexp">/HelloWorld.dir/</span>src/main.cpp.obj<br>[build] &lt;command-line&gt;: warning: ISO C++<span class="hljs-number">11</span> requires whitespace after the macro name<br>[build] In <span class="hljs-keyword">file</span> included <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Tookit<span class="hljs-regexp">/mingw64_13h/</span>lib<span class="hljs-regexp">/gcc/</span>x86_64-w64-mingw32<span class="hljs-regexp">/13.1.0/i</span>nclude<span class="hljs-regexp">/c++/</span>semaphore:<span class="hljs-number">37</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Tookit<span class="hljs-regexp">/mingw64_13h/</span>lib<span class="hljs-regexp">/gcc/</span>x86_64-w64-mingw32<span class="hljs-regexp">/13.1.0/i</span>nclude<span class="hljs-regexp">/c++/</span>stop_token:<span class="hljs-number">39</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Tookit<span class="hljs-regexp">/mingw64_13h/</span>lib<span class="hljs-regexp">/gcc/</span>x86_64-w64-mingw32<span class="hljs-regexp">/13.1.0/i</span>nclude<span class="hljs-regexp">/c++/</span>condition_variable:<span class="hljs-number">49</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Tookit<span class="hljs-regexp">/mingw64_13h/</span>lib<span class="hljs-regexp">/gcc/</span>x86_64-w64-mingw32<span class="hljs-regexp">/13.1.0/i</span>nclude<span class="hljs-regexp">/c++/mu</span>tex:<span class="hljs-number">48</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>system<span class="hljs-regexp">/detail/mu</span>tex.hpp:<span class="hljs-number">58</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>system<span class="hljs-regexp">/detail/</span>error_category_impl.hpp:<span class="hljs-number">101</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>system/error_category.hpp:<span class="hljs-number">11</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>system/error_code.hpp:<span class="hljs-number">14</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/detail/</span>throw_error.hpp:<span class="hljs-number">20</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/detail/im</span>pl/win_tss_ptr.ipp:<span class="hljs-number">22</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/detail/</span>win_tss_ptr.hpp:<span class="hljs-number">76</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/detail/</span>tss_ptr.hpp:<span class="hljs-number">25</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/detail/</span>call_stack.hpp:<span class="hljs-number">20</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/detail/</span>thread_context.hpp:<span class="hljs-number">20</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/detail/</span>recycling_allocator.hpp:<span class="hljs-number">20</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/detail/</span>handler_alloc_helpers.hpp:<span class="hljs-number">21</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/detail/</span>executor_function.hpp:<span class="hljs-number">19</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio<span class="hljs-regexp">/execution/</span>any_executor.hpp:<span class="hljs-number">24</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio/execution.hpp:<span class="hljs-number">19</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio/any_completion_executor.hpp:<span class="hljs-number">22</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/boost/</span>asio.hpp:<span class="hljs-number">20</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude<span class="hljs-regexp">/crow/</span>socket_adaptors.h:<span class="hljs-number">2</span>,<br>[build]                  <span class="hljs-keyword">from</span> C:<span class="hljs-regexp">/C_CPP/</span>Library<span class="hljs-regexp">/vcpkg/i</span>nstalled<span class="hljs-regexp">/x64-windows/i</span>nclude/crow.h:<span class="hljs-number">7</span>,<br>[build]                  <span class="hljs-keyword">from</span> D:\Code\Cpp\ExerciseCode\vscode_vcpkg_cmake_copy\src\main.cpp:<span class="hljs-number">3</span>:<br>[build] C:<span class="hljs-regexp">/C_CPP/</span>Tookit<span class="hljs-regexp">/mingw64_13h/</span>lib<span class="hljs-regexp">/gcc/</span>x86_64-w64-mingw32<span class="hljs-regexp">/13.1.0/i</span>nclude<span class="hljs-regexp">/c++/</span>bits/semaphore_base.h:<span class="hljs-number">59</span>:<span class="hljs-number">41</span>: error: <span class="hljs-string">&#x27;_POSIX_SEM_VALUE_MAX&#x27;</span> was not declared in <span class="hljs-keyword">this</span> scope<br>[build]    <span class="hljs-number">59</span> |     <span class="hljs-keyword">static</span> constexpr ptrdiff_t _S_max = _POSIX_SEM_VALUE_MAX;<br>[build]       |                                         ^~~~~~~~~~~~~~~~~~~~<br>[build] mingw32-make.exe[<span class="hljs-number">2</span>]: *** [CMakeFiles\HelloWorld.dir\build.make:<span class="hljs-number">76</span>: CMakeFiles<span class="hljs-regexp">/HelloWorld.dir/</span>src/main.cpp.obj] Error <span class="hljs-number">1</span><br>[build] mingw32-make.exe[<span class="hljs-number">1</span>]: *** [CMakeFiles\Makefile2:<span class="hljs-number">82</span>: CMakeFiles<span class="hljs-regexp">/HelloWorld.dir/</span>all] Error <span class="hljs-number">2</span><br>[build] mingw32-make.exe: *** [Makefile:<span class="hljs-number">90</span>: all] Error <span class="hljs-number">2</span><br>[proc] 命令“<span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --build d:<span class="hljs-regexp">/Code/</span>Cpp<span class="hljs-regexp">/ExerciseCode/</span>vscode_vcpkg_cmake_copy/build --config Debug --target all -j <span class="hljs-number">22</span> --”已退出，代码为 <span class="hljs-number">2</span><br>[driver] 生成完毕: <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">07.788</span><br>[build] 生成已完成，退出代码为 <span class="hljs-number">2</span><br>[cpptools] 生成的生成配置不包含活动生成配置。对 CMAKE_BUILD_TYPE 使用 <span class="hljs-string">&quot;&quot;</span> 而不是 <span class="hljs-string">&quot;Debug&quot;</span>，以确保可以找到 IntelliSense 配置<br></code></pre></td></tr></table></figure>
+<p>这好像是由于这个GCC的C++20实现有点BUG，将<code>cxx_std_20</code>
+改为<code>cxx_std_17</code> C++17及以下即可。
+询问Claude得到回复如下：（虽然不确定是否正确）</p>
+<blockquote>
+<p>这个错误提示在Windows环境下编译时,不能找到<code>_POSIX_SEM_VALUE_MAX</code>的定义。</p>
+<p><code>_POSIX_SEM_VALUE_MAX</code>是POSIX系统中的一个宏,用于定义semaphore的最大计数值。但是在Windows环境中,并没有这个定义。</p>
+<p>很可能是C++标准库的代码原本基于POSIX平台编写,移植到Windows的时候没有适配导致的错误。</p>
+<p>要解决这个问题,有以下几种方法:</p>
+<ol type="1">
+<li><p>在Windows环境下,不要直接使用<code>_POSIX_SEM_VALUE_MAX</code>,可以定义一个兼容值。修改C++标准库实现,根据平台宏对<code>_POSIX_SEM_VALUE_MAX</code>进行隔离。</p></li>
+<li><p>在编译命令中定义<code>_POSIX_SEM_VALUE_MAX</code>,使其成为一个空宏。</p></li>
+<li><p>尝试更新编译器或标准库版本,使用更兼容的实现。</p></li>
+<li><p>根据编译器文档报告此兼容性问题。</p></li>
+<li><p>联系原库维护者进行跨平台适配。</p></li>
+<li><p>隔离使用非兼容接口的代码,避免污染Windows环境。</p></li>
+<li><p>考虑用更通用的线程同步原语替换semaphore。</p></li>
+</ol>
+<p>总之,这主要是一个跨平台兼容性问题。需要区分平台适配相关接口,或者更新编译器和库的版本来获得修复。</p>
+</blockquote>
+<h2 id="问题二fatal-error-crow.h-no-such-file-or-directory">问题二：fatal
+error: crow.h: No such file or directory</h2>
+<p>CMake输出信息：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs cmake">main] 正在生成文件夹: vscode_vcpkg_cmake_copy <br>[build] 正在启动生成<br>[proc] 执行命令: <span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --build d:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build --config Release --<span class="hljs-keyword">target</span> all -j <span class="hljs-number">22</span> --<br>[build] [ <span class="hljs-number">50</span>%] Building CXX object CMakeFiles/HelloWorld.dir/src/main.cpp.obj<br>[build] D:\Code\Cpp\ExerciseCode\vscode_vcpkg_cmake_copy\src\main.cpp:<span class="hljs-number">3</span>:<span class="hljs-number">10</span>: fatal error: crow.h: No such <span class="hljs-keyword">file</span> <span class="hljs-keyword">or</span> directory<br>[build]     <span class="hljs-number">3</span> | <span class="hljs-comment">#include &lt;crow.h&gt;</span><br>[build]       |          ^~~~~~~~<br>[build] compilation terminated.<br>[build] mingw32-make.exe[<span class="hljs-number">2</span>]: *** [CMakeFiles\HelloWorld.dir\build.make:<span class="hljs-number">75</span>: CMakeFiles/HelloWorld.dir/src/main.cpp.obj] Error <span class="hljs-number">1</span><br>[build] mingw32-make.exe[<span class="hljs-number">1</span>]: *** [CMakeFiles\Makefile2:<span class="hljs-number">82</span>: CMakeFiles/HelloWorld.dir/all] Error <span class="hljs-number">2</span><br>[build] mingw32-make.exe: *** [Makefile:<span class="hljs-number">90</span>: all] Error <span class="hljs-number">2</span><br>[proc] 命令“<span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --build d:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build --config Release --<span class="hljs-keyword">target</span> all -j <span class="hljs-number">22</span> --”已退出，代码为 <span class="hljs-number">2</span><br>[driver] 生成完毕: <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">00.543</span><br>[build] 生成已完成，退出代码为 <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<p>这个是有点概率出现，不太好复现，清理一下build文件夹，重启一下VSCode似乎就好了。未知原因。</p>
+<h2 id="问题三asio缺少windows相关系统库文件链接">问题三：Asio缺少Windows相关系统库文件链接</h2>
+<p>CMake输出信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><code class="hljs bash">[main] 正在生成文件夹: vscode_vcpkg_cmake_copy <br>[main] 缺少包含 CMake 缓存的文件夹。将重新生成缓存。<br>[main] 正在配置项目: vscode_vcpkg_cmake_copy <br>[proc] 执行命令: <span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_C_COMPILER:FILEPATH=C:\C_CPP\Tookit\mingw64_13h\bin\gcc.exe -DCMAKE_CXX_COMPILER:FILEPATH=C:\C_CPP\Tookit\mingw64_13h\bin\g++.exe -SD:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy -Bd:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build -G <span class="hljs-string">&quot;MinGW Makefiles&quot;</span><br>[cmake] Not searching <span class="hljs-keyword">for</span> unused variables given on the <span class="hljs-built_in">command</span> line.<br>[cmake] -- The C compiler identification is GNU 13.1.0<br>[cmake] -- The CXX compiler identification is GNU 13.1.0<br>[cmake] -- Detecting C compiler ABI info<br>[cmake] -- Detecting C compiler ABI info - <span class="hljs-keyword">done</span><br>[cmake] -- Check <span class="hljs-keyword">for</span> working C compiler: C:/C_CPP/Tookit/mingw64_13h/bin/gcc.exe - skipped<br>[cmake] -- Detecting C compile features<br>[cmake] -- Detecting C compile features - <span class="hljs-keyword">done</span><br>[cmake] -- Detecting CXX compiler ABI info<br>[cmake] -- Detecting CXX compiler ABI info - <span class="hljs-keyword">done</span><br>[cmake] -- Check <span class="hljs-keyword">for</span> working CXX compiler: C:/C_CPP/Tookit/mingw64_13h/bin/g++.exe - skipped<br>[cmake] -- Detecting CXX compile features<br>[cmake] -- Detecting CXX compile features - <span class="hljs-keyword">done</span><br>[cmake] -- Found Boost: C:/C_CPP/Library/vcpkg/installed/x64-windows/include (found suitable version <span class="hljs-string">&quot;1.82.0&quot;</span>, minimum required is <span class="hljs-string">&quot;1.64&quot;</span>) found components: system date_time <br>[cmake] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD<br>[cmake] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed<br>[cmake] -- Looking <span class="hljs-keyword">for</span> pthread_create <span class="hljs-keyword">in</span> pthreads<br>[cmake] -- Looking <span class="hljs-keyword">for</span> pthread_create <span class="hljs-keyword">in</span> pthreads - not found<br>[cmake] -- Looking <span class="hljs-keyword">for</span> pthread_create <span class="hljs-keyword">in</span> pthread<br>[cmake] -- Looking <span class="hljs-keyword">for</span> pthread_create <span class="hljs-keyword">in</span> pthread - found<br>[cmake] -- Found Threads: TRUE  <br>[cmake] -- Configuring <span class="hljs-keyword">done</span> (7.6s)<br>[cmake] -- Generating <span class="hljs-keyword">done</span> (0.0s)<br>[cmake] -- Build files have been written to: D:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build<br>[build] 正在启动生成<br>[proc] 执行命令: <span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --build d:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build --config Debug --target all -j 22 --<br>[build] [ 50%] Building CXX object CMakeFiles/HelloWorld.<span class="hljs-built_in">dir</span>/src/main.cpp.obj<br>[build] &lt;command-line&gt;: warning: ISO C++11 requires whitespace after the macro name<br>[build] [100%] Linking CXX executable HelloWorld.exe<br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::winsock_init_base::startup(boost::asio::detail::winsock_init_base::data&amp;, unsigned char, unsigned char)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/winsock_init.ipp:39: undefined reference to `__imp_WSAStartup&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::winsock_init_base::cleanup(boost::asio::detail::winsock_init_base::data&amp;)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/winsock_init.ipp:56: undefined reference to `__imp_WSACleanup&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::socket_ops::clear_last_error()<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:73: undefined reference to `__imp_WSASetLastError&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::socket_ops::get_last_error(boost::system::error_code&amp;, bool)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:91: undefined reference to `__imp_WSAGetLastError&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::socket_ops::complete_iocp_accept(unsigned long long, void*, unsigned long, void*, unsigned long long*, unsigned long long, boost::system::error_code&amp;)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:206: undefined reference to `GetAcceptExSockaddrs&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::socket_ops::close(unsigned long long, unsigned char&amp;, bool, boost::system::error_code&amp;)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:321: undefined reference to `__imp_closesocket&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:339: undefined reference to `__imp_ioctlsocket<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:353: undefined reference to `__imp_closesocket&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::socket_ops::shutdown(unsigned long long, int, boost::system::error_code&amp;)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:466: undefined reference to `__imp_shutdown&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::socket_ops::listen(unsigned long long, int, boost::system::error_code&amp;)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:694: undefined reference to `__imp_listen&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::socket_ops::send(unsigned long long, _WSABUF const*, unsigned long long, int, boost::system::error_code&amp;)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:1381: undefined reference to `__imp_WSASend&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::socket_ops::socket(int, int, int, boost::system::error_code&amp;)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:1817: undefined reference to `__imp_WSASocketW&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:1828: undefined reference to `__imp_setsockopt<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `boost::asio::detail::socket_ops::poll_write(unsigned long long, unsigned char, int, boost::system::error_code&amp;)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:2295: undefined reference to `__imp_select<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `boost::asio::detail::socket_ops::inet_ntop(int, void const*, char*, unsigned long long, unsigned long, boost::system::error_code&amp;)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:2497: undefined reference to `__imp_WSAAddressToStringA<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `boost::asio::detail::socket_ops::inet_pton(int, char const*, void*, unsigned long*, boost::system::error_code&amp;)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:2711: undefined reference to `__imp_WSAStringToAddressA<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `boost::asio::detail::socket_ops::network_to_host_long(unsigned long)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:3932: undefined reference to `__imp_ntohl<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `boost::asio::detail::socket_ops::host_to_network_long(unsigned long)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:3947: undefined reference to `__imp_htonl<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `boost::asio::detail::socket_ops::network_to_host_short(unsigned short)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:3959: undefined reference to `__imp_ntohs<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `boost::asio::detail::socket_ops::host_to_network_short(unsigned short)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:3972: undefined reference to `__imp_htons<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `boost::asio::detail::win_iocp_socket_service_base::start_send_op(boost::asio::detail::win_iocp_socket_service_base::base_implementation_type&amp;, _WSABUF*, unsigned long long, int, bool, boost::asio::detail::win_iocp_operation*)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:400: undefined reference to `__imp_WSASend<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:402: undefined reference to `__imp_WSAGetLastError&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::win_iocp_socket_service_base::start_receive_op(boost::asio::detail::win_iocp_socket_service_base::base_implementation_type&amp;, _WSABUF*, unsigned long long, int, bool, boost::asio::detail::win_iocp_operation*)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:454: undefined reference to `__imp_WSARecv&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:457: undefined reference to `__imp_WSAGetLastError<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `boost::asio::detail::win_iocp_socket_service_base::start_accept_op(boost::asio::detail::win_iocp_socket_service_base::base_implementation_type&amp;, bool, boost::asio::detail::socket_holder&amp;, int, int, int, void*, unsigned long, boost::asio::detail::win_iocp_operation*)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:538: undefined reference to `AcceptEx<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:540: undefined reference to `__imp_WSAGetLastError&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::win_iocp_socket_service_base::restart_accept_op(unsigned long long, boost::asio::detail::socket_holder&amp;, int, int, int, void*, unsigned long, long*, boost::asio::detail::win_iocp_operation*)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:569: undefined reference to `AcceptEx&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:571: undefined reference to `__imp_WSAGetLastError<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `int boost::asio::detail::socket_ops::call_bind&lt;int&gt;(int boost::asio::detail::socket_ops::msghdr::*, unsigned long long, void const*, unsigned long long)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:283: undefined reference to `__imp_bind<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `int boost::asio::detail::socket_ops::call_setsockopt&lt;int&gt;(int boost::asio::detail::socket_ops::msghdr::*, unsigned long long, int, int, void const*, unsigned long long)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:1862: undefined reference to `__imp_setsockopt<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `int boost::asio::detail::socket_ops::call_getsockopt&lt;int&gt;(int boost::asio::detail::socket_ops::msghdr::*, unsigned long long, int, int, void*, unsigned long long*)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:1949: undefined reference to `__imp_getsockopt<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `int boost::asio::detail::socket_ops::call_getpeername&lt;int&gt;(int boost::asio::detail::socket_ops::msghdr::*, unsigned long long, void*, unsigned long long*)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:2054: undefined reference to `__imp_getpeername<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.dir/objects.a(main.cpp.obj): in function `int boost::asio::detail::socket_ops::call_getsockname&lt;int&gt;(int boost::asio::detail::socket_ops::msghdr::*, unsigned long long, void*, unsigned long long*)&#x27;</span>:<br>[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:2107: undefined reference to `__imp_getsockname<span class="hljs-string">&#x27;</span><br><span class="hljs-string">[build] collect2.exe: error: ld returned 1 exit status</span><br><span class="hljs-string">[build] mingw32-make.exe[2]: *** [CMakeFiles\HelloWorld.dir\build.make:101: HelloWorld.exe] Error 1</span><br><span class="hljs-string">[build] mingw32-make.exe[1]: *** [CMakeFiles\Makefile2:82: CMakeFiles/HelloWorld.dir/all] Error 2</span><br><span class="hljs-string">[build] mingw32-make.exe: *** [Makefile:90: all] Error 2</span><br><span class="hljs-string">[proc] 命令“&quot;D:\Program Files\CMake\bin\cmake.EXE&quot; --build d:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build --config Debug --target all -j 22 --”已退出，代码为 2</span><br><span class="hljs-string">[driver] 生成完毕: 00:00:38.628</span><br><span class="hljs-string">[build] 生成已完成，退出代码为 2</span><br></code></pre></td></tr></table></figure>
+<p>网上（Google、Bing、Github、StackOverFlow）难以找到答案，因为报错信息有点太了，询问Claude得到答案：</p>
+<blockquote>
+<p>这个链接错误的原因是目标可执行文件在链接过程中无法解析 Windows
+sockets API 所需要的符号,包括:</p>
+<ul>
+<li><p><code>WSAStartup</code>, <code>WSACleanup</code> - Winsock
+初始化和清理函数</p></li>
+<li><p><code>WSAGetLastError</code>, <code>WSASetLastError</code> -
+获取和设置错误码的函数</p></li>
+<li><p><code>AcceptEx</code>, <code>GetAcceptExSockaddrs</code> -
+接受连接的函数</p></li>
+<li><p><code>closesocket</code>, <code>ioctlsocket</code> 等 -
+套接字操作的函数</p></li>
+<li><p><code>ntohl</code>, <code>htonl</code>, <code>ntohs</code>,
+<code>htons</code> - 网络字节序转换函数</p></li>
+<li><p><code>select</code>, <code>WSASend</code>, <code>WSARecv</code>
+等 - 套接字I/O操作函数</p></li>
+</ul>
+<p>导致这个错误的常见原因:</p>
+<ol type="1">
+<li><p>没有链接 Windows socket 库 <code>ws2_32.lib</code>,它包含上述 API
+的实现。</p></li>
+<li><p>依赖的网络库没有自动链接所需的系统库。</p></li>
+<li><p>编译设置没有指定使用 Winsock。</p></li>
+<li><p>vcpkg动态链接设置不正确,应使用动态CRT链接。</p></li>
+<li><p>没有根据平台预定义正确隔离连接代码。</p></li>
+</ol>
+<p>解决方法是:</p>
+<ol type="1">
+<li><p>显式链接 <code>ws2_32.lib</code>。</p></li>
+<li><p>确认依赖库已自动链接必要的系统库。</p></li>
+<li><p>定义相关宏以开启Winsock支持。</p></li>
+<li><p>使用动态链接选项并检查编译器设置。</p></li>
+<li><p>根据Windows平台预定义隔离特定实现。</p></li>
+</ol>
+<p>明确添加对 <code>ws2_32.lib</code> 的链接可以解决大部分此类问题。</p>
+</blockquote>
+<p>于是在链接Crow库前先显式链接
+<code>ws2_32.lib</code>库：（注意MSVC直接可以支持，无需GCC这样）</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># 导入Crow库</span><br><span class="hljs-keyword">find_package</span>(Crow)<br><span class="hljs-keyword">target_link_libraries</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> ws2_32)	<span class="hljs-comment"># 显式链接 ws2_32.lib 库</span><br><span class="hljs-keyword">target_link_libraries</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> Crow::Crow)<br></code></pre></td></tr></table></figure>
+<p>运行CMake，仍然无法成功编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs bash">[build] 正在启动生成<br>[proc] 执行命令: <span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --build d:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build --config Debug --target all -j 22 --<br>[build] [ 50%] Building CXX object CMakeFiles/HelloWorld.<span class="hljs-built_in">dir</span>/src/main.cpp.obj<br>[build] &lt;command-line&gt;: warning: ISO C++11 requires whitespace after the macro name<br>[build] [100%] Linking CXX executable HelloWorld.exe<br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::socket_ops::complete_iocp_accept(unsigned long long, void*, unsigned long, void*, unsigned long long*, unsigned long long, boost::system::error_code&amp;)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/socket_ops.ipp:206: undefined reference to `GetAcceptExSockaddrs&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::win_iocp_socket_service_base::start_accept_op(boost::asio::detail::win_iocp_socket_service_base::base_implementation_type&amp;, bool, boost::asio::detail::socket_holder&amp;, int, int, int, void*, unsigned long, boost::asio::detail::win_iocp_operation*)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:538: undefined reference to `AcceptEx&#x27;</span><br>[build] C:/C_CPP/Tookit/mingw64_13h/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/bin/ld.exe: CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>/objects.a(main.cpp.obj): <span class="hljs-keyword">in</span> <span class="hljs-keyword">function</span> `boost::asio::detail::win_iocp_socket_service_base::restart_accept_op(unsigned long long, boost::asio::detail::socket_holder&amp;, int, int, int, void*, unsigned long, long*, boost::asio::detail::win_iocp_operation*)<span class="hljs-string">&#x27;:</span><br><span class="hljs-string">[build] C:/C_CPP/Library/vcpkg/installed/x64-windows/include/boost/asio/detail/impl/win_iocp_socket_service_base.ipp:569: undefined reference to `AcceptEx&#x27;</span><br>[build] collect2.exe: error: ld returned 1 <span class="hljs-built_in">exit</span> status<br>[build] mingw32-make.exe[2]: *** [CMakeFiles\HelloWorld.<span class="hljs-built_in">dir</span>\build.make:101: HelloWorld.exe] Error 1<br>[build] mingw32-make.exe[1]: *** [CMakeFiles\Makefile2:82: CMakeFiles/HelloWorld.<span class="hljs-built_in">dir</span>/all] Error 2<br>[build] mingw32-make.exe: *** [Makefile:90: all] Error 2<br>[proc] 命令“<span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --build d:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build --config Debug --target all -j 22 --”已退出，代码为 2<br>[driver] 生成完毕: 00:00:39.516<br>[build] 生成已完成，退出代码为 2<br></code></pre></td></tr></table></figure>
+<p>再次询问Claude，得知：</p>
+<blockquote>
+<p>这些 undefined reference 错误表示项目链接时无法找到 Windows
+套接字编程中的 <code>AcceptEx</code> 和
+<code>GetAcceptExSockaddrs</code> 这两个API函数。</p>
+<p>在使用像 Asio 这样的 C++ 网络库开发 Windows 应用时,需要链接
+<code>mswsock.lib</code> 库才能使用这些扩展套接字函数。</p>
+<p>可以通过以下方式修复:</p>
+<ol type="1">
+<li>在 CMakeLists 里添加:</li>
+</ol>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_link_libraries</span>(myapp PRIVATE mswsock)<br></code></pre></td></tr></table></figure>
+<p>来显式链接 <code>mswsock.lib</code>。</p>
+<ol start="2" type="1">
+<li><p>确保网络库如 Asio 已经自动链接了依赖的系统库。</p></li>
+<li><p>为目标添加编译宏:</p></li>
+</ol>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_compile_definitions</span>(myapp PUBLIC ASIO_WINDOWS)  <br></code></pre></td></tr></table></figure>
+<ol start="4" type="1">
+<li>如果使用 vcpkg,指定动态 CRT 链接:</li>
+</ol>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs actionscript">vcpkg install xxx:x64-windows-<span class="hljs-keyword">dynamic</span><br></code></pre></td></tr></table></figure>
+<ol start="5" type="1">
+<li><p>检查项目是否已经自动链接了 Windows 平台所需的系统库。</p></li>
+<li><p>尝试更新网络库至最新版本以获取缺失链接的修复。</p></li>
+</ol>
+<p>综上,明确链接 <code>mswsock.lib</code>
+或在上层网络库处理依赖,是解决大多数类似问题的办法。</p>
+</blockquote>
+<p>这里我在链接Crow库前加上mswsock即可解决：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">find_package</span>(Crow)<br><span class="hljs-keyword">target_link_libraries</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> ws2_32)<br><span class="hljs-keyword">target_link_libraries</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> mswsock)<br><span class="hljs-keyword">target_link_libraries</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> Crow::Crow)<br></code></pre></td></tr></table></figure>
+<p>再次运行CMake，完美解决：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">[main] 正在生成文件夹: vscode_vcpkg_cmake_copy <br>[build] 正在启动生成<br>[proc] 执行命令: <span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --build d:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build --config Debug --target all -j 22 --<br>[build] [ 50%] Linking CXX executable HelloWorld.exe<br>[build] [100%] Built target HelloWorld<br>[driver] 生成完毕: 00:00:26.796<br>[build] 生成已完成，退出代码为 0<br></code></pre></td></tr></table></figure>
+<h2 id="后续">后续</h2>
+<p>后面我直接改用MSVC，啥问题都没有，编译时间仅为GCC的40%，同时完美支持C++20🤣
+（Visual Studio Enterprise 2022 Preview - amd64，MSVC
+19.38.32919.0）</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">cmake_minimum_required</span>(VERSION <span class="hljs-number">3.17</span>)<br><span class="hljs-keyword">set</span>(PROJECT_NAME HelloWorld) <br><span class="hljs-keyword">set</span>(CMAKE_TOOLCHAIN_FILE <span class="hljs-string">&quot;C:/C_CPP/Library/vcpkg/scripts/buildsystems/vcpkg.cmake&quot;</span>) <span class="hljs-comment"># set vcpkg toolchain file path</span><br><span class="hljs-keyword">set</span>(VCPKG_TARGET_TRIPLET <span class="hljs-string">&quot;x64-windows&quot;</span>)<br><br><span class="hljs-keyword">project</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span>) <span class="hljs-comment"># set project name</span><br><span class="hljs-keyword">add_executable</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> src/main.cpp) <span class="hljs-comment"># add executable target named $&#123;PROJECT_NAME&#125;</span><br><span class="hljs-keyword">target_compile_features</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> PRIVATE cxx_std_20)  <span class="hljs-comment"># enable C++20 standard</span><br><span class="hljs-keyword">set_target_properties</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> PROPERTIES CXX_EXTENSIONS <span class="hljs-keyword">OFF</span>) <span class="hljs-comment"># disable compiler extensions</span><br><br><span class="hljs-keyword">find_package</span>(Crow)<br><span class="hljs-keyword">target_link_libraries</span>(<span class="hljs-variable">$&#123;PROJECT_NAME&#125;</span> Crow::Crow)<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">[build] 正在启动生成<br>[proc] 执行命令: <span class="hljs-string">&quot;D:\Program Files\CMake\bin\cmake.EXE&quot;</span> --build d:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/build --config Debug --target ALL_BUILD -j 22 --<br>[build] 适用于 .NET Framework MSBuild 版本 17.8.0-preview-23376-06+f413f5497<br>[build] <br>[build]   1&gt;Checking Build System<br>[build]   Building Custom Rule D:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/CMakeLists.txt<br>[build]   main.cpp<br>[build]   Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:<br>[build]   - add -D_WIN32_WINNT=0x0601 to the compiler <span class="hljs-built_in">command</span> line; or<br>[build]   - add _WIN32_WINNT=0x0601 to your project<span class="hljs-string">&#x27;s Preprocessor Definitions.</span><br><span class="hljs-string">[build]   Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).</span><br><span class="hljs-string">[build]   HelloWorld.vcxproj -&gt; D:\Code\Cpp\ExerciseCode\vscode_vcpkg_cmake_copy\build\Debug\HelloWorld.exe</span><br><span class="hljs-string">[build]   Building Custom Rule D:/Code/Cpp/ExerciseCode/vscode_vcpkg_cmake_copy/CMakeLists.txt</span><br><span class="hljs-string">[driver] 生成完毕: 00:00:10.848</span><br><span class="hljs-string">[build] 生成已完成，退出代码为 0</span><br></code></pre></td></tr></table></figure>
+<p>Fuck you, GCC !</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/C/Crow/" class="category-chain-item">Crow</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【C++】【Crow】我在使用Cmake构建Crow项目时遇到的3个问题</div>
+      <div>https://qalxry.github.io/2023/08/23/【C++】【Crow】我在使用Cmake构建Crow项目时遇到的3个问题/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月23日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年8月23日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/08/24/%E3%80%90C++%E3%80%91%E3%80%90CMake%E3%80%91%E4%BD%BFMSVC%E6%94%AF%E6%8C%81UTF-8%20Without%20BOM/" title="【C++】【CMake】使MSVC支持UTF-8 Without BOM">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【C++】【CMake】使MSVC支持UTF-8 Without BOM</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/29/%E3%80%90%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E3%80%91%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AE%8C%E5%85%A8%E8%BF%9B%E9%98%B6%E7%AC%94%E8%AE%B0/" title="【深度学习】深度学习完全进阶笔记">
+                        <span class="hidden-mobile">【深度学习】深度学习完全进阶笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

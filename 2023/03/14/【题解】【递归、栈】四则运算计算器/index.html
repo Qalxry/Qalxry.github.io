@@ -1,0 +1,795 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="设计一个程序，对输入的以#为结束的算术表达式（包括+，-，*，&#x2F;，(，) ），首先判断表达式是否含有非法字符（即非+，-，*，&#x2F;， (，) 之外的字符）， 如果含有非法字符，则报错误信息；如果正确，计算并输出这个表示式的值。 本题希望利用算符优先关系，实现对算术四则混合运算表达式的求值。 【输入格式】 以#为结束符的算术表达式。 【输出格式】 对于每组测试数据算术表达式，如果含有非">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【题解】【递归、栈】四则运算计算器">
+<meta property="og:url" content="https://qalxry.github.io/2023/03/14/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90%E9%80%92%E5%BD%92%E3%80%81%E6%A0%88%E3%80%91%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E8%AE%A1%E7%AE%97%E5%99%A8/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="设计一个程序，对输入的以#为结束的算术表达式（包括+，-，*，&#x2F;，(，) ），首先判断表达式是否含有非法字符（即非+，-，*，&#x2F;， (，) 之外的字符）， 如果含有非法字符，则报错误信息；如果正确，计算并输出这个表示式的值。 本题希望利用算符优先关系，实现对算术四则混合运算表达式的求值。 【输入格式】 以#为结束符的算术表达式。 【输出格式】 对于每组测试数据算术表达式，如果含有非">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="article:published_time" content="2023-03-14T14:48:00.000Z">
+<meta property="article:modified_time" content="2023-06-12T07:44:00.163Z">
+<meta property="article:author" content="しずり雪">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Algorithm 算法">
+<meta property="article:tag" content="递归">
+<meta property="article:tag" content="栈">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【题解】【递归、栈】四则运算计算器 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/diary/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【题解】【递归、栈】四则运算计算器"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-14 22:48" pubdate>
+          2023年3月14日 晚上 22:48
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【题解】【递归、栈】四则运算计算器</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年6月12日 下午 15:44
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>设计一个程序，对输入的以#为结束的算术表达式（包括+，-，*，/，(，)
+），首先判断表达式是否含有非法字符（即非+，-，*，/， (，)
+之外的字符），</p>
+<p>如果含有非法字符，则报错误信息；如果正确，计算并输出这个表示式的值。</p>
+<p>本题希望利用算符优先关系，实现对算术四则混合运算表达式的求值。</p>
+<p><strong>【输入格式】</strong></p>
+<p>以#为结束符的算术表达式。</p>
+<p><strong>【输出格式】</strong></p>
+<p>对于每组测试数据算术表达式，如果含有非法字符，<strong>输出“NO”，否则输出表达式的值</strong>，行尾不得有多余的空格。</p>
+<p><strong>【样例输入】</strong></p>
+<p>3+4*(5-3)#</p>
+<p><strong>【样例输出】</strong></p>
+<p>11</p>
+<p><strong>【样例说明】</strong></p>
+<p>　　输入样例是合法的表达式，因此求表达式的值，并输出11。</p>
+<p><strong>【样例输入】</strong></p>
+<p>3+;4*(5-3)#</p>
+<p><strong>【样例输出】</strong></p>
+<p>NO</p>
+<p><strong>【样例说明】</strong></p>
+<p>输入样例含不合法的字符';'，因此输出“<strong>NO</strong>”。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> isNumber(a) (a &gt;= <span class="hljs-string">&#x27;0&#x27;</span> &amp;&amp; a &lt;= <span class="hljs-string">&#x27;9&#x27;</span>)</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">validJudge</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>&amp; ch)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> (ch == <span class="hljs-string">&#x27;+&#x27;</span> || ch == <span class="hljs-string">&#x27;-&#x27;</span> || ch == <span class="hljs-string">&#x27;*&#x27;</span> || ch == <span class="hljs-string">&#x27;/&#x27;</span> || ch == <span class="hljs-string">&#x27;(&#x27;</span> || ch == <span class="hljs-string">&#x27;)&#x27;</span> || <span class="hljs-built_in">isNumber</span>(ch));<br>&#125;<br><span class="hljs-type">char</span>* s;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">tr</span><span class="hljs-params">(<span class="hljs-type">int</span> pre, <span class="hljs-type">char</span> oper = <span class="hljs-number">0</span>)</span> </span>&#123;<br>    <span class="hljs-type">int</span> now;<br>    <span class="hljs-keyword">if</span> (*s == <span class="hljs-string">&#x27;#&#x27;</span>) <span class="hljs-keyword">return</span> pre;                  <span class="hljs-comment">// 计算结束</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (*s == <span class="hljs-string">&#x27;)&#x27;</span>) &#123; s++; <span class="hljs-keyword">return</span> pre; &#125;    <span class="hljs-comment">// 遇到右括号就返回，完成括号内的计算</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (*s == <span class="hljs-string">&#x27;(&#x27;</span>) &#123; s++; now = <span class="hljs-built_in">tr</span>(<span class="hljs-number">0</span>); &#125;   <span class="hljs-comment">// 将括号里面的计算完之后再继续</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">isNumber</span>(*s)) &#123; now = <span class="hljs-built_in">atoi</span>(s); <span class="hljs-keyword">while</span> (<span class="hljs-built_in">isNumber</span>(*s)) s++; &#125; <span class="hljs-comment">// 读取到一个数字</span><br>    <span class="hljs-keyword">else</span> &#123;                                      <span class="hljs-comment">// 读取到一个运算符</span><br>        <span class="hljs-keyword">switch</span> (oper = *s, ++s, oper) &#123;         <span class="hljs-comment">// 这里oper用不到所以借用了oper,使得无需每种case都加上s++语句</span><br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;+&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre, <span class="hljs-string">&#x27;+&#x27;</span>);      <span class="hljs-comment">// 加法延迟到下一次来判断，防止后面的数字是别人的乘数</span><br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;-&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre, <span class="hljs-string">&#x27;-&#x27;</span>);      <span class="hljs-comment">// 减法延迟同理</span><br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;*&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre, <span class="hljs-string">&#x27;*&#x27;</span>);      <span class="hljs-comment">// 乘法延迟仅仅为了复用读取数字的代码，实际上此处可直接读取后面数字或括号，然后直接在此处相乘</span><br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;/&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre, <span class="hljs-string">&#x27;/&#x27;</span>);      <span class="hljs-comment">// 除法延迟同理</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">switch</span> (oper) &#123;                             <span class="hljs-comment">// 读取数字之后在此处进行运算</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;+&#x27;</span>: <span class="hljs-keyword">return</span> pre + <span class="hljs-built_in">tr</span>(now);         <span class="hljs-comment">// now后面可能有乘号，需要先计算后面</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;-&#x27;</span>: <span class="hljs-keyword">return</span> pre + <span class="hljs-built_in">tr</span>(-now);        <span class="hljs-comment">// 减法相当于加法</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;*&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre * now);         <span class="hljs-comment">// 乘法优先级高，可直接相乘，相乘后合并为一个数字继续往后计算，与加减不同，加减为倒序，乘除为顺序</span><br>        <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;/&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(pre / now);         <span class="hljs-comment">// 除法同理</span><br>        <span class="hljs-keyword">default</span>:  <span class="hljs-keyword">return</span> <span class="hljs-built_in">tr</span>(now);               <span class="hljs-comment">// 前面没有运算符，可能该数字为最开始的数字，或者前面为左括号</span><br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    string ss;<br>    <span class="hljs-built_in">getline</span>(cin, ss);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, len = ss.<span class="hljs-built_in">size</span>() - <span class="hljs-number">1</span>; i &lt; len; i++) &#123;<br>        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">validJudge</span>(ss[i])) &#123;<br>            cout &lt;&lt; <span class="hljs-string">&quot;NO&quot;</span>;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (ss.<span class="hljs-built_in">back</span>() != <span class="hljs-string">&#x27;#&#x27;</span>) &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;NO&quot;</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>    &#125;<br>    s = &amp;ss[<span class="hljs-number">0</span>];<br>    cout &lt;&lt; <span class="hljs-built_in">tr</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p><strong>更多测试样例：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp">(((<span class="hljs-number">1</span>+<span class="hljs-number">1</span>)*(<span class="hljs-number">2</span>+<span class="hljs-number">3</span>)/(<span class="hljs-number">9</span><span class="hljs-number">-2</span>))+<span class="hljs-number">10</span>)*<span class="hljs-number">10</span>#<br><span class="hljs-number">110</span><br><br>((<span class="hljs-number">1</span>+<span class="hljs-number">1</span>)*<span class="hljs-number">2</span>)*<span class="hljs-number">2</span>#<br><span class="hljs-number">8</span><br><br>((<span class="hljs-number">1</span>+(<span class="hljs-number">1</span>+<span class="hljs-number">1</span>))*<span class="hljs-number">2</span>#<br><span class="hljs-number">6</span><br><br><span class="hljs-number">1</span>+<span class="hljs-number">1</span><span class="hljs-number">-3</span>#<br><span class="hljs-number">-1</span><br><br><span class="hljs-number">3</span>*(<span class="hljs-number">4</span><span class="hljs-number">-1</span>*<span class="hljs-number">2</span>)+<span class="hljs-number">6</span>/(<span class="hljs-number">1</span>+<span class="hljs-number">1</span>)#<br><span class="hljs-number">9</span><br><br><span class="hljs-number">3</span>*(<span class="hljs-number">2</span><span class="hljs-number">-1</span>)+<span class="hljs-number">1</span>#<br><span class="hljs-number">4</span><br><br><span class="hljs-number">10</span>*<span class="hljs-number">5</span><span class="hljs-number">-2</span>/<span class="hljs-number">2</span>+<span class="hljs-number">4</span>#<br><span class="hljs-number">53</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E9%A2%98%E8%A7%A3/" class="category-chain-item">题解</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/C/">#C++</a>
+      
+        <a href="/tags/Algorithm-%E7%AE%97%E6%B3%95/">#Algorithm 算法</a>
+      
+        <a href="/tags/%E9%80%92%E5%BD%92/">#递归</a>
+      
+        <a href="/tags/%E6%A0%88/">#栈</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【题解】【递归、栈】四则运算计算器</div>
+      <div>https://qalxry.github.io/2023/03/14/【题解】【递归、栈】四则运算计算器/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月14日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年6月12日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/21/%E3%80%90%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%91%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%89%A9%E7%90%86%E6%9C%BA%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/" title="【服务器】轻量级物理机搭建过程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【服务器】轻量级物理机搭建过程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" title="【C++】代码与输出编码格式详解">
+                        <span class="hidden-mobile">【C++】代码与输出编码格式详解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

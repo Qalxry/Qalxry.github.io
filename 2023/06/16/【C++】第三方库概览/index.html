@@ -1,0 +1,874 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="C++第三方库文件总览 boost_1_82_0 C++ Boost库 Boost是一个广受欢迎的、功能强大的C++库集合，提供了众多跨平台的工具和组件，覆盖了各种领域和应用场景。Boost库可以用于增强C++语言的功能和性能，包括智能指针、容器、算法、线程、正则表达式等。它还提供了数学计算、网络编程、图形图像处理、文件系统操作等方面的组件和功能，使开发者能够更快速、高效地开发出稳健、可靠的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C++】第三方库概览">
+<meta property="og:url" content="https://qalxry.github.io/2023/06/16/%E3%80%90C++%E3%80%91%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E6%A6%82%E8%A7%88/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="C++第三方库文件总览 boost_1_82_0 C++ Boost库 Boost是一个广受欢迎的、功能强大的C++库集合，提供了众多跨平台的工具和组件，覆盖了各种领域和应用场景。Boost库可以用于增强C++语言的功能和性能，包括智能指针、容器、算法、线程、正则表达式等。它还提供了数学计算、网络编程、图形图像处理、文件系统操作等方面的组件和功能，使开发者能够更快速、高效地开发出稳健、可靠的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="article:published_time" content="2023-06-15T16:32:47.000Z">
+<meta property="article:modified_time" content="2023-06-17T05:55:39.095Z">
+<meta property="article:author" content="しずり雪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【C++】第三方库概览 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/diary/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【C++】第三方库概览"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-16 00:32" pubdate>
+          2023年6月16日 凌晨 00:32
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【C++】第三方库概览</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年6月17日 下午 13:55
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="c第三方库文件总览">C++第三方库文件总览</h2>
+<h3 id="boost_1_82_0">boost_1_82_0</h3>
+<p>C++ Boost库</p>
+<p>Boost是一个广受欢迎的、功能强大的C++库集合，提供了众多跨平台的工具和组件，覆盖了各种领域和应用场景。Boost库可以用于增强C++语言的功能和性能，包括智能指针、容器、算法、线程、正则表达式等。它还提供了数学计算、网络编程、图形图像处理、文件系统操作等方面的组件和功能，使开发者能够更快速、高效地开发出稳健、可靠的C++应用程序。Boost库的广泛应用领域包括系统开发、游戏开发、科学计算、金融领域等。</p>
+<h3 id="quantlib-1.30">QuantLib-1.30</h3>
+<p>QuantLib金融量化库，有20年历史，较为古老，依赖boost库。</p>
+<p>QuantLib是一个功能强大的C++金融计算库，专为金融工程和衍生品定价而设计。它提供了广泛的金融工具和模型，包括利率曲线、期权、债券、衍生品等，以及各种金融计算和分析功能。QuantLib可以用于定价、风险管理、投资组合分析、模拟等金融领域的计算和研究。它具有高度可定制性和可扩展性，被广泛应用于投资银行、资产管理、保险等金融机构以及学术界的金融研究。</p>
+<h3 id="ta-lib-0.4.0-msvc">ta-lib-0.4.0-msvc</h3>
+<p>TA-Lib金融量化库，使用C编写，有比较多的技术指标。</p>
+<p>ta-lib是一个流行的C++技术分析库，用于金融市场数据的技术分析和指标计算。它提供了多种常用的技术分析指标，如移动平均线、相对强弱指标、布林带等，以及各种图表和图形工具。ta-lib可以用于市场趋势分析、价格波动预测、交易信号生成等金融领域的数据分析和决策支持。它被广泛应用于金融交易、量化投资、股票分析等领域，为金融专业人士和算法交易者提供了有力的工具和功能。</p>
+<h3 id="spdlog-1.11.0">spdlog-1.11.0</h3>
+<p>超级快的C++日志库，内置fmt库。</p>
+<p>spdlog是一个高性能的C++日志库，旨在提供简单易用的日志记录功能和灵活的日志输出选项。它支持多线程环境下的并发日志记录，提供了丰富的日志级别和格式控制选项。spdlog可以用于应用程序的日志记录、故障排查、性能分析和错误追踪等方面。它可以将日志输出到控制台、文件、远程服务器等多种目标，并支持多种日志格式，如标准输出、JSON、Syslog等。spdlog被广泛应用于各种C++项目，包括桌面应用、服务器应用、游戏开发等，为开发者提供了便捷、高效的日志管理工具。</p>
+<h3 id="rapidjson-1.1.0">rapidjson-1.1.0</h3>
+<p>用于 C++ 的超快 JSON 解析器/生成器，同时具有 SAX/DOM 样式 API。</p>
+<p>但是据知乎所说，存在API垃圾难用、内存泄漏、解析错误等问题。</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23654513">知乎问题：jsoncpp和rapidjson哪个好用？</a></p>
+<p>rapidjson是一个高效的C++
+JSON解析和生成库，它提供了简单易用的API和功能丰富的工具，用于处理JSON数据。它可以用于解析和生成JSON格式的数据，支持高性能的数据读取和写入操作。rapidjson还提供了对JSON的查询、修改、验证和序列化等功能，使开发者能够轻松地处理和操作JSON数据，适用于各种应用领域，包括Web开发、网络通信、配置文件处理等。</p>
+<h3 id="nolhmannjson-v3.11.2">nolhmann/json-v3.11.2</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/nlohmann/json">nolhmann/json</a>是一个超级易于使用的优秀的
+JSON 解析器 for Modern C++，使用UTF-8编码，文档齐全
+，易于使用，性能落后于rapidjson约5~6倍。</p>
+<p>特点：</p>
+<ul>
+<li><p>直观的语法：在像Python这样的语言中，JSON感觉就像一种一流的数据类型。我们使用了现代C++的所有运算符魔法，以在您的代码中实现相同的感觉。查看下面的示例，您就会知道我在说什么。</p></li>
+<li><p>简单的集成：我们的整个代码只包含一个头文件json.hpp。就是这样。没有库，没有子项目，没有依赖，没有复杂的构建系统。该类是用普通的C++11编写的。总的来说，一切都不需要调整编译器标志或项目设置。</p></li>
+<li><p>严格的测试：我们的代码经过了大量的单元测试，并覆盖了100%的代码，包括所有异常行为。此外，我们使用了Valgrind和Clang
+Sanitizers进行了内存泄漏的检查。Google
+OSS-Fuzz还针对所有解析器进行了模糊测试，每天运行24/7，迄今为止已执行数十亿次测试。为了保持高质量，该项目遵循核心基础设施倡议（CII）的最佳实践。</p></li>
+</ul>
+<p>其他方面对我们来说不是很重要：</p>
+<ul>
+<li><p>内存效率：每个JSON对象的开销为一个指针（联合的最大大小）和一个枚举元素（1字节）。默认的泛化使用以下C++数据类型：std::string用于字符串，int64_t、uint64_t或double用于数字，std::map用于对象，std::vector用于数组，bool用于布尔值。但是，您可以根据需要将通用类basic_json实例化为模板。</p></li>
+<li><p>速度：市面上肯定有更快的JSON库。但是，如果您的目标是通过添加一个头文件来提供JSON支持来加快开发速度，那么这个库是您的选择。如果您知道如何使用std::vector或std::map，那么您已经准备好了。</p></li>
+</ul>
+<h3 id="yyjson-0.7.0">yyjson-0.7.0</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/ibireme/yyjson">yyjson</a>是目前最快的
+C++ Json 库，比rapidjson快3~4倍。</p>
+<p>特点：</p>
+<ul>
+<li>快速：在现代CPU上可以每秒读取或写入千兆字节的JSON数据。</li>
+<li>可移植：符合ANSI C（C89）标准，实现跨平台兼容性。</li>
+<li>严格：符合RFC 8259 JSON标准，确保严格的数字格式和UTF-8验证。</li>
+<li>可扩展：提供选项以允许注释、尾随逗号、NaN/Inf以及自定义内存分配器。</li>
+<li>准确性：可以准确地读取和写入int64、uint64和double数字。</li>
+<li>灵活：支持无限的JSON嵌套层次、000字符和非以null结尾的字符串。</li>
+<li>操作：支持使用JSON Pointer、JSON Patch和JSON Merge
+Patch进行查询和修改。</li>
+<li>开发者友好：只需一个头文件和一个源文件即可轻松集成。</li>
+</ul>
+<p>限制：</p>
+<ul>
+<li>数组或对象以链表等数据结构存储，这使得通过索引或键访问元素比使用迭代器慢。</li>
+<li>对象中允许重复的键，并且键的顺序被保留。</li>
+<li>JSON解析结果是不可变的，需要进行可变拷贝才能进行修改。</li>
+</ul>
+<h3 id="nanomsg-1.1.5">nanomsg-1.1.5</h3>
+<p>nanomsg库是一个轻量级、高性能的通信库，旨在为开发者提供多种通信模式和模式组合的灵活性。它可以用于构建分布式系统、消息队列、实时数据传输、发布/订阅模式等多种通信应用，具有可扩展性和良好的性能表现。</p>
+<p>nanomsg库可以被视为一个网络模块，它提供了一套网络通信的接口和协议，使得开发者能够在分布式系统中进行可靠的数据传输和通信。它支持多种网络传输协议，包括TCP、UDP、IPC（进程间通信）等，可以在不同的网络环境中使用。</p>
+<h3 id="pugixml-1.13">pugixml-1.13</h3>
+<p>轻量级、简单且快速的 C++ XML 解析器，支持 XPath。</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/32046606">知乎问题：C++解析xml有什么好用的轮子?</a></p>
+<p>pugixml是一个轻量级的C++ XML处理库，具有以下特点：</p>
+<ul>
+<li>类似DOM的接口，具有丰富的遍历和修改能力。</li>
+<li>极快的非验证XML解析器，可以从XML文件/缓冲区构建DOM树。</li>
+<li>支持XPath 1.0，用于复杂的数据驱动树查询。</li>
+<li>完全支持Unicode，提供Unicode接口变体和自动编码转换。</li>
+</ul>
+<p>该库非常易于移植和集成使用。您可以从存档中下载它（包含Windows/Unix换行符），从Git/Subversion存储库获取，作为主要Linux/BSD发行版（如Ubuntu、Debian、Fedora、Gentoo、Arch
+Linux、FreeBSD等）的软件包安装，也可以作为OSX软件包管理器（如Homebrew、MacPorts）的软件包安装，或者使用其他软件包管理器（如Conda）。</p>
+<p>pugixml自2006年以来一直在开发和维护，并拥有众多用户。所有代码都采用MIT许可证分发，因此在开源和专有应用程序中都可以免费使用。</p>
+<h3 id="robin-map-v1.2.1">robin-map-v1.2.1</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/Tessil/robin-map">robin-map</a>是使用罗宾汉哈希的快速哈希映射和哈希集的
+C++ 实现</p>
+<p>性能平均能达到目前std::unordered_map的<strong>10倍</strong>左右，并且在多个高负载项目中表现出了良好的稳定性OωO
+<a target="_blank" rel="noopener" href="https://www.codfox.com/archives/20220121-1.html">高效HashMap——robin-map推荐</a>
+<a target="_blank" rel="noopener" href="https://tessil.github.io/2016/08/29/benchmark-hopscotch-map.html">C++主流哈希映射实现的性能基准测试</a></p>
+<table>
+<thead>
+<tr class="header">
+<th>测试项目</th>
+<th>耗时</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>std::unordered_map&lt;int,int&gt;</td>
+<td>3821432</td>
+</tr>
+<tr class="even">
+<td>std::unordered_map&lt;int,int,nohashinit&gt;</td>
+<td>3499231</td>
+</tr>
+<tr class="odd">
+<td>std::unordered_map&lt;int,int&gt;(N)</td>
+<td>3810023</td>
+</tr>
+<tr class="even">
+<td>tsl::robin_map&lt;int,int&gt;</td>
+<td>404123</td>
+</tr>
+<tr class="odd">
+<td>tsl::robin_map&lt;int,int, nohashint&gt;</td>
+<td>410218</td>
+</tr>
+<tr class="even">
+<td>tsl::robin_map&lt;int,int&gt;(N)</td>
+<td>399983</td>
+</tr>
+</tbody>
+</table>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/C/C-%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93/" class="category-chain-item">C++ 第三方库</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【C++】第三方库概览</div>
+      <div>https://qalxry.github.io/2023/06/16/【C++】第三方库概览/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月16日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年6月17日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/06/26/%E3%80%90Github-Git%E3%80%91%E6%96%B0%E5%BB%BAgithub%E4%BB%93%E5%BA%93%E4%BB%A5%E5%8F%8A%E6%B7%BB%E5%8A%A0git%E8%BF%9B%E5%85%A5%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6/" title="【Github-Git】新建github仓库以及添加git进入本地文件">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【Github-Git】新建github仓库以及添加git进入本地文件</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/06/12/%E3%80%90Python%E3%80%91%E3%80%90%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E3%80%91readlines-%E9%80%90%E8%A1%8C%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%90%8Ewritelinees-%E9%80%90%E8%A1%8C%E8%BE%93%E5%87%BA%EF%BC%8C%E5%B0%91%E4%BA%86%E4%B8%80%E8%A1%8C/" title="【Python】【问题排查】readlines()逐行读取文件后writelinees()逐行输出，少了一行">
+                        <span class="hidden-mobile">【Python】【问题排查】readlines()逐行读取文件后writelinees()逐行输出，少了一行</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

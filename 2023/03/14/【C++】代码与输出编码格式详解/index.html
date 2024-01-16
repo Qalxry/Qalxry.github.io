@@ -1,0 +1,1392 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一篇深度好文全面解析C++编码格式问题！一站式解决C++输出乱码或者为空！ 转载请注明原作者、原文地址。 结论预览 MSVC编译环境 源文件为GB2312&#x2F;GBK编码格式 注：  常量字符串指的是在Cpp文件中有双引号的字符串，形如string s &#x3D; &quot;常量字符串&quot;; wstring的常量字符串前面需要添加&#39;L&#39;标记，注明为宽字符串wstring ws &#x3D; L&quot;常量宽字符串&quot;;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【C++】代码与输出编码格式详解">
+<meta property="og:url" content="https://qalxry.github.io/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="一篇深度好文全面解析C++编码格式问题！一站式解决C++输出乱码或者为空！ 转载请注明原作者、原文地址。 结论预览 MSVC编译环境 源文件为GB2312&#x2F;GBK编码格式 注：  常量字符串指的是在Cpp文件中有双引号的字符串，形如string s &#x3D; &quot;常量字符串&quot;; wstring的常量字符串前面需要添加&#39;L&#39;标记，注明为宽字符串wstring ws &#x3D; L&quot;常量宽字符串&quot;;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="article:published_time" content="2023-03-13T16:13:00.000Z">
+<meta property="article:modified_time" content="2023-03-14T15:35:47.847Z">
+<meta property="article:author" content="しずり雪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【C++】代码与输出编码格式详解 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/diary/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【C++】代码与输出编码格式详解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-14 00:13" pubdate>
+          2023年3月14日 凌晨 00:13
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          20k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          84 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【C++】代码与输出编码格式详解</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年3月14日 晚上 23:35
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>一篇深度好文全面解析C++编码格式问题！一站式解决C++输出乱码或者为空！</p>
+<p>转载请注明原作者、原文地址。</p>
+<h2 id="结论预览">结论预览</h2>
+<h3 id="msvc编译环境">MSVC编译环境</h3>
+<h4 id="源文件为gb2312gbk编码格式">源文件为GB2312/GBK编码格式</h4>
+<p>注：</p>
+<ul>
+<li>常量字符串指的是在Cpp文件中有双引号的字符串，形如<code>string s = "常量字符串";</code></li>
+<li>wstring的常量字符串前面需要添加'L'标记，注明为宽字符串<code>wstring ws = L"常量宽字符串";</code></li>
+<li>下图中wcout(xxx)指的是设置wcout的locale，代码为<code>wcout.imbue(locale("xxx"));</code></li>
+<li>下图中wcin/wcout(xxx)指的是<code>wcin.imbue(locale("xxx"));wcout.imbue(locale("xxx"));</code>
+一般要同时设置wcin和wcout的locale，否则两者处理字符串的方式不同会造成难以预料的结果。（ps.其实也是懒得去实验了，但说不定有什么妙用）</li>
+</ul>
+<table style="width:100%;">
+
+<thead>
+<tr class="header">
+<th>类型</th>
+<th>IO流</th>
+<th>控制台代码页</th>
+<th style="text-align: left;">原始保存效果/输入输出效果</th>
+<th style="text-align: left;">中文输出效果</th>
+<th style="text-align: left;">补救方法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>string常量字符串</td>
+<td>cout</td>
+<td>936</td>
+<td style="text-align: left;">以GB2312/GBK编码保存，输出无需转码。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以GB2312/GBK编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用ANSI_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td>string变量</td>
+<td>cin/cout</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以GB2312/GBK编码保存，输出无需转码。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">将控制台中的UTF-8字符串以GB2312/GBK编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用ANSI_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td>wstring常量字符串</td>
+<td>wcout(默认)</td>
+<td>936</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcout(chs)</td>
+<td>936</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时将UTF-16转为ANSI。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时将UTF-16转为ANSI导致乱码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcout(gbk)</td>
+<td>936</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcout(zh_CN.utf8)</td>
+<td>936</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时会隐式转码将UTF-16转为UTF-8导致乱码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时会隐式转码将UTF-16转为UTF-8。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="odd">
+<td>wstring变量</td>
+<td>wcin/wcout(默认)</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">将控制台中的UTF-8字符串以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcin/wcout(chs)</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以UTF-16编码保存，输出时将UTF-16转为ANSI。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">将控制台中的UTF-8字符串以UTF-16编码保存，输出时将UTF-16转为ANSI导致乱码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcin/wcout(gbk)</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">将控制台中的UTF-8字符串以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcin/wcout(zh_CN.utf8)</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以UTF-16编码保存，输出时会隐式转码将UTF-16转为UTF-8导致乱码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时会隐式转码将UTF-16转为UTF-8。但似乎wcin无法正确处理UTF-8输入，类似于给int输入字符串的错误。</td>
+<td style="text-align: left;">有的显示的是之前保存的常量字符串，有的显示乱码比如“十七”，如果原先输入的开头为ascll
+，则后续中文变为P或乱码</td>
+<td style="text-align: left;">使用cin输入到string，再使用UTF8_to_UTF16函数进行转码后保存到wstring。输出时使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="源文件为utf-8编码格式">源文件为UTF-8编码格式</h4>
+<p><strong>注意：</strong></p>
+<ul>
+<li>MSVC不支持在UTF8的Cpp文件内为wstring赋值，无法通过编译。比如<code>wstring ws = L"是当前文件";</code></li>
+<li>在GB2312/GBK的Cpp文件中该语句可正常通过编译。</li>
+</ul>
+<table style="width:100%;">
+
+<thead>
+<tr class="header">
+<th>类型</th>
+<th>IO流</th>
+<th>控制台代码页</th>
+<th style="text-align: left;">原始保存效果/输入输出效果</th>
+<th style="text-align: left;">中文输出效果</th>
+<th style="text-align: left;">补救方法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>string常量字符串</td>
+<td>cout</td>
+<td>936</td>
+<td style="text-align: left;">以GB2312/GBK编码保存，输出无需转码。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以GB2312/GBK编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用ANSI_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td>string变量</td>
+<td>cin/cout</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以GB2312/GBK编码保存，输出无需转码。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">将控制台中的UTF-8字符串以GB2312/GBK编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用ANSI_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td>wstring常量字符串</td>
+<td>wcout(默认)</td>
+<td>936</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcout(chs)</td>
+<td>936</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时将UTF-16转为ANSI。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时将UTF-16转为ANSI导致乱码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcout(gbk)</td>
+<td>936</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcout(zh_CN.utf8)</td>
+<td>936</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时会隐式转码将UTF-16转为UTF-8导致乱码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时会隐式转码将UTF-16转为UTF-8。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="odd">
+<td>wstring变量</td>
+<td>wcin/wcout(默认)</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">将控制台中的UTF-8字符串以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcin/wcout(chs)</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以UTF-16编码保存，输出时将UTF-16转为ANSI。</td>
+<td style="text-align: left;">正常</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">将控制台中的UTF-8字符串以UTF-16编码保存，输出时将UTF-16转为ANSI导致乱码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcin/wcout(gbk)</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">将控制台中的UTF-8字符串以UTF-16编码保存，输出时不会隐式转码。</td>
+<td style="text-align: left;">空</td>
+<td style="text-align: left;">使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>wcin/wcout(zh_CN.utf8)</td>
+<td>936</td>
+<td style="text-align: left;">将控制台中的GBK字符串以UTF-16编码保存，输出时会隐式转码将UTF-16转为UTF-8导致乱码。</td>
+<td style="text-align: left;">乱码</td>
+<td style="text-align: left;">使用UTF16_to_ANSI函数处理后再使用cout输出。</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>65001</td>
+<td style="text-align: left;">以UTF-16编码保存，输出时会隐式转码将UTF-16转为UTF-8。但似乎wcin无法正确处理UTF-8输入，类似于给int输入字符串的错误。</td>
+<td style="text-align: left;">有的显示的是之前保存的常量字符串，有的显示乱码比如“十七”，如果原先输入的开头为ascll
+，则后续中文变为P或乱码</td>
+<td style="text-align: left;">使用cin输入到string，再使用UTF8_to_UTF16函数进行转码后保存到wstring。输出时使用UTF16_to_UTF8函数处理后再使用cout输出。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gcc编译环境">GCC编译环境</h3>
+<h2 id="字符编码">字符编码</h2>
+<h3 id="ascll">ASCLL</h3>
+<p>字符编码指的是将字符集中的字符转换为计算机可识别的二进制编码的方式。常见的字符编码有<strong>ASCII、Unicode、UTF-8、UTF-16</strong>等。</p>
+<ul>
+<li>ASCII编码是最早的文本编码格式，<strong>只能表示128个字符</strong>，包括英文字母、数字和一些符号。</li>
+</ul>
+<h3 id="unicode">Unicode</h3>
+<ul>
+<li>Unicode编码则支持全球范围内的字符集，包括中文、日文、韩文等。Unicode作为字符集，定义了各种语言中的字符及其对应的<strong>唯一编码</strong>。而UTF-8和UTF-16则是Unicode的<strong>具体编码方式</strong>，它们将Unicode字符集中的字符转换成计算机可以识别的二进制编码。</li>
+<li>UTF-8编码则是一种<strong>可变长度</strong>的Unicode编码，它能够<strong>兼容ASCII</strong>编码，同时也支持全球范围内的字符集。UTF-8编码方式采用<strong>1-4个字节</strong>来表示一个字符，具体采用几个字节来表示一个字符取决于这个字符的Unicode编码。</li>
+<li>UTF-16是另外一种Unicode编码方式，它用16位来表示一个字符。与UTF-8不同，<strong>UTF-16是固定长度</strong>的，每个字符都是16位（<strong>2个字节</strong>），这使得UTF-16在处理特殊字符时比UTF-8更高效。UTF-16编码方式适用于需要支持大量字符集的应用程序，如多语言网站、多语言文本编辑器等。但是，UTF-16也存在一些缺点，比如它需要更多的存储空间，因为每个字符都用16位来表示，而且它<strong>不支持变长编码</strong>，因此在处理ASCII字符时会浪费存储空间。</li>
+</ul>
+<h3 id="ansi">ANSI</h3>
+<p>ANSI（American National Standards
+Institute）是美国国家标准化组织，成立于1918年。它制定了许多标准，包括计算机领域的标准。在计算机领域中，ANSI制定了一系列编码标准，如ASCII编码标准等。</p>
+<p>在Windows操作系统中，<strong>ANSI通常指代一种字符编码方式</strong>，即Windows<strong>代码页</strong>（Windows
+Code
+Page），也称为<strong>ANSI代码页</strong>。Windows代码页是一种与<strong>语言和地区</strong>有关的字符编码方式，它用于将字符集中的字符转换为计算机可识别的二进制编码。Windows操作系统中的<strong>ANSI字符集包括许多不同的代码页</strong>，如<strong>中文的GB2312</strong>、BIG5、日文的Shift-JIS等，这些代码页<strong>都是基于ASCII字符集的扩展</strong>，用于支持不同语言和地区的字符集。但是，ANSI字符集存在一些缺点，如<strong>无法支持多语言字符集</strong>，容易出现字符集兼容性问题等，因此现在已经逐渐被Unicode编码所取代。</p>
+<ul>
+<li><strong>GB2312</strong>：GB2312是中国国家标准，于1980年发布，它采用<strong>双字节</strong>编码方式，其中第一个字节为高字节，第二个字节为低字节。包含了近<strong>7,000</strong>个中文字符和符号，其中包括了基本汉字、简化字、繁体字以及一些常用的非汉字字符。</li>
+<li><strong>GBK</strong>：GBK是<strong>GB2312的扩展编码</strong>方式，它于1995年发布，也采用<strong>双字节</strong>编码方式，其中第一个字节为高字节，第二个字节为低字节。与GB2312不同的是，GBK字符集包含了超过<strong>21,000</strong>个中文字符和符号，包括了繁体字、日韩汉字以及一些生僻字等。GBK编码方式在中国大陆和台湾地区广泛使用，它支持GB2312字符集，因此可以兼容GB2312编码方式，同时也支持更多的中文字符和符号。</li>
+</ul>
+<h2 id="c与窄字符和宽字符">C++与窄字符和宽字符</h2>
+<h3 id="窄字符">窄字符</h3>
+<ul>
+<li><strong>char </strong>类型：保存一个字节。</li>
+<li><strong>string / char[]</strong>
+类型：以单个字节为单位保存一个字符序列。</li>
+<li><strong>cout / cin</strong> IO流：</li>
+<li><strong>ofstream / ifstream</strong> 文件流：</li>
+</ul>
+<h3 id="宽字符">宽字符</h3>
+<ul>
+<li><strong>wchat_t</strong> 类型：保存两个字节。</li>
+<li><strong>wstring / wchar_t[]</strong>
+类型：以两个字节为单位保存字符序列。</li>
+<li><strong>wcout / wcin</strong> :</li>
+<li><strong>wofstream / wifstream</strong> :</li>
+</ul>
+<h2 id="控制台代码页">控制台代码页</h2>
+<p>默认情况下中国地区的控制台代码页为 936（GBK）。输入 <code>chcp</code>
+并回车可以查看当前活动代码页。</p>
+<p><img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313185709825.png" srcset="/img/loading.gif" lazyload alt="image-20230313185709825" style="zoom: 50%;"></p>
+<p>输入 <code>chcp 65001</code>
+回车后会切换到65001代码页（UTF-8）。当然，这种更改是局部的，只要退出这个控制台，代码页依然为936。</p>
+<p><img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313185945473.png" srcset="/img/loading.gif" lazyload alt="image-20230313185945473" style="zoom:50%;"></p>
+<h2 id="c控制台程序输出乱码的原因">C++控制台程序输出乱码的原因</h2>
+<p>影响字符输出效果的因素有三个：</p>
+<ol type="1">
+<li>cpp/h/hpp文件编码格式</li>
+<li>在程序内部是否人为使用了编码转换</li>
+<li>控制台代码页</li>
+</ol>
+<h3 id="代码文件格式">代码文件格式</h3>
+<p>主要影响的是在代码里面写的常量字符串，比如
+<code>string s = "你好";</code> <code>wstring ws = L"你好";</code></p>
+<h3 id="人为编码转换">人为编码转换</h3>
+<p>人为使用了&lt;codecvt&gt;头文件的编码转换（比如里面的 UTF-8 转 UTF-16
+的函数
+codecvt_utf8_utf16<char16_t>），或者自己通过位运算、字节的操控（windows.h头文件中提供的WideCharToMultiByte、MultiByteToWideChar函数）。</char16_t></p>
+<h3 id="控制台代码页-1">控制台代码页</h3>
+<p>如前文中936为GBK编码，65001为UTF-8编码，这直接决定了控制台会如何处理程序向控制台<strong>输出</strong>的字符序列！以及控制台向程序<strong>输入</strong>的字符序列编码格式！</p>
+<h2 id="如何保证不输出乱码或空字符">如何保证不输出乱码或空字符？</h2>
+<h3 id="一12轮测试">（一）12轮测试</h3>
+<h4 id="cpphhpp文件保存为utf-8格式">1.
+Cpp/H/Hpp<strong>文件保存</strong>为UTF-8格式</h4>
+<p>可在自己的IDE中进行选择。（有的IDE没有这种功能）</p>
+<h4 id="控制台代码页修改为65001">2. 控制台代码页修改为65001</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;chcp 65001&quot;</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="设置wcoutwcin的locale">3. 设置wcout/wcin的locale</h4>
+<p>具体代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++">wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;zh_CN.UTF-8&quot;</span>));	<span class="hljs-comment">// &quot;zh_CN.UTF-8&quot;也可换为&quot;chs&quot;</span><br>wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;zh_CN.UTF-8&quot;</span>));<br><span class="hljs-comment">// wofstream、wifstream 同理</span><br></code></pre></td></tr></table></figure>
+<p>这里我遇到了一个问题，在我的VSCode和Sublime上使用TDM-GCC作为编译器，编译器一直报错，报错信息入下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp">terminate called after throwing an instance of <span class="hljs-string">&#x27;std::runtime_error&#x27;</span><br>  <span class="hljs-built_in">what</span>():  locale::facet::_S_create_c_locale name <span class="hljs-keyword">not</span> valid<br></code></pre></td></tr></table></figure>
+<p>然后我换成了CodeBlocks（Mingw-64 GNU GCC）和Visual
+Studio（MSVC）进行编译，没有任何报错。折腾了半天也没搞定VSCode和Sublime上的问题，
+也许是TDM-GCC的BUG吧，只好作罢。接下来我使用CodeBlocks和VS进行测试。</p>
+<h3 id="测试1">测试1：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>GB2312</li>
+<li><strong>wcout/wcin设置locale：</strong>不设置</li>
+<li><strong>控制台代码页：</strong>默认936（GBK）</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>VS通过编译，wcout/wcin能输出代码内部的宽字符串，但对于用户输入的ascll和宽字符没有反应。</p>
+<p>CodeBlocks编译器报错。</p>
+<p><strong>初步判断为wcout/wcin的锅，它们无法接受单字节的字符。</strong></p>
+<p><img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313212052031.png" srcset="/img/loading.gif" lazyload alt="image-20230313212052031"></p>
+<h3 id="测试2">测试2：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>GB2312</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为chs</li>
+<li><strong>控制台代码页：</strong>默认936（GBK）</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>VS通过编译，wcout能输出代码内部的宽字符串，也能接受用户输入，是比较理想的效果。</p>
+<p>CodeBlocks编译器报错。</p>
+<p><strong>此时为GB2312环境下MSVC的最优解，GCC编译器除外。</strong></p>
+<p><img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313212457722.png" srcset="/img/loading.gif" lazyload alt="image-20230313212457722"></p>
+<h3 id="测试3">测试3：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>GB2312</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为GBK</li>
+<li><strong>控制台代码页：</strong>默认936（GBK）</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;GBK&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;GBK&quot;</span>));<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>VS通过编译，wcout/wcin能输出代码内部的宽字符串，但对于用户输入的宽字符则没有反应。</p>
+<p>CodeBlocks编译器报错。</p>
+<p><strong>初步判断为中文字符集不太兼容的问题，具体原因未知。</strong></p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313212816133.png" srcset="/img/loading.gif" lazyload alt="image-20230313212816133">
+<figcaption aria-hidden="true">image-20230313212816133</figcaption>
+</figure>
+<h3 id="测试4">测试4：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>GB2312</li>
+<li><strong>wcout/wcin设置locale：</strong>不设置</li>
+<li><strong>控制台代码页：</strong>65001</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;chcp 65001&quot;</span>);<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>VS通过编译，cout/cin输出ASCLL正常，中文输出乱码，wcout/wcin能输出代码内部的ASCLL，但对于用户输入的则没有反应。</p>
+<p>CodeBlocks编译器报错。</p>
+<p><strong>初步判断为控制台对字符流的处理问题以及wcout/wcin内部问题。</strong></p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313212924855.png" srcset="/img/loading.gif" lazyload alt="image-20230313212924855">
+<figcaption aria-hidden="true">image-20230313212924855</figcaption>
+</figure>
+<h3 id="测试5">测试5：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>GB2312</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为chs</li>
+<li><strong>控制台代码页：</strong>65001</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;chcp 65001&quot;</span>);<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>VS通过编译，除ASCLL以外输出为乱码。</p>
+<p>CodeBlocks编译器报错。</p>
+<p><strong>初步判断为GBK与UTF-8不兼容的问题。</strong></p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313213005587.png" srcset="/img/loading.gif" lazyload alt="image-20230313213005587">
+<figcaption aria-hidden="true">image-20230313213005587</figcaption>
+</figure>
+<h3 id="测试6">测试6：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>GB2312</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为GBK</li>
+<li><strong>控制台代码页：</strong>65001</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;chcp 65001&quot;</span>);<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;GBK&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;GBK&quot;</span>));<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>简要：不行</strong></p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313213046539.png" srcset="/img/loading.gif" lazyload alt="image-20230313213046539">
+<figcaption aria-hidden="true">image-20230313213046539</figcaption>
+</figure>
+<h3 id="测试7">测试7：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>UTF-8</li>
+<li><strong>wcout/wcin设置locale：</strong>不设置</li>
+<li><strong>控制台代码页：</strong>默认936（GBK）</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>简要：不行！</strong></p>
+<p>注意到一点，这里VS的控制台居然自动变为了65001代码页，有点奇怪。</p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313213424518.png" srcset="/img/loading.gif" lazyload alt="image-20230313213424518">
+<figcaption aria-hidden="true">image-20230313213424518</figcaption>
+</figure>
+<h3 id="测试8">测试8：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>UTF-8</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为chs</li>
+<li><strong>控制台代码页：</strong>默认936（GBK）</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>简要：不行</strong></p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313213813461.png" srcset="/img/loading.gif" lazyload alt="image-20230313213813461">
+<figcaption aria-hidden="true">image-20230313213813461</figcaption>
+</figure>
+<h3 id="测试9">测试9：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>UTF-8</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为zh_CN.utf8</li>
+<li><strong>控制台代码页：</strong>默认936（GBK）</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;zh_CN.utf8&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;zh_CN.utf8&quot;</span>));<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>简要：不行</strong></p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313213945450.png" srcset="/img/loading.gif" lazyload alt="image-20230313213945450">
+<figcaption aria-hidden="true">image-20230313213945450</figcaption>
+</figure>
+<h3 id="测试10">测试10：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>UTF-8</li>
+<li><strong>wcout/wcin设置locale：</strong>不设置</li>
+<li><strong>控制台代码页：</strong>65001</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;chcp 65001&quot;</span>);<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>简要：不行</strong></p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313214212088.png" srcset="/img/loading.gif" lazyload alt="image-20230313214212088">
+<figcaption aria-hidden="true">image-20230313214212088</figcaption>
+</figure>
+<h3 id="测试11">测试11：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>UTF-8</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为chs</li>
+<li><strong>控制台代码页：</strong>65001</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;chcp 65001&quot;</span>);<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>简要：不行</strong></p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313214721673.png" srcset="/img/loading.gif" lazyload alt="image-20230313214721673">
+<figcaption aria-hidden="true">image-20230313214721673</figcaption>
+</figure>
+<h3 id="测试12">测试12：</h3>
+<ol type="1">
+<li><strong>文件保存格式：</strong>UTF-8</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为zh_CN.utf8</li>
+<li><strong>控制台代码页：</strong>65001</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">system</span>(<span class="hljs-string">&quot;chcp 65001&quot;</span>);<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;zh_CN.utf8&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;zh_CN.utf8&quot;</span>));<br>    <span class="hljs-comment">// 英文测试</span><br>    string outstr = <span class="hljs-string">&quot;aaa&quot;</span>, instr;<br>    wstring outwstr = <span class="hljs-string">L&quot;bbb&quot;</span>, inwstr;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    outstr = <span class="hljs-string">&quot;梦梦&quot;</span>;<br>    outwstr = <span class="hljs-string">L&quot;娜娜&quot;</span>;<br>    cout &lt;&lt; outstr &lt;&lt; endl;<br>    wcout &lt;&lt; outwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 英文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>    <span class="hljs-comment">// 中文测试</span><br>    cin &gt;&gt; instr;<br>    wcin &gt;&gt; inwstr;<br>    cout &lt;&lt; instr &lt;&lt; endl;<br>    wcout &lt;&lt; inwstr &lt;&lt; endl;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>简要：不行</strong></p>
+<figure>
+<img src="/2023/03/14/%E3%80%90C++%E3%80%91%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%BE%93%E5%87%BA%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/Users\Qalxry\AppData\Roaming\Typora\typora-user-images\image-20230313215538438.png" srcset="/img/loading.gif" lazyload alt="image-20230313215538438">
+<figcaption aria-hidden="true">image-20230313215538438</figcaption>
+</figure>
+<h3 id="二从中挑选出最佳方案">（二）从中挑选出最佳方案</h3>
+<p>给出四个转码函数。其中前两个需要添加头文件&lt;codecvt&gt;，后两个要添加头文件&lt;Windows.h&gt;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function">wstring <span class="hljs-title">UTF8_to_UTF16</span><span class="hljs-params">(<span class="hljs-type">const</span> string&amp; strUTF8)</span> </span>&#123;<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> __cplusplus &gt;= 201703L &amp;&amp; defined(__cpp_lib_char8_t) <span class="hljs-comment">// 检查编译器是否支持 C++17 和 char8_t</span></span><br>    std::wstring_convert&lt;std::codecvt_char8&lt;<span class="hljs-type">wchar_t</span>&gt;, <span class="hljs-type">wchar_t</span>&gt; converter;<br>    std::wstring strUTF16 = converter.<span class="hljs-built_in">from_bytes</span>(<span class="hljs-built_in">reinterpret_cast</span>&lt;<span class="hljs-type">const</span> <span class="hljs-type">char</span>*&gt;(strUTF8.<span class="hljs-built_in">data</span>()), strUTF8.<span class="hljs-built_in">data</span>() + strUTF8.<span class="hljs-built_in">size</span>());<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    std::wstring_convert&lt;std::codecvt_utf8_utf16&lt;<span class="hljs-type">wchar_t</span>&gt;&gt; converter;<br>    std::wstring strUTF16 = converter.<span class="hljs-built_in">from_bytes</span>(strUTF8);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <span class="hljs-keyword">return</span> strUTF16;<br>&#125;<br><br><span class="hljs-function">string <span class="hljs-title">UTF16_to_UTF8</span><span class="hljs-params">(<span class="hljs-type">const</span> wstring&amp; strUTF16)</span> </span>&#123;<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> __cplusplus &gt;= 201703L <span class="hljs-comment">// 判断编译器是否支持 C++17，因为C++17改了，与之前的版本冲突</span></span><br>    std::wstring_convert&lt;std::codecvt_utf8&lt;<span class="hljs-type">wchar_t</span>&gt;&gt; converter;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span> </span><br>    std::wstring_convert&lt;std::codecvt_utf8_utf16&lt;<span class="hljs-type">wchar_t</span>&gt;&gt; converter;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    std::string strUTF8 = converter.<span class="hljs-built_in">to_bytes</span>(strUTF16);<br>    <span class="hljs-keyword">return</span> strUTF8;<br>&#125;<br><br><span class="hljs-function">wstring <span class="hljs-title">ANSI_to_UTF16</span><span class="hljs-params">(<span class="hljs-type">const</span> string&amp; strANSI)</span> </span>&#123;<br>    <span class="hljs-type">int</span> nWide = ::<span class="hljs-built_in">MultiByteToWideChar</span>(CP_ACP, <span class="hljs-number">0</span>, strANSI.<span class="hljs-built_in">c_str</span>(), (<span class="hljs-type">int</span>)strANSI.<span class="hljs-built_in">size</span>(), <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>);<br>    <span class="hljs-function">unique_ptr&lt;<span class="hljs-type">wchar_t</span>[]&gt; <span class="hljs-title">buffer</span><span class="hljs-params">(<span class="hljs-keyword">new</span> <span class="hljs-type">wchar_t</span>[nWide + <span class="hljs-number">1</span>])</span></span>;<br>    <span class="hljs-keyword">if</span> (!buffer)<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">L&quot;&quot;</span>;<br>    ::<span class="hljs-built_in">MultiByteToWideChar</span>(CP_ACP, <span class="hljs-number">0</span>, strANSI.<span class="hljs-built_in">c_str</span>(), (<span class="hljs-type">int</span>)strANSI.<span class="hljs-built_in">size</span>(), buffer.<span class="hljs-built_in">get</span>(), nWide);<br>    buffer[nWide] = <span class="hljs-string">L&#x27;\0&#x27;</span>;<br>    <span class="hljs-keyword">return</span> buffer.<span class="hljs-built_in">get</span>();<br>&#125;<br><br><span class="hljs-function">string <span class="hljs-title">UTF16_to_ANSI</span><span class="hljs-params">(<span class="hljs-type">const</span> wstring&amp; strUTF16)</span> </span>&#123;<br>    <span class="hljs-type">int</span> nAnsi = ::<span class="hljs-built_in">WideCharToMultiByte</span>(CP_ACP, <span class="hljs-number">0</span>, strUTF16.<span class="hljs-built_in">c_str</span>(), (<span class="hljs-type">int</span>)strUTF16.<span class="hljs-built_in">size</span>(), <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br>    <span class="hljs-function">unique_ptr&lt;<span class="hljs-type">char</span>[]&gt; <span class="hljs-title">buffer</span><span class="hljs-params">(<span class="hljs-keyword">new</span> <span class="hljs-type">char</span>[nAnsi + <span class="hljs-number">1</span>])</span></span>;<br>    <span class="hljs-keyword">if</span> (!buffer)<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;&quot;</span>;<br>    ::<span class="hljs-built_in">WideCharToMultiByte</span>(CP_ACP, <span class="hljs-number">0</span>, strUTF16.<span class="hljs-built_in">c_str</span>(), (<span class="hljs-type">int</span>)strUTF16.<span class="hljs-built_in">size</span>(), buffer.<span class="hljs-built_in">get</span>(), nAnsi, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);<br>    buffer[nAnsi] = <span class="hljs-string">&#x27;\0&#x27;</span>;<br>    <span class="hljs-keyword">return</span> buffer.<span class="hljs-built_in">get</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="方案一不可用于gcc">方案一（不可用于GCC）：</h4>
+<p>经过在VS上的测试，此情况使用wcin输入的宽字符串为UTF-16编码格式，当需要输出UTF-8时，则必须将其用UTF16_to_UTF8函数转换后输出。</p>
+<p>当ANSI想要输出UTF-8时，可以使用ANSI_to_UTF16和UTF16_to_UTF8两个函数进行转换。</p>
+<ol type="1">
+<li><strong>文件保存格式：</strong>GB2312</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为chs</li>
+<li><strong>控制台代码页：</strong>默认936（GBK）</li>
+<li><strong>codecvt</strong>头文件：输出utf-8文件时使用</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;codecvt&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="方案二vs特化方案推荐">方案二（VS特化方案）（推荐）：</h4>
+<ol type="1">
+<li><strong>文件保存格式：</strong>（VS中的）Unicode</li>
+<li><strong>wcout/wcin设置locale：</strong>设置为chs</li>
+<li><strong>控制台代码页：</strong>默认936（GBK）</li>
+<li><strong>codecvt</strong>头文件：输出utf-8文件时使用</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;codecvt&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function">string <span class="hljs-title">UTF16_to_UTF8</span><span class="hljs-params">(<span class="hljs-type">const</span> wstring&amp; strUTF16)</span> </span>&#123;<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> __cplusplus &gt;= 201703L <span class="hljs-comment">// 判断编译器是否支持 C++17，因为C++17改了，与之前的版本冲突</span></span><br>    std::wstring_convert&lt;std::codecvt_utf8&lt;<span class="hljs-type">wchar_t</span>&gt;&gt; converter;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span> </span><br>    std::wstring_convert&lt;std::codecvt_utf8_utf16&lt;<span class="hljs-type">wchar_t</span>&gt;&gt; converter;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    std::string strUTF8 = converter.<span class="hljs-built_in">to_bytes</span>(strUTF16);<br>    <span class="hljs-keyword">return</span> strUTF8;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    wcout.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    wcin.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    wstring ws;<br>    wcin &gt;&gt; ws;<br>    wcout &lt;&lt; ws;<br>    <span class="hljs-function">ofstream <span class="hljs-title">wofs</span><span class="hljs-params">(<span class="hljs-string">&quot;sss.txt&quot;</span>, ios::out | ios::trunc)</span></span>;<br>    wofs.<span class="hljs-built_in">imbue</span>(<span class="hljs-built_in">locale</span>(<span class="hljs-string">&quot;chs&quot;</span>));<br>    wofs &lt;&lt; <span class="hljs-built_in">UTF16_to_UTF8</span>(ws);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样将可以实现输出UTF-8文本。同时其他功能一切正常！（VS yyds！）</p>
+<p><strong>注：必须使用C++14及以下版本！！</strong></p>
+<h4 id="方案三vs特化方案">方案三（VS特化方案）：</h4>
+<ol type="1">
+<li><strong>文件保存格式：</strong>（VS中的）Unicode</li>
+<li><strong>wcout/wcin设置locale：不用设置</strong></li>
+<li><strong>控制台代码页：</strong>默认936（GBK）</li>
+<li><strong>codecvt</strong>头文件：输出utf-8文件时使用</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;locale&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;codecvt&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function">string <span class="hljs-title">UTF16_to_UTF8</span><span class="hljs-params">(<span class="hljs-type">const</span> wstring&amp; strUTF16)</span> </span>&#123;<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> __cplusplus &gt;= 201703L <span class="hljs-comment">// 判断编译器是否支持 C++17，因为C++17改了，与之前的版本冲突</span></span><br>    std::wstring_convert&lt;std::codecvt_utf8&lt;<span class="hljs-type">wchar_t</span>&gt;&gt; converter;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span> </span><br>    std::wstring_convert&lt;std::codecvt_utf8_utf16&lt;<span class="hljs-type">wchar_t</span>&gt;&gt; converter;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    std::string strUTF8 = converter.<span class="hljs-built_in">to_bytes</span>(strUTF16);<br>    <span class="hljs-keyword">return</span> strUTF8;<br>&#125;<br><span class="hljs-function">wstring <span class="hljs-title">ANSI_to_UTF16</span><span class="hljs-params">(<span class="hljs-type">const</span> string&amp; strANSI)</span> </span>&#123;<br>    <span class="hljs-type">int</span> nWide = ::<span class="hljs-built_in">MultiByteToWideChar</span>(CP_ACP, <span class="hljs-number">0</span>, strANSI.<span class="hljs-built_in">c_str</span>(), (<span class="hljs-type">int</span>)strANSI.<span class="hljs-built_in">size</span>(), <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>);<br>    <span class="hljs-function">unique_ptr&lt;<span class="hljs-type">wchar_t</span>[]&gt; <span class="hljs-title">buffer</span><span class="hljs-params">(<span class="hljs-keyword">new</span> <span class="hljs-type">wchar_t</span>[nWide + <span class="hljs-number">1</span>])</span></span>;<br>    <span class="hljs-keyword">if</span> (!buffer)<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">L&quot;&quot;</span>;<br>    ::<span class="hljs-built_in">MultiByteToWideChar</span>(CP_ACP, <span class="hljs-number">0</span>, strANSI.<span class="hljs-built_in">c_str</span>(), (<span class="hljs-type">int</span>)strANSI.<span class="hljs-built_in">size</span>(), buffer.<span class="hljs-built_in">get</span>(), nWide);<br>    buffer[nWide] = <span class="hljs-string">L&#x27;\0&#x27;</span>;<br>    <span class="hljs-keyword">return</span> buffer.<span class="hljs-built_in">get</span>();<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    string s;<br>    cin &gt;&gt; s;<br>    cout &lt;&lt; s;<br>    <span class="hljs-function">ofstream <span class="hljs-title">wofs</span><span class="hljs-params">(<span class="hljs-string">&quot;sss.txt&quot;</span>, ios::out | ios::trunc)</span></span>;<br>    wofs &lt;&lt; <span class="hljs-built_in">UTF16_to_UTF8</span>(<span class="hljs-built_in">ANSI_to_UTF16</span>(s));<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样将可以实现输出UTF-8文本。同时其他功能一切正常！（VS yyds！）</p>
+<p><strong>注：必须使用C++14及以下版本！！</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/C/" class="category-chain-item">C++</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/C/C-%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F/" class="category-chain-item">C++ 编码格式</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【C++】代码与输出编码格式详解</div>
+      <div>https://qalxry.github.io/2023/03/14/【C++】代码与输出编码格式详解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月14日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年3月14日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/14/%E3%80%90%E9%A2%98%E8%A7%A3%E3%80%91%E3%80%90%E9%80%92%E5%BD%92%E3%80%81%E6%A0%88%E3%80%91%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97%E8%AE%A1%E7%AE%97%E5%99%A8/" title="【题解】【递归、栈】四则运算计算器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【题解】【递归、栈】四则运算计算器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/13/%E5%8D%9A%E5%AE%A2%E7%BC%96%E5%86%99%E6%94%BB%E7%95%A5/" title="博客编写攻略">
+                        <span class="hidden-mobile">博客编写攻略</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
