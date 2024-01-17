@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/piclib/bg_sora_3.jpg">
 <meta property="article:published_time" content="2024-01-17T14:12:37.000Z">
-<meta property="article:modified_time" content="2024-01-17T14:14:47.038Z">
+<meta property="article:modified_time" content="2024-01-17T14:39:28.202Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="DP">
 <meta property="article:tag" content="图论">
@@ -317,7 +317,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月17日 晚上 22:14
+                    本文最后更新于：2024年1月17日 晚上 22:39
                   
                 
               </p>
@@ -340,7 +340,8 @@ Hamilton 路径中被忽视的玄妙之处</h2>
 <p>输出一个整数，表示最短 <span class="math inline">\(Hamilton\)</span>
 路径的长度。</p>
 <h4 id="数据范围">数据范围</h4>
-<p><span class="math inline">\(1≤n≤20\)</span> <span class="math inline">\(0≤a[i,j]≤107\)</span></p>
+<p><span class="math inline">\(1≤n≤20\)</span></p>
+<p><span class="math inline">\(0≤a[i,j]≤107\)</span></p>
 <h3 id="状压dp模板ac代码">2 状压DP模板AC代码</h3>
 <p>先给出最终的代码，然后我们再分析其中不被重视的玄秘之处。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">20</span>;      <span class="hljs-comment">// 最多20个点</span><br><span class="hljs-type">int</span> n, dp[<span class="hljs-number">1</span> &lt;&lt; N][N];  <span class="hljs-comment">// dp[S][j]表示点集S中，以j为终点的最短路径长度</span><br><span class="hljs-type">int</span> dist[N][N];        <span class="hljs-comment">// dist[i][j]表示点i到点j的距离</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>            cin &gt;&gt; dist[i][j];<br><br>    <span class="hljs-comment">// int -&gt; 0x3f3f3f3f = 1061109567 &lt; 2147483647 / 2</span><br>    <span class="hljs-comment">// 不用更大的数字是因为防止两个无穷大相加爆int</span><br>    <span class="hljs-built_in">memset</span>(dp, <span class="hljs-number">0x3f</span>, <span class="hljs-built_in">sizeof</span>(dp));         <span class="hljs-comment">// 初始化为无穷大</span><br>    dp[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;                         <span class="hljs-comment">// 开始：集合中只有起点的点集，起点到起点的距离为0</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> S = <span class="hljs-number">1</span>; S &lt; (<span class="hljs-number">1</span> &lt;&lt; n); S++) &#123;  <span class="hljs-comment">// 枚举所有点集</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++) &#123;     <span class="hljs-comment">// 计算在 S 中以 j 为终点的最短路径长度</span><br>            <span class="hljs-keyword">if</span> ((S &gt;&gt; j) &amp; <span class="hljs-number">1</span>) &#123;           <span class="hljs-comment">// S 中必须包含点 j</span><br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; n; k++) &#123;     <span class="hljs-comment">// 取出 S-j 中的一个点 k，通过枚举</span><br>                    <span class="hljs-keyword">if</span> ((S ^ (<span class="hljs-number">1</span> &lt;&lt; j)) &gt;&gt; k &amp; <span class="hljs-number">1</span>)  <span class="hljs-comment">// 判断 S-j 中是否包含点 k</span><br>                        dp[S][j] = <span class="hljs-built_in">min</span>(dp[S][j], dp[S ^ (<span class="hljs-number">1</span> &lt;&lt; j)][k] + dist[k][j]);<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; dp[(<span class="hljs-number">1</span> &lt;&lt; n) - <span class="hljs-number">1</span>][n - <span class="hljs-number">1</span>] &lt;&lt; endl;<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
