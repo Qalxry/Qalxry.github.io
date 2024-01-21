@@ -1,20 +1,20 @@
 @font-face {
     font-family: "Nunito";
-    src: url("../fonts/Nunito/Nunito.woff2") format("woff2"), url("../fonts/Nunito/Nunito.ttf") format("truetype");
+    src: url("../../fonts/Nunito/Nunito.woff2") format("woff2"), url("../fonts/Nunito/Nunito.ttf") format("truetype");
     font-weight: normal; /* 会被应用为 CSS font-weight:400 的样式 */
     font-style: normal;
 }
 
 @font-face {
     font-family: "Nunito";
-    src: url("../fonts/Nunito/Nunito-Italic.woff2") format("woff2"), url("../fonts/Nunito/Nunito-Italic.ttf") format("truetype");
+    src: url("../../fonts/Nunito/Nunito-Italic.woff2") format("woff2"), url("../fonts/Nunito/Nunito-Italic.ttf") format("truetype");
     font-weight: normal; /* 会被应用为 CSS font-weight:400 的样式 */
     font-style: italic;
 }
 
 @font-face {
     font-family: "Nunito-Bold";
-    src: url("../fonts/Nunito/Nunito-Bold.woff2") format("woff2"), url("../fonts/Nunito/Nunito-Bold.ttf") format("truetype");
+    src: url("../../fonts/Nunito/Nunito-Bold.woff2") format("woff2"), url("../fonts/Nunito/Nunito-Bold.ttf") format("truetype");
     font-weight: normal; /* 会被应用为 CSS font-weight:400 的样式 */
     font-style: normal;
 }
@@ -54,8 +54,8 @@ details > summary::-webkit-details-marker {
 }
 
 details > *:not(summary) {
-    margin:0.8em;
-    margin-top: 1em;
+    margin: 1em;
+    /* margin-top: 10px; */
 }
 
 details > summary::before {
@@ -63,9 +63,9 @@ details > summary::before {
     content: "";
     width: 0;
     height: 0;
-    border-left: 16px solid #121f72;
-    border-bottom: 9px solid transparent;
-    border-top: 9px solid transparent; /* Change 'black' to your desired triangle color */
+    border-left: 15px solid #121f72;
+    border-bottom: 8px solid transparent;
+    border-top: 8px solid transparent; /* Change 'black' to your desired triangle color */
     display: inline-block;
     transition: all 0.2s ease-in-out;
     margin-top: 0.4em;
@@ -78,11 +78,11 @@ details > summary > summary-title {
     z-index: 12;
     position: relative;
     display: inline-block;
-    font-size: 1.1em;
+    font-size: 0.95em;
     letter-spacing: 0.02em;
     /* font-weight: bold; */
-    line-height: 1.1;
-    margin-left: 0.2em;
+    /* line-height: 1; */
+    margin-left: 0.5em;
     padding: 0 0.35em;
     transition: color 0.5s;
     transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
@@ -93,6 +93,7 @@ details > summary > summary-subtitle {
     position: relative;
     display: inline-block;
     margin: 0 0 0 0.5em;
+    margin-left: 0.7em;
     font-size: 0.8em;
     letter-spacing: 0.05em;
     transform: translate3d(-0.5em, 0, 0);
@@ -137,7 +138,7 @@ details > summary > summary-subtitle::before {
 
 /* //////////////////// Clicked //////////////////// */
 details[open] {
-    transform: scale(0.994);
+    transform: scale(0.999);
     box-shadow: 1px 1px 3px 0px rgba(0, 32, 139, 0.466);
 }
 
@@ -151,7 +152,7 @@ details[open] > summary {
 }
 
 details[open] > summary::before {
-    border-left: 16px solid #4143a4;
+    border-left: 15px solid #4143a4;
     transform: rotate(90deg);
 }
 
@@ -177,33 +178,35 @@ details[open] > summary > summary-subtitle::before {
 }
 
 /* //////////////////// Hover //////////////////// */
-details:hover {
-    /* border: 1px solid #4143a4; */
-    transform: scale(0.99);
-    box-shadow: 1px 1px 3px 0px rgba(0, 32, 139, 0.4);
-}
+@media (hover: hover) and (pointer: fine) {
+    details:hover {
+        /* border: 1px solid #4143a4; */
+        transform: scale(0.999);
+        box-shadow: 1px 1px 3px 0px rgba(0, 32, 139, 0.4);
+    }
 
-details:not([open]) > summary:hover::before {
-    border-left: 16px solid #6265fe;
-}
+    details:not([open]) > summary:hover::before {
+        border-left: 15px solid #6265fe;
+    }
 
-details > summary:hover {
-    background-color: #f3f6ff;
-    color: #6265fe;
-}
+    details > summary:hover {
+        background-color: #f3f6ff;
+        color: #6265fe;
+    }
 
-details:not([open]) > summary:hover > summary-title::before {
-    transform: scale3d(1, 1.5, 1);
-}
-details:not([open]) > summary:hover > summary-subtitle::before {
-    transform: scale3d(1, 1, 1);
-}
+    details:not([open]) > summary:hover > summary-title::before {
+        transform: scale3d(1, 1.5, 1);
+    }
+    details:not([open]) > summary:hover > summary-subtitle::before {
+        transform: scale3d(1, 1, 1);
+    }
 
-details:not([open]) > summary:hover > summary-subtitle {
-    transform: translate3d(0, 0, 0);
-}
+    details:not([open]) > summary:hover > summary-subtitle {
+        transform: translate3d(0, 0, 0);
+    }
 
-details:not([open]) > summary:hover > summary-subtitle::before {
-    transform-origin: 0% 50%;
-    transition-timing-function: ease;
+    details:not([open]) > summary:hover > summary-subtitle::before {
+        transform-origin: 0% 50%;
+        transition-timing-function: ease;
+    }
 }
