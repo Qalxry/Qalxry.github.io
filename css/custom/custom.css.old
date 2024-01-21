@@ -5,8 +5,8 @@
     font-family: 'SmileySans';
     /* font-style: normal; */
     /* font-weight: 400; */
-    src: url('../fonts/SmileySans-Oblique.ttf.woff2') format('woff2'),
+    src: url('../fonts/SmileySans/SmileySans-Oblique.ttf.woff2') format('woff2'),
         /* Chrome 36+, Opera 23+, Firefox 39+ */
-        url('../fonts/SmileySans-Oblique.otf') format('opentype'),
-        url('../fonts/SmileySans-Oblique.ttf') format('truetype');
+        url('../fonts/SmileySans/SmileySans-Oblique.otf') format('opentype'),
+        url('../fonts/SmileySans/SmileySans-Oblique.ttf') format('truetype');
 }

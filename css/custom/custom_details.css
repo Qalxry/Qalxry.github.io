@@ -1,0 +1,209 @@
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito/Nunito.woff2") format("woff2"), url("../fonts/Nunito/Nunito.ttf") format("truetype");
+    font-weight: normal; /* 会被应用为 CSS font-weight:400 的样式 */
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Nunito";
+    src: url("../fonts/Nunito/Nunito-Italic.woff2") format("woff2"), url("../fonts/Nunito/Nunito-Italic.ttf") format("truetype");
+    font-weight: normal; /* 会被应用为 CSS font-weight:400 的样式 */
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Nunito-Bold";
+    src: url("../fonts/Nunito/Nunito-Bold.woff2") format("woff2"), url("../fonts/Nunito/Nunito-Bold.ttf") format("truetype");
+    font-weight: normal; /* 会被应用为 CSS font-weight:400 的样式 */
+    font-style: normal;
+}
+
+details {
+    z-index: 10;
+    border: 1px solid #ffffff;
+    box-shadow: 2px 2px 2px 1px rgba(77, 87, 200, 0.345);
+    border-radius: 10px;
+    /* padding: 5px; */
+    /* margin-bottom: 10px; */
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+details > summary {
+    font-family: "Nunito", sans-serif;
+    /* font-family: "Liu Jian Mao Cao", sans-serif; */
+    font-size: 1.15em;
+    background-color: #e8edff;
+    color: #121f72;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    padding-left: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    user-select: none;
+}
+
+details > summary::-webkit-details-marker {
+    display: none; /* 对于 WebKit 浏览器隐藏默认箭头 */
+}
+
+details > *:not(summary) {
+    margin:0.8em;
+    margin-top: 1em;
+}
+
+details > summary::before {
+    /* content: "▶"; */
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 16px solid #121f72;
+    border-bottom: 9px solid transparent;
+    border-top: 9px solid transparent; /* Change 'black' to your desired triangle color */
+    display: inline-block;
+    transition: all 0.2s ease-in-out;
+    margin-top: 0.4em;
+    transform-origin: 40% 50%;
+    background: none;
+}
+
+details > summary > summary-title {
+    font-family: "Nunito-Bold", "黑体", sans-serif;
+    z-index: 12;
+    position: relative;
+    display: inline-block;
+    font-size: 1.1em;
+    letter-spacing: 0.02em;
+    /* font-weight: bold; */
+    line-height: 1.1;
+    margin-left: 0.2em;
+    padding: 0 0.35em;
+    transition: color 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+details > summary > summary-subtitle {
+    z-index: 12;
+    position: relative;
+    display: inline-block;
+    margin: 0 0 0 0.5em;
+    font-size: 0.8em;
+    letter-spacing: 0.05em;
+    transform: translate3d(-0.5em, 0, 0);
+    transition: transform 0.5s, color 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+details > summary > summary-title::before {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    opacity: 0.3;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 0% 50%;
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+details > summary > summary-subtitle::before {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    top: calc(95%);
+    left: 0.05em;
+    width: 100%;
+    height: 1px;
+    opacity: 0.3;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 100% 50%;
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+details > summary > summary-title::before,
+details > summary > summary-subtitle::before {
+    background: #6265fe;
+}
+
+/* //////////////////// Clicked //////////////////// */
+details[open] {
+    transform: scale(0.994);
+    box-shadow: 1px 1px 3px 0px rgba(0, 32, 139, 0.466);
+}
+
+/* 关闭内容时需要rotate回来 */
+details:not([open]) > summary::before {
+    transform: rotate(0deg);
+}
+
+details[open] > summary {
+    border-bottom: 1px solid #dfe3f5;
+}
+
+details[open] > summary::before {
+    border-left: 16px solid #4143a4;
+    transform: rotate(90deg);
+}
+
+details[open] > summary > summary-title,
+details[open] > summary > summary-subtitle {
+    color: #4143a4;
+}
+
+details[open] > summary > summary-title::before {
+    transform: scale3d(1, 1.5, 1);
+}
+details[open] > summary > summary-subtitle::before {
+    transform: scale3d(1, 1, 1);
+}
+
+details[open] > summary > summary-subtitle {
+    transform: translate3d(0, 0, 0);
+}
+
+details[open] > summary > summary-subtitle::before {
+    transform-origin: 0% 50%;
+    transition-timing-function: ease;
+}
+
+/* //////////////////// Hover //////////////////// */
+details:hover {
+    /* border: 1px solid #4143a4; */
+    transform: scale(0.99);
+    box-shadow: 1px 1px 3px 0px rgba(0, 32, 139, 0.4);
+}
+
+details:not([open]) > summary:hover::before {
+    border-left: 16px solid #6265fe;
+}
+
+details > summary:hover {
+    background-color: #f3f6ff;
+    color: #6265fe;
+}
+
+details:not([open]) > summary:hover > summary-title::before {
+    transform: scale3d(1, 1.5, 1);
+}
+details:not([open]) > summary:hover > summary-subtitle::before {
+    transform: scale3d(1, 1, 1);
+}
+
+details:not([open]) > summary:hover > summary-subtitle {
+    transform: translate3d(0, 0, 0);
+}
+
+details:not([open]) > summary:hover > summary-subtitle::before {
+    transform-origin: 0% 50%;
+    transition-timing-function: ease;
+}
