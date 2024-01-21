@@ -210,3 +210,6 @@ details[open] > summary > summary-subtitle::before {
         transition-timing-function: ease;
     }
 }
+@media (hover: none) and (pointer: coarse) {
+    
+}
