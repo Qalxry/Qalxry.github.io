@@ -20,15 +20,13 @@
 }
 
 details {
+    display: flex;
     z-index: 10;
     border: 1px solid #ffffff;
     box-shadow: 2px 2px 2px 1px rgba(77, 87, 200, 0.345);
     border-radius: 10px;
-    /* padding: 5px; */
-    /* margin-bottom: 10px; */
     overflow: hidden;
     background-color: #ffffff;
-    transition: all 0.2s ease-in-out;
 }
 
 details > summary {
@@ -67,7 +65,7 @@ details > summary::before {
     border-bottom: 8px solid transparent;
     border-top: 8px solid transparent; /* Change 'black' to your desired triangle color */
     display: inline-block;
-    transition: all 0.2s ease-in-out;
+    transition: border-left, transform 0.2s ease-in-out;
     margin-top: 0.4em;
     transform-origin: 40% 50%;
     background: none;
@@ -175,6 +173,17 @@ details[open] > summary > summary-subtitle {
 details[open] > summary > summary-subtitle::before {
     transform-origin: 0% 50%;
     transition-timing-function: ease;
+}
+
+details .details-content {
+    display: block;
+    overflow: hidden;
+    transition: max-height 2s ease-in-out;
+    max-height: 0; /* 当details没有打开时 */
+}
+
+details[open] .details-content {
+    max-height: 400px; /* 你需要更具实际内容设置一个适当的最大高度 */
 }
 
 /* //////////////////// Hover //////////////////// */
