@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   mydetailsElements.forEach((mydetails) => {
     // 为mydetails添加“notOpened”属性
     mydetails.setAttribute("hasNotOpened", "hasNotOpened");
+
     ["h1", "h2", "h3", "h4", "h5", "h6"].forEach((tag, index) => {
       // 获取特定标签的所有实例
       var headers = mydetails.getElementsByTagName(tag);
@@ -60,6 +61,27 @@ document.addEventListener("DOMContentLoaded", function (event) {
       }
     });
     console.log("[DEBUG] Finished the element replacement.");
+  });
+
+  // When scroll to the mydetails element, add ".disable-lazyload-mathjax" class to it.
+  mydetailsElements.forEach(function (mydetails) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            // 为所有子类添加 “.disable-lazyload-mathjax” 类
+            mydetails.querySelectorAll("*").forEach((element) => {
+              element.classList.add("disable-lazyload-mathjax");
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        rootMargin: "0px 0px 200% 0px",
+      }
+    );
+    observer.observe(mydetails);
   });
 
   mydetailsElements.forEach(function (mydetails) {
@@ -95,17 +117,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
         mydetails.setAttribute("open", "open");
         mydetails.style.height = mydetails.scrollHeight + "px";
         // 需要等待内部的mathjax公式渲染完成后再次调整高度
-        if (mydetails.hasAttribute("hasNotOpened")) {
-          mydetails.removeAttribute("hasNotOpened");
-          setTimeout(function () {
-            let isOpen = mydetails.hasAttribute("open");
-            if (isOpen) {
-              mydetails.style.height = mydetails.scrollHeight + "px";
-            } else {
-              mydetails.style.height = getTotalHeight(summary) + "px";
-            }
-          }, 300);
-        }
+        // if (mydetails.hasAttribute("hasNotOpened")) {
+        //   mydetails.removeAttribute("hasNotOpened");
+        //   setTimeout(function () {
+        //     let isOpen = mydetails.hasAttribute("open");
+        //     if (isOpen) {
+        //       mydetails.style.height = mydetails.scrollHeight + "px";
+        //     } else {
+        //       mydetails.style.height = getTotalHeight(summary) + "px";
+        //     }
+        //   }, 300);
+        // }
       }
     });
   });
