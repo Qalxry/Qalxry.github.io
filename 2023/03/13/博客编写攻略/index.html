@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/post/%E5%8D%9A%E5%AE%A2%E7%BC%96%E5%86%99%E6%94%BB%E7%95%A5/index.png">
 <meta property="article:published_time" content="2023-03-13T05:44:00.000Z">
-<meta property="article:modified_time" content="2023-09-09T16:29:23.685Z">
+<meta property="article:modified_time" content="2024-01-22T16:55:53.104Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary_large_image">
@@ -255,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          827 字
+          1.5k 字
         
       </span>
     
@@ -266,7 +266,7 @@
         
         
         
-          4 分钟
+          7 分钟
         
       </span>
     
@@ -317,7 +317,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月10日 凌晨 00:29
+                    本文最后更新于：2024年1月23日 凌晨 00:55
                   
                 
               </p>
@@ -366,6 +366,25 @@ Wallhaven</a></strong></p>
 </figure>
 <p><strong><a target="_blank" rel="noopener" href="https://unsplash.com/">点击跳转到
 Unsplash</a></strong></p>
+<h3 id="hexo-fluid-美化">Hexo Fluid 美化</h3>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ba692a97a602">来自：【Hwcoder】让你的
+Hexo 博客更美观的 N 种配置（基于 Fluid 主题扩展）</a></p>
+<h4 id="行内代码颜色">行内代码颜色</h4>
+<p>默认的行内代码颜色和正文颜色是继承关系，且行内代码背景色也不明显，因此视觉上难以区分。
+但是配置文件中又没有对应选项可以修改，查阅 GitHub 的 Issue
+发现，有人曾提供过一个解决方案。</p>
+<p>打开路径 <code>/themes/fluid/source/css/_pages/_base</code> 下的
+<code>base.styl</code> 文件，找到 <code>code</code> 配置项，修改颜色为
+<code>#E05B35</code>。</p>
+<h4 id="mac-风格代码块">Mac 风格代码块</h4>
+<p>在 GitHub 的 Issue 发现有人提供了自定义样式实现 Mac
+风格代码块的方法，遂尝试之。 首先在路径
+<code>/themes/fluid/source/css</code> 下新建文件
+<code>mac.styl</code>，复制以下代码：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-class">.highlight</span><br>    <span class="hljs-attribute">background</span>: <span class="hljs-number">#011627</span><br>    <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">5px</span><br>    <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0</span> <span class="hljs-number">10px</span> <span class="hljs-number">30px</span> <span class="hljs-number">0</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, .<span class="hljs-number">4</span>)<br>    <span class="hljs-attribute">padding-top</span>: <span class="hljs-number">30px</span><br><br>    <span class="hljs-selector-pseudo">&amp;::before</span><br>      <span class="hljs-attribute">background</span>: <span class="hljs-number">#fc625d</span><br>      <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">50%</span><br>      <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">20px</span> <span class="hljs-number">0</span> <span class="hljs-number">#fdbc40</span>, <span class="hljs-number">40px</span> <span class="hljs-number">0</span> <span class="hljs-number">#35cd4b</span><br>      <span class="hljs-attribute">content</span>: <span class="hljs-string">&#x27; &#x27;</span><br>      <span class="hljs-attribute">height</span>: <span class="hljs-number">12px</span><br>      <span class="hljs-attribute">left</span>: <span class="hljs-number">12px</span><br>      <span class="hljs-attribute">margin-top</span>: -<span class="hljs-number">20px</span><br>      <span class="hljs-attribute">position</span>: absolute<br>      <span class="hljs-attribute">width</span>: <span class="hljs-number">12px</span><br></code></pre></td></tr></table></figure>
+<p>然后在路径 <code>/_config.fluid.yml</code> 中找到
+<code>custom_css</code> 选项，加入 <code>/css/mac.css</code>
+代码，注意这里后缀名依然使用 <code>.css</code>，不然无法识别！</p>
 
                 
               </div>
@@ -430,7 +449,7 @@ Unsplash</a></strong></p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年9月10日</div>
+          <div>2024年1月23日</div>
         </div>
       
       
