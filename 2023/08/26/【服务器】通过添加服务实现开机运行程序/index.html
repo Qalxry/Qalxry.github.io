@@ -757,9 +757,15 @@
                   });
                 }, '', false]
               },
-              lazyAlwaysTypeset: [
-                '.disable-lazyload-mathjax'
-              ]
+              lazyAlwaysTypeset: (function() {
+                // 检查页面上是否存在 'mydetails' 元素
+                if (!document.querySelector('mydetails')) {
+                  return null; // 如果不存在，返回 null
+                } else {
+                  return ['mydetails']; // 如果存在，返回包含 'mydetails' 的数组
+                }
+                // 如果你直接给一个列表，那么如果页面上不存在这个元素，MathJax 将会崩溃
+              })(),
             }
           };
         } else {

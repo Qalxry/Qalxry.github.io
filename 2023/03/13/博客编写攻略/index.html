@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/post/%E5%8D%9A%E5%AE%A2%E7%BC%96%E5%86%99%E6%94%BB%E7%95%A5/index.png">
 <meta property="article:published_time" content="2023-03-13T05:44:00.000Z">
-<meta property="article:modified_time" content="2024-01-22T16:55:53.104Z">
+<meta property="article:modified_time" content="2024-01-22T17:52:15.207Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="Blog">
 <meta name="twitter:card" content="summary_large_image">
@@ -255,7 +255,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          3.6k 字
         
       </span>
     
@@ -266,7 +266,7 @@
         
         
         
-          7 分钟
+          15 分钟
         
       </span>
     
@@ -317,7 +317,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月23日 凌晨 00:55
+                    本文最后更新于：2024年1月23日 凌晨 01:52
                   
                 
               </p>
@@ -385,6 +385,13 @@ Hexo 博客更美观的 N 种配置（基于 Fluid 主题扩展）</a></p>
 <p>然后在路径 <code>/_config.fluid.yml</code> 中找到
 <code>custom_css</code> 选项，加入 <code>/css/mac.css</code>
 代码，注意这里后缀名依然使用 <code>.css</code>，不然无法识别！</p>
+<h3 id="mathjax-懒加载">Mathjax 懒加载</h3>
+<p>如果某些元素内部含有公式，但又要在公式真正加载之前确定大小，就必须设置该元素内部的公式不懒加载，而是直接渲染出来。这时候就需要使用
+<code>lazyAlwaysTypeset</code> 选项。</p>
+<p><code>themes/fluid/layout/_partials/plugins/math.ejs</code> 的
+<code>mathjax</code> 部分，添加 <code>lazyAlwaysTypeset</code>
+选项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs ejs">&lt;% if(theme.post.math.engine === &#x27;mathjax&#x27;) &#123; %&gt;<br>  &lt;%<br>    var lazy = theme.lazyload.enable &amp;&amp; require_version(theme.static_prefix.mathjax, &#x27;3.2.0&#x27;)<br><br>    import_script(`<br>      &lt;script&gt;<br>        if (!window.MathJax) &#123;<br>          window.MathJax = &#123;<br>            tex    : &#123;<br>              inlineMath: &#123; &#x27;[+]&#x27;: [[&#x27;$&#x27;, &#x27;$&#x27;]] &#125;<br>            &#125;,<br>            loader : &#123;<br>              $&#123; lazy ? &#x27;load: \[\&#x27;ui/lazy\&#x27;\]&#x27; : &#x27;&#x27; &#125;<br>            &#125;,<br>            options: &#123;<br>              renderActions: &#123;<br>                insertedScript: [200, () =&gt; &#123;<br>                  document.querySelectorAll(&#x27;mjx-container&#x27;).forEach(node =&gt; &#123;<br>                    let target = node.parentNode;<br>                    if (target.nodeName.toLowerCase() === &#x27;li&#x27;) &#123;<br>                      target.parentNode.classList.add(&#x27;has-jax&#x27;);<br>                    &#125;<br>                  &#125;);<br>                &#125;, &#x27;&#x27;, false]<br>              &#125;,<br>              lazyAlwaysTypeset: (function() &#123;<br>                // 检查页面上是否存在 &#x27;mydetails&#x27; 元素<br>                if (!document.querySelector(&#x27;mydetails&#x27;)) &#123;<br>                  return null; // 如果不存在，返回 null<br>                &#125; else &#123;<br>                  return [&#x27;mydetails&#x27;]; // 如果存在，返回包含 &#x27;mydetails&#x27; 的数组<br>                &#125;<br>                // 如果你直接给一个列表，那么如果页面上不存在这个元素，MathJax 将会崩溃<br>              &#125;)(),<br>            &#125;<br>          &#125;;<br>        &#125; else &#123;<br>          MathJax.startup.document.state(0);<br>          MathJax.texReset();<br>          MathJax.typeset();<br>          MathJax.typesetPromise();<br>        &#125;<br><br>        Fluid.events.registerRefreshCallback(function() &#123;<br>          if (&#x27;MathJax&#x27; in window &amp;&amp; MathJax.startup.document &amp;&amp; typeof MathJax.startup.document.state === &#x27;function&#x27;) &#123;<br>            MathJax.startup.document.state(0);<br>            MathJax.texReset();<br>            MathJax.typeset();<br>            MathJax.typesetPromise();<br>          &#125;<br>        &#125;);<br>      &lt;/script&gt;<br>    `)<br><br>    import_js(theme.static_prefix.mathjax.replace(&#x27;es5/&#x27;, &#x27;&#x27;), &#x27;es5/tex-mml-chtml.js&#x27;)<br>  %&gt;<br><br>&lt;% &#125; else if (theme.post.math.engine === &#x27;katex&#x27;) &#123; %&gt;<br>  &lt;% import_css(theme.static_prefix.katex, &#x27;katex.min.css&#x27;) %&gt;<br>&lt;% &#125; %&gt;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -781,9 +788,15 @@ Hexo 博客更美观的 N 种配置（基于 Fluid 主题扩展）</a></p>
                   });
                 }, '', false]
               },
-              lazyAlwaysTypeset: [
-                '.disable-lazyload-mathjax'
-              ]
+              lazyAlwaysTypeset: (function() {
+                // 检查页面上是否存在 'mydetails' 元素
+                if (!document.querySelector('mydetails')) {
+                  return null; // 如果不存在，返回 null
+                } else {
+                  return ['mydetails']; // 如果存在，返回包含 'mydetails' 的数组
+                }
+                // 如果你直接给一个列表，那么如果页面上不存在这个元素，MathJax 将会崩溃
+              })(),
             }
           };
         } else {
