@@ -1,0 +1,23 @@
+mydetails {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: $font-family;
+  margin-bottom: 2rem;
+  color: var(--post-text-color);
+}
+mydetails > myh1,
+mydetails myh2 {
+  border-bottom-color: var(--line-color);
+}
+mydetails > myh1,
+mydetails myh2,
+mydetails myh3,
+mydetails myh4,
+mydetails myh5,
+mydetails myh6 {
+  color: var(--post-heading-color);
+  transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+  font-weight: bold;
+  margin-bottom: 0.75em;
+  margin-top: 2em;
+}

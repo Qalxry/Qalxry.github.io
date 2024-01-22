@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/piclib/ve04_b.jpg">
 <meta property="article:published_time" content="2024-01-20T12:55:20.000Z">
-<meta property="article:modified_time" content="2024-01-21T18:26:59.802Z">
+<meta property="article:modified_time" content="2024-01-22T15:21:42.748Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="DP">
 <meta property="article:tag" content="Algorithm 算法">
@@ -74,6 +74,7 @@
 <link rel="stylesheet" href="/css/custom/custom.css">
 <link rel="stylesheet" href="/css/custom/custom_details.css">
 <link rel="stylesheet" href="/css/custom/mydetails.css">
+<link rel="stylesheet" href="/css/custom/myhX.css">
 
 
 
@@ -317,7 +318,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年1月22日 凌晨 02:26
+                    本文最后更新于：2024年1月22日 晚上 23:21
                   
                 
               </p>
@@ -619,38 +620,31 @@ Nothing Here.
 <h3 id="矩阵乘法优化">矩阵乘法优化</h3>
 <h3 id="cdq-分治">cdq 分治</h3>
 <html>
-<details>
-<summary>
-<summary-title>Proof</summary-title> <summary-subtitle>CDQ
-分治正确性证明</summary-subtitle>
-</summary>
-<div class="details-content">
-<p>这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。</p>
-<h3 id="这里是-秘-密-内-容">这里是 <a target="_blank" rel="noopener" href="https://www.mimi703.com">秘
-~ 密 ~ 内 ~ 容</a> ~</h3>
-<p><span class="math display">\[
-See~you~again~!
-\]</span></p>
-<p><span class="math inline">\(\texttt{Yoooo~}\)</span></p>
-</div>
-</details>
-</html>
-<html>
 <mydetails>
 <summary>
-<summary-title>Proof</summary-title> <summary-subtitle>CDQ
+<summary-title>Proof</summary-title> <summary-subtitle>cdq
 分治正确性证明</summary-subtitle>
 </summary>
 <p>
-</p><p>这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。这里是算法的正确性证明。折叠此部分时，这里的内容将不会显示。</p>
-<h3 id="这里是-秘-密-内-容-1">这里是 <a target="_blank" rel="noopener" href="https://www.mimi703.com">秘 ~ 密 ~ 内 ~ 容</a> ~</h3>
+</p><p><myh2> Come on! </myh2></p>
 <p><span class="math display">\[
-See~you~again~!
+\begin{align}
+dp[i] &amp;= min\{dp[j]+w[j][i]\}, \quad j \in [0,i) \\
+&amp;= min\{dp[j]+w[j][i]\}+w[i][i] \\
+&amp;= min\{dp[j]+w[j][i]+w[i][i]\} \\
+&amp;= min\{dp[j]+w[j][i]+w[i][i]\}+w[i][i] \\
+&amp;= min\{dp[j]+w[j][i]+w[i][i]\}+w[i][i]+w[i][i] \\
+&amp;= min\{dp[j]+w[j][i]+w[i][i]\}+w[i][i]+w[i][i]+w[i][i] \\
+&amp;= min\{dp[j]+w[j][i]+w[i][i]\}+w[i][i]+w[i][i]+w[i][i]+w[i][i]
+\end{align}
 \]</span></p>
-<p><span class="math inline">\(\texttt{Yoooo~}\)</span></p>
 <p></p>
 </mydetails>
 </html>
+<div class="note note-success">
+            <p><strong>WARNING</strong></p><p><a class="btn" href="url" title="title" target="_blank">text</a></p><p>文字 或者 <code>markdown</code> 均可</p>
+          </div>
+<p>swsw</p>
 
                 
               </div>

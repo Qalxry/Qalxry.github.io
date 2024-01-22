@@ -229,3 +229,15 @@ mydetails[open] > summary > summary-subtitle::before {
 }
 @media (hover: none) and (pointer: coarse) {
 }
+
+
+/* 
+To deal with the bug that internal h1/h2/h3/h4/h5 appear at the beside toc.
+This bug is serious, because if we clicked h1/h2/h3/h4/h5 appearing at the beside toc, 
+these h1/h2/h3/h4/h5 elements would hide the summary and things go to be uncontrollable. 
+So we just copy the style of h1/h2/h3/h4/h5 to myh1/myh2/myh3/myh4/myh5. 
+And then we use myh1/myh2/myh3/myh4/myh5 instead of h1/h2/h3/h4/h5 in the markdown file.
+So that they will not appear at the beside toc.
+*/
+/* mydetails myh1 */
+
