@@ -844,7 +844,7 @@ i.iconfont {
   line-height: 1;
 }
 :root {
-  --color-mode: "light";
+  --color-mode: 'light';
   --body-bg-color: #eee;
   --board-bg-color: #fff;
   --text-color: #3c4858;
@@ -864,10 +864,23 @@ i.iconfont {
   --button-hover-bg-color: #f2f3f5;
   --highlight-bg-color: #f6f8fa;
   --inlinecode-bg-color: rgba(175,184,193,0.2);
+  --mydetails-color: #121f72;
+  --mydetails-bg-color: #fff;
+  --mydetails-border-color: #fff;
+  --mydetails-summary-color: #121f72;
+  --mydetails-summary-bg-color: #e8edff;
+  --mydetails-summary-hover-color: #6265fe;
+  --mydetails-summary-hover-bg-color: #f3f6ff;
+  --mydetails-summary-active-color: #4143a4;
+  --mydetails-summary-active-bg-color: #f3f6ff;
+  --mydetails-summary-active-bottom-color: #e8edff;
+  --mydetails-summary-line-bg-color: #6265fe;
+  --mydetails-shadow-color: rgba(77,87,200,0.345);
+  --mydetails-shadow-hover-color: rgba(0,32,139,0.466);
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-mode: "dark";
+    --color-mode: 'dark';
   }
   :root:not([data-user-color-scheme]) {
     --body-bg-color: #181c27;
@@ -887,13 +900,26 @@ i.iconfont {
     --scrollbar-hover-color: #9da8b3;
     --button-bg-color: transparent;
     --button-hover-bg-color: #46647e;
-    --highlight-bg-color: #303030;
+    --highlight-bg-color: #0d1117;
     --inlinecode-bg-color: rgba(99,110,123,0.4);
+    --mydetails-color: #c4bfb8;
+    --mydetails-bg-color: #181a1b;
+    --mydetails-border-color: #0f1011;
+    --mydetails-summary-color: #8fb6ed;
+    --mydetails-summary-bg-color: #242729;
+    --mydetails-summary-hover-color: #b3d3ff;
+    --mydetails-summary-hover-bg-color: #181a1b;
+    --mydetails-summary-active-color: #b3d3ff;
+    --mydetails-summary-active-bg-color: #181a1b;
+    --mydetails-summary-active-bottom-color: #181a1b;
+    --mydetails-summary-line-bg-color: #b3d3ff;
+    --mydetails-shadow-color: rgba(0,0,0,0);
+    --mydetails-shadow-hover-color: rgba(0,0,0,0);
   }
   :root:not([data-user-color-scheme]) img {
-    -webkit-filter: brightness(0.9);
     filter: brightness(0.9);
     transition: filter 0.2s ease-in-out;
+    -webkit-filter: brightness(0.9);
   }
   @supports (-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px)) {
     :root:not([data-user-color-scheme]) .navbar .dropdown-collapse,
@@ -920,7 +946,7 @@ i.iconfont {
     transition: background-color 0.2s ease-in-out;
   }
 }
-[data-user-color-scheme="dark"] {
+[data-user-color-scheme='dark'] {
   --body-bg-color: #181c27;
   --board-bg-color: #252d38;
   --text-color: #c4c6c9;
@@ -938,35 +964,48 @@ i.iconfont {
   --scrollbar-hover-color: #9da8b3;
   --button-bg-color: transparent;
   --button-hover-bg-color: #46647e;
-  --highlight-bg-color: #303030;
+  --highlight-bg-color: #0d1117;
   --inlinecode-bg-color: rgba(99,110,123,0.4);
+  --mydetails-color: #c4bfb8;
+  --mydetails-bg-color: #181a1b;
+  --mydetails-border-color: #0f1011;
+  --mydetails-summary-color: #8fb6ed;
+  --mydetails-summary-bg-color: #242729;
+  --mydetails-summary-hover-color: #b3d3ff;
+  --mydetails-summary-hover-bg-color: #181a1b;
+  --mydetails-summary-active-color: #b3d3ff;
+  --mydetails-summary-active-bg-color: #181a1b;
+  --mydetails-summary-active-bottom-color: #181a1b;
+  --mydetails-summary-line-bg-color: #b3d3ff;
+  --mydetails-shadow-color: rgba(0,0,0,0);
+  --mydetails-shadow-hover-color: rgba(0,0,0,0);
 }
-[data-user-color-scheme="dark"] img {
-  -webkit-filter: brightness(0.9);
+[data-user-color-scheme='dark'] img {
   filter: brightness(0.9);
   transition: filter 0.2s ease-in-out;
+  -webkit-filter: brightness(0.9);
 }
 @supports (-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px)) {
-  [data-user-color-scheme="dark"] .navbar .dropdown-collapse,
-  [data-user-color-scheme="dark"] .top-nav-collapse,
-  [data-user-color-scheme="dark"] .navbar-col-show {
+  [data-user-color-scheme='dark'] .navbar .dropdown-collapse,
+  [data-user-color-scheme='dark'] .top-nav-collapse,
+  [data-user-color-scheme='dark'] .navbar-col-show {
     background: rgba(31,49,68,0.7);
     -webkit-backdrop-filter: blur(3px);
     backdrop-filter: blur(3px);
   }
 }
 @supports not ((-webkit-backdrop-filter: blur(3px)) or (backdrop-filter: blur(3px))) {
-  [data-user-color-scheme="dark"] .navbar .dropdown-collapse,
-  [data-user-color-scheme="dark"] .top-nav-collapse,
-  [data-user-color-scheme="dark"] .navbar-col-show {
+  [data-user-color-scheme='dark'] .navbar .dropdown-collapse,
+  [data-user-color-scheme='dark'] .top-nav-collapse,
+  [data-user-color-scheme='dark'] .navbar-col-show {
     background: #1f3144;
   }
 }
-[data-user-color-scheme="dark"] .license-box {
+[data-user-color-scheme='dark'] .license-box {
   background-color: rgba(62,75,94,0.35);
   transition: background-color 0.2s ease-in-out;
 }
-[data-user-color-scheme="dark"] .gt-comment-admin .gt-comment-content {
+[data-user-color-scheme='dark'] .gt-comment-admin .gt-comment-content {
   background-color: transparent;
   transition: background-color 0.2s ease-in-out;
 }

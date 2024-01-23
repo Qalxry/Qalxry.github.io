@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   // 为每个<mydetails>标签处理子元素
   mydetailsElements.forEach((mydetails) => {
-    // 为mydetails添加“notOpened”属性
-    mydetails.setAttribute("hasNotOpened", "hasNotOpened");
+    // // 为mydetails添加“notOpened”属性
+    // mydetails.setAttribute("hasNotOpened", "hasNotOpened");
 
     ["h1", "h2", "h3", "h4", "h5", "h6"].forEach((tag, index) => {
       // 获取特定标签的所有实例
