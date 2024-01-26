@@ -1,4 +1,6 @@
 const extend_features = document.extend_features;
+// NOTE: 可以开启 debug 模式，这样每次更新配置都会打印出来
+const EXTEND_DEBUG_MODE = false;
 
 class CodeFont {
     constructor() {
@@ -283,7 +285,7 @@ class FixedBackground {
         }
     }
     update() {
-        console.log(`[Fixed Background] Apply this config: ${JSON.stringify(this.configs, null, 2)}`);
+        if (EXTEND_DEBUG_MODE) console.log(`[Fixed Background] Apply this config: ${JSON.stringify(this.configs, null, 2)}`);
         this.create();
         this.apply();
         for (const item_selector in this.maskedElems) {
