@@ -156,7 +156,7 @@ Fluid.plugins = {
           e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-copy', 'icon-success');
           setTimeout(function() {
             e.trigger.innerHTML = e.trigger.innerHTML.replace('icon-success', 'icon-copy');
-          }, 2000);
+          }, 3000);
         });
       }
     });

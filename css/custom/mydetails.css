@@ -1,3 +1,33 @@
+mydetails {
+  --mydetails-color: #121f72;
+  --mydetails-bg-color: #fff;
+  --mydetails-border-color: #fff;
+  --mydetails-summary-color: #121f72;
+  --mydetails-summary-bg-color: #e8edff;
+  --mydetails-summary-hover-color: #6265fe;
+  --mydetails-summary-hover-bg-color: #f3f6ff;
+  --mydetails-summary-active-color: #4143a4;
+  --mydetails-summary-active-bg-color: #f3f6ff;
+  --mydetails-summary-active-bottom-color: #e8edff;
+  --mydetails-summary-line-bg-color: #6265fe;
+  --mydetails-shadow-color: rgba(77,87,200,0.345);
+  --mydetails-shadow-hover-color: rgba(0,32,139,0.466);
+}
+[data-user-color-scheme='dark'] mydetails {
+  --mydetails-color: #c4bfb8;
+  --mydetails-bg-color: #181a1b;
+  --mydetails-border-color: #0f1011;
+  --mydetails-summary-color: #8fb6ed;
+  --mydetails-summary-bg-color: #242729;
+  --mydetails-summary-hover-color: #b3d3ff;
+  --mydetails-summary-hover-bg-color: #181a1b;
+  --mydetails-summary-active-color: #b3d3ff;
+  --mydetails-summary-active-bg-color: #181a1b;
+  --mydetails-summary-active-bottom-color: #181a1b;
+  --mydetails-summary-line-bg-color: #b3d3ff;
+  --mydetails-shadow-color: rgba(0,0,0,0);
+  --mydetails-shadow-hover-color: rgba(0,0,0,0);
+}
 @font-face {
   font-weight: normal /* 会被应用为 CSS font-weight:400 的样式 */;
   font-style: normal;
@@ -27,7 +57,7 @@ mydetails {
   box-shadow: 2px 2px 2px 1px var(--mydetails-shadow-color);
   color: var(--mydetails-color);
   font-size: 1em;
-  transition: height 0.2s ease-in-out;
+  transition: background-color border height 0.2s ease-in-out;
   transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 mydetails > summary {
@@ -60,7 +90,7 @@ mydetails > summary::before {
   border-left: 0.77em solid var(--mydetails-summary-color);
   background: none /* content: "▶"; */;
   content: '';
-  transition: border-left, transform 0.2s ease-in-out;
+  transition: border-left transform 0.2s ease-in-out;
   transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
   transform-origin: 40% 50%;
 }
@@ -191,12 +221,26 @@ mydetails[open] > summary > summary-subtitle::before {
     transform-origin: 0% 50%;
   }
 }
-/*
-To deal with the bug that internal h1/h2/h3/h4/h5 appear at the beside toc.
-This bug is serious, because if we clicked h1/h2/h3/h4/h5 appearing at the beside toc, 
-these h1/h2/h3/h4/h5 elements would hide the summary and things go to be uncontrollable. 
-So we just copy the style of h1/h2/h3/h4/h5 to myh1/myh2/myh3/myh4/myh5. 
-And then we use myh1/myh2/myh3/myh4/myh5 instead of h1/h2/h3/h4/h5 in the markdown file.
-So that they will not appear at the beside toc.
-*/
-/* mydetails myh1 */
+mydetails {
+  margin-bottom: 2rem;
+  color: var(--post-text-color);
+  font-size: 1rem;
+  font-family: $font-family;
+  line-height: 1.6;
+}
+mydetails > myh1,
+mydetails myh2 {
+  border-bottom-color: var(--line-color);
+}
+mydetails > myh1,
+mydetails myh2,
+mydetails myh3,
+mydetails myh4,
+mydetails myh5,
+mydetails myh6 {
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  color: var(--post-heading-color);
+  font-weight: bold;
+  transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+}

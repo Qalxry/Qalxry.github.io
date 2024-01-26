@@ -1,0 +1,97 @@
+:root {
+  --mydetails-color: #121f73;
+  --mydetails-bg-color: rgba(255,255,255,0.6);
+  --mydetails-border-color: rgba(255,255,255,0.6);
+  --mydetails-summary-color: #121f73;
+  --mydetails-summary-bg-color: rgba(232,237,255,0.4);
+  --mydetails-summary-hover-color: #6264fe;
+  --mydetails-summary-hover-bg-color: #f3f6ff;
+  --mydetails-summary-active-color: #4143a4;
+  --mydetails-summary-active-bg-color: #f3f6ff;
+  --mydetails-summary-active-bottom-color: rgba(232,237,255,0.4);
+  --mydetails-summary-line-bg-color: #6264fe;
+  --mydetails-shadow-color: rgba(77,87,200,0.345);
+  --mydetails-shadow-hover-color: rgba(0,32,139,0.466);
+  --myhighlight-bg-color: rgba(255,255,255,0.4);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) {
+    --mydetails-color: #c4bfb8;
+    --mydetails-bg-color: rgba(24,26,27,0.6);
+    --mydetails-border-color: #0f1011;
+    --mydetails-summary-color: #91a8ed;
+    --mydetails-summary-bg-color: rgba(36,39,41,0.6);
+    --mydetails-summary-hover-color: #b3c6ff;
+    --mydetails-summary-hover-bg-color: rgba(24,26,27,0.6);
+    --mydetails-summary-active-color: #b3c6ff;
+    --mydetails-summary-active-bg-color: rgba(24,26,27,0.6);
+    --mydetails-summary-active-bottom-color: rgba(24,26,27,0.6);
+    --mydetails-summary-line-bg-color: #b3c6ff;
+    --mydetails-shadow-color: rgba(0,0,0,0);
+    --myhighlight-bg-color: rgba(0,0,0,0.4);
+  }
+}
+[data-user-color-scheme='dark'] {
+  --mydetails-color: #c4bfb8;
+  --mydetails-bg-color: rgba(24,26,27,0.6);
+  --mydetails-border-color: #0f1011;
+  --mydetails-summary-color: #91a8ed;
+  --mydetails-summary-bg-color: rgba(36,39,41,0.6);
+  --mydetails-summary-hover-color: #b3c6ff;
+  --mydetails-summary-hover-bg-color: rgba(24,26,27,0.6);
+  --mydetails-summary-active-color: #b3c6ff;
+  --mydetails-summary-active-bg-color: rgba(24,26,27,0.6);
+  --mydetails-summary-active-bottom-color: rgba(24,26,27,0.6);
+  --mydetails-summary-line-bg-color: #b3c6ff;
+  --mydetails-shadow-color: rgba(0,0,0,0);
+  --myhighlight-bg-color: rgba(0,0,0,0.4);
+}
+#board {
+  border-radius: 1rem;
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+}
+#board_warpper {
+  margin: 1px;
+  border-radius: 0.5rem;
+}
+#toc {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--board-bg-color);
+  transition: background-color 0.2s ease-in-out;
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
+}
+.sidebar {
+  margin-right: 1rem;
+}
+.highlight {
+  overflow: hidden;
+  border-radius: 15px;
+  background-color: var(--myhighlight-bg-color) !important;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  transition: background-color 0.2s ease-in-out !important;
+}
+.highlight *:not(.gutter) {
+  background-color: rgba(0,0,0,0) !important /* 定制滚动条的整体样式 */;
+  scrollbar-color: rgba(255,255,255,0.5) transparent !important /* 定制滚动条的轨道颜色和滑块颜色 */;
+  scrollbar-width: bold !important /* 定制滚动条的宽度 */;
+}
+.highlight td.gutter {
+  background-color: var(--body-bg-color) !important;
+}
+.highlight td.gutter pre {
+  border-right: 0px solid var(--body-bg-color) !important;
+}
+.highlight:hover .copy-btn {
+  background-color: var(--myhighlight-bg-color) !important;
+  box-shadow: 1px 1px 2px rgba(127,127,127,0.5);
+}
+.highlight .copy-btn {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  background-color: rgba(0,0,0,0);
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
