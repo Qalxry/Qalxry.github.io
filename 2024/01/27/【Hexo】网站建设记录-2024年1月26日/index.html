@@ -1,0 +1,1301 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start --><script src="/js/custom/auto_generate/theme_config.js" defer></script><!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="【Hexo】网站建设记录-2024年1月26日 1月21日的时候，因为写ACM算法博客想要添加一个小组件，可以折叠定理的证明内容，所以上网寻找合适的方式。找到一种在markdown中使用html原生的details标签来折叠的方法。但是，太原始了和网站的画风太冲突：   原生的Details标签，点击可展开  啦啦啦~~~   那必须得上CSS美化一些。我又萌生了使用CSS动画的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Hexo】网站建设记录-2024年1月26日">
+<meta property="og:url" content="https://qalxry.github.io/2024/01/27/%E3%80%90Hexo%E3%80%91%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE%E8%AE%B0%E5%BD%95-2024%E5%B9%B41%E6%9C%8826%E6%97%A5/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="【Hexo】网站建设记录-2024年1月26日 1月21日的时候，因为写ACM算法博客想要添加一个小组件，可以折叠定理的证明内容，所以上网寻找合适的方式。找到一种在markdown中使用html原生的details标签来折叠的方法。但是，太原始了和网站的画风太冲突：   原生的Details标签，点击可展开  啦啦啦~~~   那必须得上CSS美化一些。我又萌生了使用CSS动画的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/piclib/ve_cl07_a.jpg">
+<meta property="article:published_time" content="2024-01-26T16:22:44.000Z">
+<meta property="article:modified_time" content="2024-01-26T18:08:07.115Z">
+<meta property="article:author" content="しずり雪">
+<meta property="article:tag" content="Blog">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/piclib/ve_cl07_a.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【Hexo】网站建设记录-2024年1月26日 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom/mydetails.css">
+<link rel="stylesheet" href="/css/custom/fonts.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+            <script>
+            document.subthemes = {
+                default: "none",
+                list: [{"name":"none","path":"/"},{"name":"classic","path":"/subthemes/classic/"},{"name":"modern","path":"/subthemes/modern/"}]
+            };
+            </script>
+
+            <script src="/subthemes/subthemes.js" defer></script>
+            <style>
+                #theme-toggle-btn .nav-link {
+                    display: block;
+                    color: var(--navbar-text-color);
+                    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+                }
+                #theme-toggle-btn .nav-link svg {
+                    transition: fill 0.2s ease-in-out;
+                    fill: var(--navbar-text-color);
+                }
+                #theme-toggle-btn .nav-link:hover svg {
+                    fill: var(--link-hover-color);
+                }
+            </style>
+            <link rel="stylesheet" href="/subthemes/classic/css/main.css">
+<link rel="stylesheet" href="/subthemes/modern/css/main.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start -->
+        <script>
+        console.log('[Extend Features] running...');
+        document.extend_features = {"enable":false,"code_font":{"enable":false,"font_family":"SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace","font_weight":600},"fixed_background":{"enable":false,"mask":{"enable":true,"list":[{"selector":"#web_bg","enable":true,"style":"background-color: rgba(0, 0, 0, 0.3);  border-radius: 1rem;"},{"selector":"#board","enable":true,"style":"background-color: rgba(0, 0, 0, 0);    border-radius: 1rem;"},{"selector":"#toc","enable":true,"style":"background-color: rgba(0, 0, 0, 0.15); border-radius: 1rem;"}]}}};
+        </script>
+        <script src="/extend_features/extend_features.js"></script>
+        <!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/diary/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/piclib/ve_cl07_a.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【Hexo】网站建设记录-2024年1月26日"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-27 00:22" pubdate>
+          2024年1月27日 凌晨 00:22
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          44 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【Hexo】网站建设记录-2024年1月26日</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年1月27日 凌晨 02:08
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="hexo网站建设记录-2024年1月26日">【Hexo】网站建设记录-2024年1月26日</h2>
+<p>1月21日的时候，因为写ACM算法博客想要添加一个小组件，可以折叠定理的证明内容，所以上网寻找合适的方式。找到一种在markdown中使用html原生的details标签来折叠的方法。但是，太原始了和网站的画风太冲突：</p>
+<details class="nocss">
+<summary class="nocss">
+原生的Details标签，点击可展开
+</summary>
+啦啦啦~~~
+</details>
+<p><br></p>
+<p>那必须得上CSS美化一些。我又萌生了使用CSS动画的念头，可是，details标签点击之后只能立即展开，不能用CSS渐变展开，即使你用JS也不好使。</p>
+<p>所以只好自己写一个组件啦~~~非常简单的小组件，但是调动画调了好久，因为我这时CSS还不熟，所以只能去网上找一些模板，然后自己改。</p>
+<p>我看到有一个网站上面挂了好多超超超级好看的效果，在翻看几十个大佬作品之后，选了其中一个最”朴实无华“的效果：</p>
+<p>效果如下，感觉不错，技术难度也不太高（相比大佬的其他作品而言）：</p>
+<html>
+<body>
+<style>
+.menu {
+    position: relative;
+    z-index: 10;
+}
+.menu__item {
+    position: relative;
+    display: block;
+    margin: 0 0 1.5em;
+    line-height: 1;
+}
+.menu__item-name,
+.menu__item-label {
+    position: relative;
+    display: inline-block;
+}
+.menu__item-name {
+    font-size: 1.25em; /* 确保没有下划线 */
+}
+.menu__item-label {
+    margin: 0 0 0 0.5em; /* 确保没有下划线 */
+}
+.menu--adsila {
+    font-family: "Nunito", sans-serif;
+    font-size: 1.15em; /* 确保没有下划线 */
+}
+.menu--adsila a {
+    color: #272727;
+}
+.menu--adsila .menu__item-name {
+    font-weight: bold;
+    line-height: 1.4;
+    padding: 0 0.35em;
+    transition: color 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+.menu--adsila .menu__item-name::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    opacity: 0.3;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 0% 50%;
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+.menu--adsila .menu__item-label {
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    transform: translate3d(-0.5em, 0, 0);
+    transition: transform 0.5s, color 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+.menu--adsila .menu__item-label::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: calc(100% + 0.1em);
+    left: 0.05em;
+    width: 100%;
+    height: 1px;
+    opacity: 0.3;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 100% 50%;
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+.menu--adsila .menu__item:nth-child(odd) .menu__item-name::before,
+.menu--adsila .menu__item:nth-child(odd) .menu__item-label::before {
+    background: #6265fe;
+}
+.menu--adsila .menu__item:nth-child(even) .menu__item-name::before,
+.menu--adsila .menu__item:nth-child(even) .menu__item-label::before {
+    background: #fe628e;
+}
+/* //////////////////// Hover //////////////////// */
+.menu--adsila .menu__item:nth-child(odd):hover {
+    color: #6265fe;
+}
+.menu--adsila .menu__item:nth-child(even):hover {
+    color: #fe628e;
+}
+.menu--adsila .menu__item:hover .menu__item-name::before,
+.menu--adsila .menu__item:hover .menu__item-label::before {
+    transform: scale3d(1, 1, 1);
+}
+.menu--adsila .menu__item:hover .menu__item-label {
+    transform: translate3d(0, 0, 0);
+}
+.menu--adsila .menu__item:hover .menu__item-label::before {
+    transform-origin: 0% 50%;
+    transition-timing-function: ease;
+}
+/* //////////////////// Clicked //////////////////// */
+.menu--adsila .menu__item.menu__item--clicked:nth-child(odd) {
+    color: #4a4cbe;
+}
+.menu--adsila .menu__item.menu__item--clicked:nth-child(even) {
+    color: #ca4d71;
+}
+.menu--adsila .menu__item.menu__item--clicked .menu__item-name::before,
+.menu--adsila .menu__item.menu__item--clicked .menu__item-label::before {
+    transform: scale3d(1, 1, 1);
+}
+.menu--adsila .menu__item.menu__item--clicked .menu__item-label {
+    transform: translate3d(0, 0, 0);
+}
+.menu--adsila .menu__item.menu__item--clicked .menu__item-label::before {
+    transform-origin: 0% 50%;
+    transition-timing-function: ease;
+}
+</style>
+<nav class="menu menu--adsila">
+<a class="menu__item" href="#"><span class="menu__item-name">Definition</span><span class="menu__item-label">定义</span></a>
+<a class="menu__item" href="#"><span class="menu__item-name">Theorem</span><span class="menu__item-label">定理</span></a>
+<a class="menu__item" href="#"><span class="menu__item-name">Proposition</span><span class="menu__item-label">命题</span></a>
+<a class="menu__item" href="#"><span class="menu__item-name">Lemma</span><span class="menu__item-label">引理</span></a>
+<a class="menu__item" href="#"><span class="menu__item-name">Corollary</span><span class="menu__item-label">推论</span></a>
+<a class="menu__item" href="#"><span class="menu__item-name">Assertion</span><span class="menu__item-label">断言</span></a>
+<a class="menu__item" href="#"><span class="menu__item-name">Ansatz</span><span class="menu__item-label">假设</span></a>
+<a class="menu__item" href="#"><span class="menu__item-name">Ansatz</span><span class="menu__item-label">假设</span></a>
+<a class="menu__item" href="#"><span class="menu__item-name">Property</span><span class="menu__item-label">性质</span></a>
+<a class="menu__item" href="https://qalxry.github.io/"><span class="menu__item-name">Contact</span><span class="menu__item-label">Go
+to my blog now!</span></a>
+</nav>
+</body>
+</html>
+<p>但是上面仅仅是一个小Tag，并且CSS也挺乱的，于是我又花了几个小时，重新整合到details里面，最后的效果如下：</p>
+<html>
+<body>
+<style>
+details {
+    z-index: 10;
+    border: 1px solid #ffffff;
+    box-shadow: 2px 2px 2px 1px rgba(77, 87, 200, 0.345);
+    border-radius: 10px;
+    /* padding: 5px; */
+    /* margin-bottom: 10px; */
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+details > summary {
+    font-family: "Nunito", sans-serif;
+    /* font-family: "Liu Jian Mao Cao", sans-serif; */
+    font-size: 1.15em;
+    background-color: #e8edff;
+    color: #121f72;
+    position: relative;
+    display: block;
+    text-decoration: none;
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    padding-left: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    user-select: none;
+}
+details > summary::-webkit-details-marker {
+    display: none; /* 对于 WebKit 浏览器隐藏默认箭头 */
+}
+details > *:not(summary) {
+    margin:0.8em;
+}
+details > summary::before {
+    /* content: "▶"; */
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 16px solid #121f72;
+    border-bottom: 9px solid transparent;
+    border-top: 9px solid transparent; /* Change 'black' to your desired triangle color */
+    display: inline-block;
+    transition: all 0.2s ease-in-out;
+    margin-top: 0.4em;
+    transform-origin: 40% 50%;
+    background: none;
+}
+details > summary > summary-title {
+    font-family: "Nunito-Bold", "黑体", sans-serif;
+    z-index: 12;
+    position: relative;
+    display: inline-block;
+    font-size: 1.1em;
+    letter-spacing: 0.02em;
+    /* font-weight: bold; */
+    line-height: 1.1;
+    margin-left: 0.2em;
+    padding: 0 0.35em;
+    transition: color 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+details > summary > summary-subtitle {
+    z-index: 12;
+    position: relative;
+    display: inline-block;
+    margin: 0 0 0 0.5em;
+    font-size: 0.8em;
+    letter-spacing: 0.05em;
+    transform: translate3d(-0.5em, 0, 0);
+    transition: transform 0.5s, color 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+details > summary > summary-title::before {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    opacity: 0.3;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 0% 50%;
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+details > summary > summary-subtitle::before {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    top: calc(95%);
+    left: 0.05em;
+    width: 100%;
+    height: 1px;
+    opacity: 0.3;
+    transform: scale3d(0, 1, 1);
+    transform-origin: 100% 50%;
+    transition: transform 0.5s;
+    transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+details > summary > summary-title::before,
+details > summary > summary-subtitle::before {
+    background: #6265fe;
+}
+/* //////////////////// Clicked //////////////////// */
+details[open] {
+    transform: scale(0.994);
+    box-shadow: 1px 1px 3px 0px rgba(0, 32, 139, 0.466);
+}
+/* 关闭内容时需要rotate回来 */
+details:not([open]) > summary::before {
+    transform: rotate(0deg);
+}
+details[open] > summary {
+    border-bottom: 1px solid #dfe3f5;
+}
+details[open] > summary::before {
+    border-left: 16px solid #4143a4;
+    transform: rotate(90deg);
+}
+details[open] > summary > summary-title,
+details[open] > summary > summary-subtitle {
+    color: #4143a4;
+}
+details[open] > summary > summary-title::before {
+    transform: scale3d(1, 1.5, 1);
+}
+details[open] > summary > summary-subtitle::before {
+    transform: scale3d(1, 1, 1);
+}
+details[open] > summary > summary-subtitle {
+    transform: translate3d(0, 0, 0);
+}
+details[open] > summary > summary-subtitle::before {
+    transform-origin: 0% 50%;
+    transition-timing-function: ease;
+}
+/* //////////////////// Hover //////////////////// */
+details:hover {
+    /* border: 1px solid #4143a4; */
+    transform: scale(0.99);
+    box-shadow: 1px 1px 3px 0px rgba(0, 32, 139, 0.4);
+}
+details:not([open]) > summary:hover::before {
+    border-left: 16px solid #6265fe;
+}
+details > summary:hover {
+    background-color: #f3f6ff;
+    color: #6265fe;
+}
+details:not([open]) > summary:hover > summary-title::before {
+    transform: scale3d(1, 1.5, 1);
+}
+details:not([open]) > summary:hover > summary-subtitle::before {
+    transform: scale3d(1, 1, 1);
+}
+details:not([open]) > summary:hover > summary-subtitle {
+    transform: translate3d(0, 0, 0);
+}
+details:not([open]) > summary:hover > summary-subtitle::before {
+    transform-origin: 0% 50%;
+    transition-timing-function: ease;
+}
+.nocss {
+    all: revert;
+}
+details[open].nocss {
+    all: revert;
+}
+details[open] > summary.nocss {
+    all: revert;
+}
+details[open] > summary.nocss::before {
+    all: revert;
+}
+details[open] > summary > summary-title.nocss {
+    all: revert;
+}
+details[open] > summary > summary-subtitle.nocss {
+    all: revert;
+}
+details[open] > summary > summary-title.nocss::before {
+    all: revert;
+}
+details[open] > summary > summary-subtitle.nocss::before {
+    all: revert;
+}
+details:not([open]) > summary.nocss {
+    all: revert;
+}
+details:not([open]) > summary.nocss::before {
+    all: revert;
+}
+details:not([open]) > summary > summary-title.nocss {
+    all: revert;
+}
+details:not([open]) > summary > summary-subtitle.nocss {
+    all: revert;
+}
+details:not([open]) > summary > summary-title.nocss::before {
+    all: revert;
+}
+details:not([open]) > summary > summary-subtitle.nocss::before {
+    all: revert;
+}
+details:hover.nocss {
+    all: revert;
+}
+details:hover.nocss::before {
+    all: revert;
+}
+details:hover > summary.nocss {
+    all: revert;
+}
+details:hover > summary.nocss::before {
+    all: revert;
+}
+details:hover > summary > summary-title.nocss {
+    all: revert;
+}
+details:hover > summary > summary-subtitle.nocss {
+    all: revert;
+}
+details:hover > summary > summary-title.nocss::before {
+    all: revert;
+}
+details:hover > summary > summary-subtitle.nocss::before {
+    all: revert;
+}
+details.nocss * {
+    all: revert;
+}
+details.nocss summary {
+    all: revert;
+}
+details.nocss summary::before {
+    all: revert;
+}
+details.nocss summary > summary-title {
+    all: revert;
+}
+details.nocss summary > summary-subtitle {
+    all: revert;
+}
+details.nocss summary > summary-title::before {
+    all: revert;
+}
+details.nocss summary > summary-subtitle::before {
+    all: revert;
+}
+</style>
+<details>
+<summary>
+<summary-title>Definition</summary-title><summary-subtitle>定义</summary-subtitle>
+</summary>
+<p>啦啦啦~~~</p>
+<p>啦啦啦~~~</p>
+<p>啦啦啦~~~</p>
+<p>啦啦啦~~~</p>
+<p>啦啦啦~~~</p>
+</details>
+</body>
+</html>
+<p>感觉非常不错，只是展开的时候没有动画。因为写的那时候我还没有意识到details不能用CSS动画渐变展开。</p>
+<p>大佬的作品这么牛逼，那么我写的这个小组件肯定也是可以滴！于是我就开始了我的折腾之旅。（我CSS和JS只会个皮毛啊啊啊...）</p>
+<p>如果要实现动画，那么就必须要用到JS了。那么整个东西都得重写了，所以，我又又又花了几个小时，重新写了一个JS版本的小组件。</p>
+<p>期间还顺便学了SASS，因为想简化CSS的编写，但是，我发现SASS用了之后，CSS的编写反而更加复杂了，所以我就学了也没用。</p>
+<p>但是，如果这里面有Mathjax公式块，当组件折叠的时候它因为懒加载没有加载，它的块大小是0，我无法计算展开的高度，如果让它自己撑开来，显得流畅度大大下降，还有各种bug（可能是我太菜了）。所以我又去学了Mathjax的懒加载（Mathjax的文档和Hexo的文档怎么都这么简洁啊。。），又要改fluid的东西，什么ejs啊，js啊，我都不会，只能一点点研究，最后终于搞定了。</p>
+<mydetails>
+<summary>
+<summary-title>Definition</summary-title><summary-subtitle>定义</summary-subtitle>
+</summary>
+<p>啦啦啦~~~</p>
+<p>啦啦啦~~~</p>
+<p>啦啦啦~~~</p>
+<p>超级QQ的~~~</p>
+<p></p></mydetails><p></p>
+<p>没想到我这个网站还有黑夜模式，那么要不要适配呢...</p>
+<p>这下陷入了一个无穷循环，我要是适配了黑夜模式，那么我就要把所有的CSS都改一遍，因为里面的颜色也是写死的。</p>
+<p>但是我又不想改，因为我觉得这个效果已经很好了，而且我也不会改，改了也不一定能改好。</p>
+<p>而且，我也不知道怎么适配黑夜模式，因为我不知道黑夜模式的CSS是怎么写的，我也不知道怎么去改。</p>
+<p>可！是！我！又！不！想！放！弃！</p>
+<p>于是乎，我又又又又开始了漫长的研究之旅。（真的很久！至此已经15h x 2天
+= 30h）</p>
+<p>我先看看我hexo用的fluid主题的黑夜模式是怎么写的，然后我发现，他是用了一个CSS变量，然后在黑夜模式下改变这个变量的值，从而实现黑夜模式。</p>
+<p>它把变量放到 :root
+里面，然后在黑夜模式下改变这个变量的值，从而实现黑夜模式。</p>
+<p>这里fluid又用的是Stylus，我又不会，所以我又去学了一下Stylus。。。好吧，我承认我是个菜鸡。</p>
+<p>好在这东西还挺简单的，我很快就学会了，然后我就开始改我的CSS了。</p>
+<p>真的改了好久，因为fluid那个Stylus用了一些函数，并且那时候我连 root
+都不知道是什么，所以我就只能一个一个的试和猜测。（期间疯狂问ChatGPT，花了好多钱啊啊，好像也就几十块钱XD）</p>
+<p>最后，我终于把我的小组件适配了黑夜模式，效果如下：</p>
+<mydetails>
+<summary>
+<summary-title>Dark
+Mode</summary-title><summary-subtitle>点击网站右上角查看效果</summary-subtitle>
+</summary>
+<p>
+啦啦啦~~~
+</p>
+<p>
+啦啦啦~~~
+</p>
+<p>
+超级黑黑的~~~
+</p>
+<p></p></mydetails><p></p>
+<p>这个时候，我已经花了3天 x
+15h了，已经上瘾了。这时我又看到有人的网站背景有毛玻璃效果，并且可以固定背景，我觉得很好看，于是我又开始了我的折腾之旅。</p>
+<p>我在复制了这位大佬的代码后，效果确实可以。可是看了一会儿，我觉得这个效果不太好，太过于花哨了，阅读效果不好。并且又要适配黑夜模式。。。</p>
+<p>于是我想，要是能够切换背景就好了，这样就不用在二者之间选择了。于是我就开始了我的折腾之旅。。。。</p>
+<p>这回可不好搞，因为涉及到了Hexo和Fluid主题的修改，而且我又不会JS。。。到Hexo的官网上看了一下，发现Hexo的文档真是依托。。。根本没用。只好自己研究源码喽~~~</p>
+<p>于是我把整个Fluid主题的结构和文件都看了一遍，发现主要思路就是 inject
+注入，然后在网站源码js里添加一些代码，就可以实现这样的效果。</p>
+<p>于是乎，漫长的JS编写过程又开始了。。。（真的很久！又花了15h x 3天 =
+45h）</p>
+<p>由于这种奇葩的需求，我没去找别人的代码，而是自己写了一个。真的，我写的代码真的很烂，但是我也没办法。期间代码改了好多好多版，从最开始完全耦合在fluid里面，到现在最低耦合的版本，我也是疯了。</p>
+<p>尤其是，我又想出了一个更奇葩的想法，我看到全屏背景固定住后，由于要让标题和背景的对比度高，所以必须添加一个灰灰的mask在背景上，但这样就搞得毛玻璃的文章背景显得灰灰的，阅读效果极差。我想了一个笨办法，我把所有透明的组件都添加相同的固定背景（全亮不透明），并且显示的区域和它覆盖的区域一样，这样就可以伪装成没有mask了。</p>
+<p>好在CSS支持这个背景的操作，但是JS就复杂了，要为所有透明组件添加wrapper显示背景，再添加mask显示独立的遮罩（后面的是我又想出来的需求。。。）</p>
+<p>与此同时，我还希望这个东西方便配置，并且支持热切换。所以，写了很久，读取配置文件注入代码，又是生成JS文件。。。终于在第6天晚上，我把这个东西写完了。</p>
+<p>效果如下：</p>
+<p>点击右上角的按钮，可以切换主题的效果，可以看到，背景和标题的对比度很高，阅读效果很好。并且如果看腻了就可以切换回来。非常爽！！！</p>
+<p>同时，我拓展了fluid主题的设置，写了一个拓展属性的管理器，非常方便地编写拓展功能，并且支持监视配置的变化，实时更新组件样式。我还写了一个子主题管理器，可以方便地切换子主题，并支持子主题的文件分开存放，非常方便。并且选择的子主题会记录在Local
+Storage里面，下次打开还是这个。每个子主题都可以覆盖父主题的文件，这样就可以实现子主题的定制化了~~~（虽然性能拉跨，但是我不管了，我就是要这么做！）</p>
+<p>至此，我终于把我的网站美化完毕了，虽然还可以玩很多内容，但是我已经很满意了。这次先告一段落吧！</p>
+<mydetails>
+<summary>
+<summary-title>Postscript</summary-title><summary-subtitle>后记</summary-subtitle>
+</summary>
+<p>
+</p><p>这篇文章2k5字左右，花了1.5小时就写好了，还嵌入了一些组件，感觉我的手速变快了~~~</p>
+<p>我的VSCode在这个时期装了TODO-Tree插件，用起来还不错，可以把TODO和FIXME的注释都显示出来，还可以自定义颜色，非常方便！</p>
+<span class="math display">\[
+The\ End.
+\]</span>
+<p></p>
+<p></p></mydetails><p></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Blog/" class="category-chain-item">Blog</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Blog/">#Blog</a>
+      
+        <a href="/tags/Hexo/">#Hexo</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【Hexo】网站建设记录-2024年1月26日</div>
+      <div>https://qalxry.github.io/2024/01/27/【Hexo】网站建设记录-2024年1月26日/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年1月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/" title="【算法】【DP】DP优化总结">
+                        <span class="hidden-mobile">【算法】【DP】DP优化总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href='https://hexo.io' target='_blank' rel='nofollow noopener'><span>Hexo</span></a> 
+<i class='iconfont icon-love'></i>
+<a href='https://github.com/fluid-dev/hexo-theme-fluid' target='_blank' rel='nofollow noopener'><span>Fluid</span></a>
+<div style='font-size: 0.85rem'>
+<span id='timeDate'>载入天数...</span>
+<span id='times'>载入时分秒...</span>
+<script src='/js/duration.js'></script>
+</div>
+
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              },
+              lazyAlwaysTypeset: (function() {
+                // 检查页面上是否存在 'mydetails' 元素
+                if (!document.querySelector('mydetails')) {
+                  return null; // 如果不存在，返回 null
+                } else {
+                  return ['mydetails']; // 如果存在，返回包含 'mydetails' 的数组
+                }
+                // 如果你直接给一个列表，那么如果页面上不存在这个元素，MathJax 将会崩溃
+              })(),
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/d3.v7.min.js"></script>
+<script src="/js/custom/mydetails.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
