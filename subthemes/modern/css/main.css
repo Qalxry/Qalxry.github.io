@@ -1,4 +1,6 @@
-:root {
+:root[subtheme='modern'] {
+  --board-bg-color: rgba(255,255,255,0.627);
+  --post-text-color: #1c2e30;
   --mydetails-color: #121f73;
   --mydetails-bg-color: rgba(255,255,255,0.6);
   --mydetails-border-color: rgba(255,255,255,0.6);
@@ -14,24 +16,9 @@
   --mydetails-shadow-hover-color: rgba(0,32,139,0.466);
   --myhighlight-bg-color: rgba(255,255,255,0.4);
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-user-color-scheme]) {
-    --mydetails-color: #c4bfb8;
-    --mydetails-bg-color: rgba(24,26,27,0.6);
-    --mydetails-border-color: #0f1011;
-    --mydetails-summary-color: #91a8ed;
-    --mydetails-summary-bg-color: rgba(36,39,41,0.6);
-    --mydetails-summary-hover-color: #b3c6ff;
-    --mydetails-summary-hover-bg-color: rgba(24,26,27,0.6);
-    --mydetails-summary-active-color: #b3c6ff;
-    --mydetails-summary-active-bg-color: rgba(24,26,27,0.6);
-    --mydetails-summary-active-bottom-color: rgba(24,26,27,0.6);
-    --mydetails-summary-line-bg-color: #b3c6ff;
-    --mydetails-shadow-color: rgba(0,0,0,0);
-    --myhighlight-bg-color: rgba(0,0,0,0.4);
-  }
-}
-[data-user-color-scheme='dark'] {
+:root[subtheme='modern'][data-user-color-scheme='dark'] {
+  --board-bg-color: rgba(37,45,56,0.627);
+  --post-text-color: #d4d6d9;
   --mydetails-color: #c4bfb8;
   --mydetails-bg-color: rgba(24,26,27,0.6);
   --mydetails-border-color: #0f1011;
@@ -44,54 +31,63 @@
   --mydetails-summary-active-bottom-color: rgba(24,26,27,0.6);
   --mydetails-summary-line-bg-color: #b3c6ff;
   --mydetails-shadow-color: rgba(0,0,0,0);
+  --mydetails-shadow-hover-color: rgba(0,0,0,0);
   --myhighlight-bg-color: rgba(0,0,0,0.4);
 }
-#board {
+:root[subtheme='modern'] #board {
   border-radius: 1rem;
+  transition: backdrop-filter, background-color 0.2s ease-in-out;
   -webkit-backdrop-filter: blur(40px);
   backdrop-filter: blur(40px);
 }
-#board_warpper {
+:root[subtheme='modern'] #board_warpper {
   margin: 1px;
   border-radius: 0.5rem;
 }
-#toc {
+:root[subtheme='modern'] #toc {
   padding: 1rem;
   border-radius: 0.5rem;
   background-color: var(--board-bg-color);
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color, backdrop-filter, padding 0.2s ease-in-out;
   -webkit-backdrop-filter: blur(40px);
   backdrop-filter: blur(40px);
 }
-.sidebar {
-  margin-right: 1rem;
+@supports (-moz-appearance: none) {
+  :root[subtheme='modern'] #toc {
+    backdrop-filter: blur(8px);
+  }
 }
-.highlight {
+:root[subtheme='modern'] .sidebar {
+  margin-right: 1rem;
+  transition: margin-right 0.2s ease-in-out;
+}
+:root[subtheme='modern'] .highlight {
   overflow: hidden;
   border-radius: 15px;
   background-color: var(--myhighlight-bg-color) !important;
   box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-  transition: background-color 0.2s ease-in-out !important;
+  transition: background-color, box-shadow 0.2s ease-in-out !important;
 }
-.highlight *:not(.gutter) {
-  background-color: rgba(0,0,0,0) !important /* 定制滚动条的整体样式 */;
+:root[subtheme='modern'] .highlight *:not(.gutter) {
+  background-color: rgba(0,0,0,0) !important;
   scrollbar-color: rgba(255,255,255,0.5) transparent !important /* 定制滚动条的轨道颜色和滑块颜色 */;
   scrollbar-width: bold !important /* 定制滚动条的宽度 */;
 }
-.highlight td.gutter {
+:root[subtheme='modern'] .highlight td.gutter {
   background-color: var(--body-bg-color) !important;
+  transition: background-color 0s ease-in-out !important;
 }
-.highlight td.gutter pre {
+:root[subtheme='modern'] .highlight td.gutter pre {
   border-right: 0px solid var(--body-bg-color) !important;
 }
-.highlight:hover .copy-btn {
+:root[subtheme='modern'] .highlight:hover .copy-btn {
   background-color: var(--myhighlight-bg-color) !important;
   box-shadow: 1px 1px 2px rgba(127,127,127,0.5);
 }
-.highlight .copy-btn {
+:root[subtheme='modern'] .highlight .copy-btn {
   margin-top: 0.5rem;
   padding: 0.4rem 0.8rem 0.4rem 0.8rem;
   border-radius: 0.5rem;
   background-color: rgba(0,0,0,0);
-  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  transition: background-color, box-shadow 0.2s ease-in-out;
 }

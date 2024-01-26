@@ -97,14 +97,15 @@ function getLS(k) {
         });
         nav_ul.appendChild(nav_li);
     }
-
+ 
     function overwriteThemeConfig(newThemeName) {
+        // NOTE: 仅仅覆写 extend_features
         // throw new Error("[SubThemes] Overwriting theme config is not implemented yet.");
         let newConfig = document.subthemes_config[newThemeName].extend_features;
         let baseConfig = JSON.parse(JSON.stringify(document.subthemes_config[NONE_SUBTHEME].extend_features));
         let pageConfig = document.extend_features;
-        console.log(`[SubThemes] Basic theme config '${NONE_SUBTHEME}' (Only Extend) : ${JSON.stringify(baseConfig, null, 2)}`);
-        
+        // console.log(`[SubThemes] Basic theme config '${NONE_SUBTHEME}' (Only Extend) : ${JSON.stringify(baseConfig, null, 2)}`);
+
         function isObject(item) {
             return (item && typeof item === 'object' && !Array.isArray(item));
         }
@@ -122,26 +123,77 @@ function getLS(k) {
                 }
             }
         }
-        
+        function merge(source, target) {
+            let changed = false;
+            for (let key in target) {
+                if (target.hasOwnProperty(key)) {
+                    if (isObject(target[key])) {
+                        if (!source[key]) {
+                            source[key] = {};
+                            changed = true;
+                        }
+                        changed = changed || mergeFeatures(source[key], target[key]);
+                    } else if (Array.isArray(target[key])) {
+                        changed = changed || (JSON.stringify(source[key]) !== JSON.stringify(source[key]));
+                        source[key] = [...target[key]];
+                    } else {
+                        changed = changed || (source[key] !== target[key]);
+                        source[key] = target[key];
+                    }
+                }
+            }
+            return changed;
+        }
+        function mergeFeatures_Change(source, target) {
+            let changes = {};
+            for (let key in target) {
+                if (target.hasOwnProperty(key)) {
+                    changes[key] = {};
+                    if (isObject(target[key])) {
+                        console.log(`[SubThemes] Merge '${key}' (Only Extend) : `);
+                        console.log(`[SubThemes] ${JSON.stringify(source[key], null, 2)} -> ${JSON.stringify(target[key], null, 2)}`);
+                        changes[key].changed = merge(source[key], target[key]);
+                    }
+                }
+            }
+            return changes;
+        }
+
         if (newConfig === undefined) {
-            console.info(`[SubThemes] No extend features found for theme '${newThemeName}'`);
+            // console.info(`[SubThemes] This theme '${newThemeName}' is undefined. Skip. (Only Extend)`);
         }
         else if (newThemeName === NONE_SUBTHEME) {
-            console.info(`[SubThemes] Go back to the basic theme '${NONE_SUBTHEME}'`);
-        } 
+            // console.info(`[SubThemes] Go back to the basic theme '${NONE_SUBTHEME}' (Only Extend)`);
+        }
         else {
-            console.log(`[SubThemes] New theme config '${newThemeName}' (Only Extend) : ${JSON.stringify(newConfig, null, 2)}`);
+            // console.log(`[SubThemes] New theme config '${newThemeName}' (Only Extend) : ${JSON.stringify(newConfig, null, 2)}`);
             mergeFeatures(baseConfig, newConfig);
         }
-        
-        mergeFeatures(pageConfig, baseConfig);
 
-        console.log(`[SubThemes] The merge result (Page Config) of '${newThemeName}' (Only Extend) : ${JSON.stringify(pageConfig, null, 2)}`);
+        let changes = mergeFeatures_Change(pageConfig, baseConfig);
 
+        console.log(`[SubThemes] Merge result (Only Extend) : ${JSON.stringify(pageConfig, null, 2)}`);
+
+        const pageConfigChanged = document.extend_features_signal;
+        if (baseConfig.enable !== true && pageConfig.enable === true) {
+            // 从 enable 到 disable
+            pageConfigChanged.enable.changed = true;
+        }
+        for (let key in changes) {
+            if (changes.hasOwnProperty(key)) {
+                if (changes[key].changed) {
+                    pageConfigChanged[key].changed = true;
+                }
+            }
+        }
+        console.log(`[SubThemes] Changes of '${newThemeName}' (Only Extend) : ${JSON.stringify(pageConfigChanged, null, 2)}`);
+
+        // console.log(`[SubThemes] The merge result (Page Config) of '${newThemeName}' (Only Extend) : ${JSON.stringify(pageConfig, null, 2)}`);
+
+        // TODO 更多覆写设置
         // 重写 document.theme_config
-        // ... (TODO)
     }
-    
+
     if (document.readyState === "loading") {
         // 此时加载尚未完成
         document.addEventListener("DOMContentLoaded", function () {

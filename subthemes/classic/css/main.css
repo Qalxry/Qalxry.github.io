@@ -1,0 +1,13 @@
+:root[subtheme='classic'] body {
+  font-size: $font-size;
+}
+:root[subtheme='classic'] #toc {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--board-bg-color);
+  transition: background-color, padding $animation-time ease-in-out;
+}
+:root[subtheme='classic'] code {
+  font-weight: 400 !important;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace !important;
+}

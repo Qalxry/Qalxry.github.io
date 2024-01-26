@@ -1,4 +1,4 @@
-mydetails {
+:root {
   --mydetails-color: #121f72;
   --mydetails-bg-color: #fff;
   --mydetails-border-color: #fff;
@@ -13,7 +13,7 @@ mydetails {
   --mydetails-shadow-color: rgba(77,87,200,0.345);
   --mydetails-shadow-hover-color: rgba(0,32,139,0.466);
 }
-[data-user-color-scheme='dark'] mydetails {
+[data-user-color-scheme='dark'] {
   --mydetails-color: #c4bfb8;
   --mydetails-bg-color: #181a1b;
   --mydetails-border-color: #0f1011;
@@ -28,24 +28,6 @@ mydetails {
   --mydetails-shadow-color: rgba(0,0,0,0);
   --mydetails-shadow-hover-color: rgba(0,0,0,0);
 }
-@font-face {
-  font-weight: normal /* 会被应用为 CSS font-weight:400 的样式 */;
-  font-style: normal;
-  font-family: 'Nunito';
-  src: url("../../fonts/Nunito/Nunito.woff2") format('woff2'), url("../fonts/Nunito/Nunito.ttf") format('truetype');
-}
-@font-face {
-  font-weight: normal /* 会被应用为 CSS font-weight:400 的样式 */;
-  font-style: italic;
-  font-family: 'Nunito';
-  src: url("../../fonts/Nunito/Nunito-Italic.woff2") format('woff2'), url("../fonts/Nunito/Nunito-Italic.ttf") format('truetype');
-}
-@font-face {
-  font-weight: normal /* 会被应用为 CSS font-weight:400 的样式 */;
-  font-style: normal;
-  font-family: 'Nunito-Bold';
-  src: url("../../fonts/Nunito/Nunito-Bold.woff2") format('woff2'), url("../fonts/Nunito/Nunito-Bold.ttf") format('truetype');
-}
 mydetails {
   z-index: 10;
   display: block;
@@ -57,7 +39,7 @@ mydetails {
   box-shadow: 2px 2px 2px 1px var(--mydetails-shadow-color);
   color: var(--mydetails-color);
   font-size: 1em;
-  transition: background-color border height 0.2s ease-in-out;
+  transition: background-color, border, height 0.2s ease-in-out;
   transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 mydetails > summary {

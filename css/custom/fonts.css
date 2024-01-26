@@ -1,0 +1,42 @@
+@font-face {
+  font-weight: normal /* 会被应用为 CSS font-weight:400 的样式 */;
+  font-style: normal;
+  font-family: 'Nunito';
+  src: url("../../fonts/Nunito/Nunito.woff2") format('woff2'), url("../fonts/Nunito/Nunito.ttf") format('truetype');
+}
+@font-face {
+  font-weight: normal;
+  font-style: italic;
+  font-family: 'Nunito';
+  src: url("../../fonts/Nunito/Nunito-Italic.woff2") format('woff2'), url("../fonts/Nunito/Nunito-Italic.ttf") format('truetype');
+}
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'Nunito-Bold';
+  src: url("../../fonts/Nunito/Nunito-Bold.woff2") format('woff2'), url("../fonts/Nunito/Nunito-Bold.ttf") format('truetype');
+}
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'JetBrains Mono';
+  src: url("../../fonts/JetBrainsMono/JetBrainsMono-Regular.woff2") format('woff2'), url("../fonts/JetBrainsMono/JetBrainsMono-Regular.ttf") format('truetype');
+}
+@font-face {
+  font-weight: normal;
+  font-style: italic;
+  font-family: 'JetBrains Mono';
+  src: url("../../fonts/JetBrainsMono/JetBrainsMono-Italic.woff2") format('woff2'), url("../fonts/JetBrainsMono/JetBrainsMono-Italic.ttf") format('truetype');
+}
+@font-face {
+  font-weight: normal;
+  font-style: normal;
+  font-family: 'JetBrains Mono Bold';
+  src: url("../../fonts/JetBrainsMono/JetBrainsMono-Bold.woff2") format('woff2'), url("../fonts/JetBrainsMono/JetBrainsMono-Bold.ttf") format('truetype');
+}
+@font-face {
+  font-weight: normal;
+  font-style: italic;
+  font-family: 'JetBrains Mono Bold';
+  src: url("../../fonts/JetBrainsMono/JetBrainsMono-BoldItalic.woff2") format('woff2'), url("../fonts/JetBrainsMono/JetBrainsMono-BoldItalic.ttf") format('truetype');
+}

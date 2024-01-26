@@ -58,6 +58,7 @@
 
   
 <link rel="stylesheet" href="/css/custom/mydetails.css">
+<link rel="stylesheet" href="/css/custom/fonts.css">
 
 
 
@@ -80,7 +81,7 @@
 <!-- hexo injector head_end start -->
             <script>
             document.subthemes = {
-                default: "modern",
+                default: "none",
                 list: [{"name":"none","path":"/"},{"name":"classic","path":"/subthemes/classic/"},{"name":"modern","path":"/subthemes/modern/"}]
             };
             </script>
@@ -100,7 +101,9 @@
                     fill: var(--link-hover-color);
                 }
             </style>
-            <!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
+            <link rel="stylesheet" href="/subthemes/classic/css/main.css">
+<link rel="stylesheet" href="/subthemes/modern/css/main.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><style>mjx-container[jax="SVG"] {
   direction: ltr;
 }
 
@@ -216,12 +219,12 @@ mjx-container[display="true"] + br {
 
 
 <body><!-- hexo injector body_begin start -->
-            <script>
-            console.log('[Extend Features] running...');
-            document.extend_features = {"enable":true,"code_font":{"enable":true,"font_family":"'JetBrains Mono', Consolas, 'Courier New', Courier, monospace","font_weight":600},"fixed_background":{"enable":true,"mask":{"enable":true,"list":[{"selector":"#web_bg","style":"background-color: rgba(0, 0, 0, 0.3); margin: 0; padding: 0; border-radius: 1rem;"},{"selector":"#board","style":"background-color: rgba(0, 0, 0, 0);   margin: 0; padding: 0; border-radius: 1rem;"},{"selector":"#toc","style":"background-color: rgba(0, 0, 0, 0.15);   margin: 0; padding: 0; border-radius: 1rem;"}]}}};
-            </script>
-            <script src="/extend_features/extend_features.js"></script>
-            <!-- hexo injector body_begin end -->
+        <script>
+        console.log('[Extend Features] running...');
+        document.extend_features = {"enable":false,"code_font":{"enable":false,"font_family":"SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace","font_weight":600},"fixed_background":{"enable":false,"mask":{"enable":true,"list":[{"selector":"#web_bg","enable":true,"style":"background-color: rgba(0, 0, 0, 0.3);  border-radius: 1rem;"},{"selector":"#board","enable":true,"style":"background-color: rgba(0, 0, 0, 0);    border-radius: 1rem;"},{"selector":"#toc","enable":true,"style":"background-color: rgba(0, 0, 0, 0.15); border-radius: 1rem;"}]}}};
+        </script>
+        <script src="/extend_features/extend_features.js"></script>
+        <!-- hexo injector body_begin end -->
   
 
   <header>
@@ -517,9 +520,9 @@ mjx-container[display="true"] + br {
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Git/">#Git</a>
-            
               <a href="/tags/Github/">#Github</a>
+            
+              <a href="/tags/Git/">#Git</a>
             
           </div>
         
@@ -1234,7 +1237,5 @@ mjx-container[display="true"] + br {
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
-<!-- hexo injector body_end start --><link rel="stylesheet" href="/subthemes/classic/css/main.css">
-<link rel="stylesheet" href="/subthemes/modern/css/main.css">
-<!-- hexo injector body_end end --></body>
+</body>
 </html>

@@ -8,13 +8,14 @@ document.subthemes_config = {
         "font_family": "Consolas, monospace"
       },
       "fixed_background": {
-        "enable": false,
+        "enable": true,
         "mask": {
           "enable": true,
           "list": [
             {
               "selector": "#web_bg",
-              "style": "background-color: rgba(0, 0, 0, 0.3); margin: 0; padding: 0; border-radius: 1rem;"
+              "enable": true,
+              "style": "background-color: rgba(0, 0, 0, 0.3); border-radius: 0rem;"
             }
           ]
         }
@@ -22,15 +23,11 @@ document.subthemes_config = {
     }
   },
   "modern": {
-    "enable": false
-  },
-  "none": {
     "enable": true,
     "extend_features": {
-      "enable": true,
       "code_font": {
         "enable": true,
-        "font_family": "'JetBrains Mono', Consolas, 'Courier New', Courier, monospace"
+        "font_family": "\"Jetbrains Mono\", Consolas, monospace"
       },
       "fixed_background": {
         "enable": true,
@@ -39,15 +36,51 @@ document.subthemes_config = {
           "list": [
             {
               "selector": "#web_bg",
-              "style": "background-color: rgba(0, 0, 0, 0.3); margin: 0; padding: 0; border-radius: 1rem;"
+              "enable": true,
+              "style": "background-color: rgba(0, 0, 0, 0.3); border-radius: 0rem;"
             },
             {
               "selector": "#board",
-              "style": "background-color: rgba(0, 0, 0, 0);   margin: 0; padding: 0; border-radius: 1rem;"
+              "enable": true,
+              "style": "background-color: rgba(0, 0, 0, 0.15); border-radius: 1rem;"
             },
             {
               "selector": "#toc",
-              "style": "background-color: rgba(0, 0, 0, 0.15);   margin: 0; padding: 0; border-radius: 1rem;"
+              "enable": true,
+              "style": "background-color: rgba(0, 0, 0, 0.15); border-radius: 1rem;"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "none": {
+    "enable": true,
+    "extend_features": {
+      "enable": false,
+      "code_font": {
+        "enable": false,
+        "font_family": "SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace"
+      },
+      "fixed_background": {
+        "enable": false,
+        "mask": {
+          "enable": true,
+          "list": [
+            {
+              "selector": "#web_bg",
+              "enable": true,
+              "style": "background-color: rgba(0, 0, 0, 0.3);  border-radius: 1rem;"
+            },
+            {
+              "selector": "#board",
+              "enable": true,
+              "style": "background-color: rgba(0, 0, 0, 0);    border-radius: 1rem;"
+            },
+            {
+              "selector": "#toc",
+              "enable": true,
+              "style": "background-color: rgba(0, 0, 0, 0.15); border-radius: 1rem;"
             }
           ]
         }

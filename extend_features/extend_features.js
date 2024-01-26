@@ -1,6 +1,5 @@
 const extend_features = document.extend_features;
 
-
 class CodeFont {
     constructor() {
         this.configs = extend_features.code_font;
@@ -15,19 +14,16 @@ class CodeFont {
                 item.style.fontSize = this.configs.font_size;
             });
             this.status = true;
-        }
-        else if (this.status === true && this.configs.enable === false) {
+        } else if (this.status === true && this.configs.enable === false) {
             this.code_blocks.forEach((item) => {
                 item.style.fontFamily = this.default_font_family;
                 item.style.fontWeight = this.default_font_weight;
                 item.style.fontSize = this.default_font_size;
             });
             this.status = false;
-        }
-        else if (this.status === false && this.configs.enable === false) {
+        } else if (this.status === false && this.configs.enable === false) {
             // do nothing
-        }
-        else {
+        } else {
             this.code_blocks.forEach((item) => {
                 item.style.fontFamily = this.configs.font_family;
                 item.style.fontWeight = this.configs.font_weight;
@@ -36,20 +32,28 @@ class CodeFont {
         }
     }
     observer() {
-        document.extend_features.code_font = new Proxy(document.extend_features.code_font, {
+        // document.extend_features.code_font = new Proxy(document.extend_features.code_font, {
+        //     set: (target, key, value) => {
+        //         console.log(`[Code Font] Set ${target}.${key} to ${value}`);
+        //         target[key] = value;
+        //         this.update();
+        //         return true;
+        //     },
+        // });
+        document.extend_features_signal.code_font = new Proxy(document.extend_features_signal.code_font, {
             set: (target, key, value) => {
                 console.log(`[Code Font] Set ${target}.${key} to ${value}`);
                 target[key] = value;
                 this.update();
                 return true;
-            }
+            },
         });
     }
     begin() {
         this.code_blocks = document.querySelectorAll("code");
-        console.log('[Code Font] Begin');
+        console.log("[Code Font] Begin");
         if (this.code_blocks.length === 0) {
-            console.log('[Code Font] Code blocks not found.');
+            console.log("[Code Font] Code blocks not found.");
             return;
         }
         this.default_font_family = document.querySelector("code").style.fontFamily;
@@ -60,214 +64,251 @@ class CodeFont {
     }
 }
 
+
 class FixedBackground {
     constructor() {
         this.configs = extend_features.fixed_background;
-        this.status = 'null'
-        this.mask_list = [];
-        this.wrapper_list = [];
-        this.mask_bg_color_list = [];
+        this.bg_img = "url()";
+        this.maskedElems = {};
+        // this.maskedElems = {
+        //      "selector": {
+        //          "enable": true,
+        //          "wrapper": [wrapper],
+        //          "mask": [mask],
+        //          "mask_bg_color": mask_bg_color
+        //          "priority": 0
+        //      }
+        // }
     }
-    hidden_web_bg() {
-        this.web_bg.setAttribute("style", "background-image: url();");
-        this.banner.setAttribute("style", `background-image: ${this.bg_img};`);
-        this.banner_mask.setAttribute("style", `background-color: ${this.banner_mask_bg_color}`);
-    }
-    hidden_mask() {
-        this.mask_bg_color_list = [];
-        this.mask_list.forEach((item) => {
-            this.mask_bg_color_list.push(item.style.backgroundColor || this.banner_mask_bg_color || "rgba(0,0,0,0)");
-            item.setAttribute("style", "rgba(0,0,0,0)");
-        });
-        this.wrapper_list.forEach((item) => {
-            item.setAttribute("style", "background-image: url();");
-        });
-    }
-    show_web_bg() {
-        this.web_bg.setAttribute("style", `background-image: ${this.bg_img};`);
-        this.banner.setAttribute("style", "background-image: url();");
-        this.banner_mask.setAttribute("style", "background-color: rgba(0,0,0,0);");
-    }
-    show_mask() {
-        this.mask_list.forEach((item, index) => {
-            item.setAttribute("style", `background-color: ${this.mask_bg_color_list[index]}`);
-        });
-        this.wrapper_list.forEach((item) => {
-            item.setAttribute("style", `background-image: ${this.bg_img};`);
-        });
-    }
-    create_web_bg() {
-        this.banner = document.querySelector("#banner");
-        this.banner_mask = this.banner.querySelector(".mask");
-        this.bg_img = banner.style.backgroundImage;
-        this.web_bg = document.createElement("div");
-        this.web_bg.id = "web_bg";
-        this.web_bg.setAttribute("style", `
-            background-image: ${this.bg_img};
-            background-color: rgba(0,0,0,0);
+    init() {
+        /*
+            We have :
+            <div id="banner">
+                ...
+                    <div class="mask">
+                        <div class="banner-text"></div>
+                    </div>
+                ...
+            </div>
+            in the beginning of the body.
+            This is the banner.
+        */
+        this.maskedElems[".banner-text"] = {
+            enable: true,
+            wrapper: [document.querySelector("#banner")],
+            mask: [document.querySelector(".mask.flex-center")],
+            mask_bg_color: document.querySelector(".mask.flex-center").style.backgroundColor || "rgba(0,0,0,0)",
+            priority: 0,
+        };
+        this.bg_img = document.querySelector("#banner").style.backgroundImage;
+        /*
+            We create this :
+            <div id="web_bg_wrapper">
+                <div id="web_bg_mask">
+                    <div id="web_bg"></div>
+                </div>
+            </div>
+            in the beginning of the body.
+            Just a background.
+            And maybe the #web_bg tag is not exist in the config mask list,
+            so we need to create it manually.
+        */
+        let web_bg = document.createElement("div");
+        web_bg.id = "web_bg";
+        web_bg.setAttribute(
+            "style", `
+            display: none;
             position: fixed;
             width: 100%;
             height: 100%;
             z-index: -1;
+        `);
+        document.body.insertBefore(web_bg, document.body.firstChild);
+        this.maskedElems["#web_bg"] = {
+            enable: true,
+            wrapper: [this.create_wrapper(web_bg)],
+            mask: [this.create_mask(web_bg)],
+            mask_bg_color: "rgba(0,0,0,0)",
+            priority: 0,
+        };
+        this.maskedElems["#web_bg"].wrapper[0].style.position = "fixed";
+        /* 
+            We create this :
+            <div id="XXX_wrapper">
+                <div id="XXX_bg_mask">
+                    <div prop="XXX"></div>
+                </div>
+            </div>
+        */
+        this.create();
+    }
+    parse_bg_color(style) {
+        // 匹配 background-color: rgba(0,0,0,0);
+        // let reg = /background-color: *rgba\([0-9]+,[0-9]+,[0-9]+,[0-9.]+\);/g;
+        // let bg_color = "";
+        // let match = reg.exec(style);
+        // if (match) {
+        //     bg_color = match[0];
+        //     return bg_color;
+        // }
+        // return null;
+        let bg_color = style.substring(
+            style.indexOf('rgba', style.indexOf("background-color")),
+            style.indexOf(')', style.indexOf("background-color")) + 1
+        );
+        if (bg_color == -1) {
+            return null;
+        }
+        return bg_color
+    }
+    parse_item_name(item) {
+        // id class tag
+        let item_name = "";
+        if (item.id) {
+            item_name = item.id;
+        } else if (item.class) {
+            item_name = item.class;
+        } else if (item.tag) {
+            item_name = item.tag;
+        }
+        return item_name;
+    }
+    create_wrapper(itemElem) {
+        let wrapper = document.createElement("div");
+        wrapper.id = this.parse_item_name(itemElem) + "_wrapper";
+        wrapper.setAttribute("style", `
+            border-radius: 0;
+            background-image: ${this.bg_img || "url()"};
+            background-color: rgba(0,0,0,0);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-        `);
-        this.web_bg_mask = document.createElement("div");
-        this.web_bg_mask.id = "web_bg_mask";
-
-
-        this.web_bg_mask.setAttribute("style", `
-            ${() => {
-                if (!this.configs.mask.enable) {
-                    return `background-color: rgba(0,0,0,0);`;
-                }
-                this.configs.mask.list.forEach((item) => {
-                    if (item.selector === "#web_bg") {
-                        return item.style;
-                    }
-                });
-                return `background-color: rgba(0,0,0,0);`;
-            }}
-            position: fixed;
+            background-attachment: fixed;
             width: 100%;
             height: 100%;
-            z-index: -1;
         `);
-        this.web_bg.appendChild(this.web_bg_mask);
-
-        document.body.insertBefore(this.web_bg, document.body.firstChild);
-        // 去除banner原本的mask和背景图
-        this.banner_mask_bg_color = this.banner_mask.style.backgroundColor || "rgba(0,0,0,0)";
-        this.banner_mask.setAttribute("style", "background-color:rgba(0,0,0,0)");
-        this.banner.setAttribute("style", "background-image: url()");
+        itemElem.parentNode.replaceChild(wrapper, itemElem);
+        wrapper.appendChild(itemElem);
+        return wrapper;
     }
-    create_mask() {
+    create_mask(itemElem) {
+        let mask = document.createElement("div");
+        mask.id = this.parse_item_name(itemElem) + "_mask";
+        mask.setAttribute("style", `
+            border-radius: 0;
+            background-color: rgba(0,0,0,0);
+            width: 100%;
+            height: 100%;
+        `);
+        itemElem.parentNode.replaceChild(mask, itemElem);
+        mask.appendChild(itemElem);
+        return mask;
+    }
+    create() {
         this.configs.mask.list.forEach((item) => {
+            if (this.maskedElems.hasOwnProperty(item.selector)) {
+                return;
+            }
+            console.log(`[Fixed Background] Create ${item.selector}`);
+            this.maskedElems[item.selector] = {
+                enable: false,
+                wrapper: [],
+                mask: [],
+                mask_bg_color: "rgba(0,0,0,0)",
+                priority: 0,
+            };
             let itemElements = document.querySelectorAll(item.selector); // 选择所有要包裹的元素
-            // itemElem 是被包裹的元素其中的一个
-            // item 是被包裹的元素的配置
             itemElements.forEach((itemElem) => {
-                let wrapper = document.createElement("div");
-                let mask = document.createElement("div");
-                wrapper.id = itemElem.id + "_wrapper";
-                mask.id = itemElem.id + "_mask";
-                // 设置wrapper的样式，它用于提供背景图
-                // 设置mask的样式
-                // 计算被包裹元素的border-radius，防止外面的wrapper的背景图溢出
-                if (itemElem.id == 'web_bg') {
-                    mask.setAttribute("style", `
-                        ${item.style}
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 0;
-                    `);
-                    wrapper.setAttribute(
-                        "style", `
-                        border-radius: ${mask.style.borderRadius || 0};
-                        background-image: ${this.bg_img || 'url()'};
-                        background-color: rgba(0,0,0,0);
-                        background-size: cover;
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-attachment: fixed;
-                        position: fixed;
-                        top: 0;
-                        right: 0;
-                        bottom: 0;
-                        left: 0;
-                        width: 100vw;
-                        height: 100vh;
-                        border-radius: 0;
-                    `);
-                }
-                else {
-                    mask.setAttribute("style", `
-                        width: 100%;
-                        height: 100%;
-                        ${item.style}
-                    `);
-                    wrapper.setAttribute(
-                        "style", `
-                        border-radius: ${mask.style.borderRadius || 0};
-                        background-image: ${this.bg_img || 'url()'};
-                        background-color: rgba(0,0,0,0);
-                        background-size: cover;
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-attachment: fixed;
-                    `);
-                }
-                // 将itemElem的父元素替换为wrapper
-                itemElem.parentNode.replaceChild(wrapper, itemElem);
-                wrapper.appendChild(mask);
-                mask.appendChild(itemElem);
-                // 将wrapper的父元素替换为mask
-                // 将mask的父元素替换为itemElem
-                this.wrapper_list.push(wrapper);
-                this.mask_list.push(mask);
+                let item_wrapper = this.create_wrapper(itemElem);
+                let item_mask = this.create_mask(itemElem);
+                this.maskedElems[item.selector].wrapper.push(item_wrapper);
+                this.maskedElems[item.selector].mask.push(item_mask);
             });
         });
     }
-    update() {
-        console.log('[Fix Background] Update');
-        if (this.status === 'null' && this.configs.enable) {
-            this.status = 'web_bg';
-            this.create_web_bg();
-            if (this.configs.mask.enable) {
-                this.status = 'all';
-                this.create_mask();
+    hidden(item_selector) {
+        this.maskedElems[item_selector].enable = false;
+        this.maskedElems[item_selector].wrapper.forEach((item) => {
+            item.style.backgroundImage = "url()";
+        });
+        this.maskedElems[item_selector].mask.forEach((item) => {
+            item.style.backgroundColor = "rgba(0,0,0,0)";
+        });
+    }
+    show(item_selector) {
+        this.maskedElems[item_selector].enable = true;
+        this.maskedElems[item_selector].wrapper.forEach((item) => {
+            item.style.backgroundImage = this.bg_img;
+        });
+        this.maskedElems[item_selector].mask.forEach((item) => {
+            item.style.backgroundColor = this.maskedElems[item_selector].mask_bg_color;
+        });
+    }
+    apply() {
+        // 将config中mask的style配置到[mask]上，但先隐藏所有的mask（设置为透明）
+        // 记录mask的背景色到[mask_bg_color]上，可供后续决定是否显示
+        this.configs.mask.list.forEach((item) => {
+            console.log(`[Fixed Background] Apply ${item.selector}`);
+            this.maskedElems[item.selector].enable = item.enable;
+            this.maskedElems[item.selector].mask_bg_color = this.parse_bg_color(item.style) || "rgba(0,0,0,0)";
+            this.maskedElems[item.selector].priority = item.priority;
+            for (let i = 0; i < this.maskedElems[item.selector].wrapper.length; i++) {
+                this.maskedElems[item.selector].mask[i].setAttribute("style", `
+                    border-radius: 0;
+                    width: 100%;
+                    height: 100%;
+                    ${item.style}
+                    background-color: rgba(0,0,0,0);
+                `);
+                this.maskedElems[item.selector].wrapper[i].style.borderRadius = this.maskedElems[item.selector].mask[i].style.borderRadius;
             }
-        }
-        else if (this.status === 'web_bg') {
-            if (this.configs.enable && this.configs.mask.enable) {
-                this.create_mask();
-                this.status = 'all';
-            }
-            else {
-                this.status = 'null';
-                this.hidden_web_bg();
-            }
-        }
-        else if (this.status === 'all') {
-            if (!this.configs.enable) {
-                this.status = 'hidden_all';
-                this.hidden_mask();
-                this.hidden_web_bg();
-            }
-            else if (!this.configs.mask.enable) {
-                this.status = 'hidden_mask';
-                this.hidden_mask();
-            }
-        }
-        else if (this.status === 'hidden_all') {
-            if (this.configs.enable) {
-                this.status = 'web_bg';
-                this.show_web_bg();
-                if (this.configs.mask.enable) {
-                    this.status = 'all';
-                    this.show_mask();
-                }
-            }
-        }
-        else if (this.status === 'hidden_mask') {
-            if (this.configs.enable) {
-                if (this.configs.mask.enable) {
-                    this.status = 'all';
-                    this.show_mask();
-                }
-            }
-            else {
-                this.status = 'hidden_all';
-                this.hidden_web_bg();
+        });
+        if (this.configs.enable === false) {
+            for (const item_selector in this.maskedElems) {
+                this.maskedElems[item_selector].enable = (item_selector === '.banner-text');
             }
         }
         else {
-            console.log('[Fix Background] Error status: ' + this.status);
+            for (const item_selector in this.maskedElems) {
+                if (item_selector === '.banner-text') {
+                    this.maskedElems[item_selector].enable = false;
+                }
+                else if (item_selector === '#web_bg') {
+                    this.maskedElems[item_selector].enable = true;
+                }
+                else {
+                    this.maskedElems[item_selector].enable = this.configs.mask.enable && this.maskedElems[item_selector].enable
+                }
+            }
+        }
+    }
+    update() {
+        console.log(`[Fixed Background] Apply this config: ${JSON.stringify(this.configs, null, 2)}`);
+        this.create();
+        this.apply();
+        for (const item_selector in this.maskedElems) {
+            if (this.maskedElems.hasOwnProperty(item_selector)) {
+                if (this.maskedElems[item_selector].enable) {
+                    this.show(item_selector);
+                }
+                else {
+                    this.hidden(item_selector);
+                }
+            }
         }
     }
     observer() {
-        document.extend_features.fixed_background = new Proxy(document.extend_features.fixed_background, {
+        // document.extend_features.fixed_background = new Proxy(
+        //     document.extend_features.fixed_background, {
+        //     set: (target, key, value) => {
+        //         console.log(`[Fix Background] Set ${target}.${key} to ${value}.`);
+        //         target[key] = value;
+        //         this.update();
+        //         return true;
+        //     }
+        // });
+        document.extend_features_signal.fixed_background = new Proxy(
+            document.extend_features_signal.fixed_background, {
             set: (target, key, value) => {
                 console.log(`[Fix Background] Set ${target}.${key} to ${value}.`);
                 target[key] = value;
@@ -277,6 +318,7 @@ class FixedBackground {
         });
     }
     begin() {
+        this.init();
         this.update();
         this.observer();
     }
@@ -288,62 +330,45 @@ class ExtendFeatures {
         this.status = extend_features.enable;
         this.features = {
             code_font: new CodeFont(),
-            fixed_background: new FixedBackground()
-        }
+            fixed_background: new FixedBackground(),
+        };
         this.features_status = {};
-    }
-    disable() {
-        for (const feature in extend_features) {
-            if (extend_features.hasOwnProperty(feature) &&
-                typeof extend_features[feature] === 'object' &&
-                feature !== 'enable') {
-                this.features_status[feature] = extend_features[feature].enable;
-                extend_features[feature].enable = false;
+        document.extend_features_signal = {};
+        for (const feature_name in this.features) {
+            if (this.features.hasOwnProperty(feature_name)) {
+                document.extend_features_signal[feature_name] = {changed: false};
             }
         }
-        extend_features.enable = false;
-    }
-    enable() {
-        for (const feature in this.features_status) {
-            if (this.features_status.hasOwnProperty(feature) &&
-                extend_features.hasOwnProperty(feature)) {
-                extend_features[feature].enable = this.features_status[feature];
-            }
-        }
-        this.features_status = {};
-        extend_features.enable = true;
-    }
-    update() {
-        if (this.status === false && this.configs.enable === true) {
-            this.enable();
-            this.status = true;
-        }
-        else if (this.status === true && this.configs.enable === false) {
-            this.disable();
-            this.status = false;
-        }
-    }
+        document.extend_features_signal.enable = {changed: false};
+    } 
     begin() {
-        for (const feature in this.features) {
-            if (this.features.hasOwnProperty(feature)) {
-                this.features[feature].begin();
+        for (const feature_name in this.features) {
+            if (this.features.hasOwnProperty(feature_name)) {
+                this.features[feature_name].begin();
             }
         }
-        if (this.configs.enable === false) {
-            this.disable();
-        }
-        this.update();
         this.observer();
-        console.log('[Extend Features Manager] Begin.');
+        console.log("[Extend Features Manager] Begin.");
     }
     observer() {
-        document.extend_features = new Proxy(document.extend_features, {
+        // document.extend_features = new Proxy(document.extend_features, {
+        //     set: (target, key, value) => {
+        //         console.log(
+        //             `[Extend Features Manager] Set ${target}.${key} to ${value}.`
+        //         );
+        //         target[key] = value;
+        //         this.update();
+        //         return true;
+        //     },
+        // });
+        document.extend_features_signal.enable = new Proxy(document.extend_features_signal.enable, {
             set: (target, key, value) => {
-                console.log(`[Extend Features Manager] Set ${target}.${key} to ${value}.`);
+                console.log(
+                    `[Extend Features Manager] Set ${target}.${key} to ${value}.`
+                );
                 target[key] = value;
-                this.update();
                 return true;
-            }
+            },
         });
     }
 }
@@ -353,7 +378,6 @@ if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function () {
         extend_features_manager.begin();
     });
-}
-else {
+} else {
     extend_features_manager.begin();
 }
