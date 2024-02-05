@@ -27,7 +27,8 @@ document.subthemes_config = {
     "extend_features": {
       "code_font": {
         "enable": true,
-        "font_family": "\"Jetbrains Mono\", Consolas, monospace"
+        "font_family": "\"Jetbrains Mono\", Consolas, monospace",
+        "font_weight": 600
       },
       "fixed_background": {
         "enable": true,
@@ -60,7 +61,8 @@ document.subthemes_config = {
       "enable": false,
       "code_font": {
         "enable": false,
-        "font_family": "SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace"
+        "font_family": "SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace",
+        "font_weight": 400
       },
       "fixed_background": {
         "enable": false,

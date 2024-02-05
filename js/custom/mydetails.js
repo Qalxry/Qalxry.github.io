@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       }
     });
     resizeObserver.observe(summary);
+    hasBeenOpenedOnce = false;
     summary.addEventListener("click", function () {
       let isOpen = mydetails.hasAttribute("open");
       if (isOpen) {
@@ -95,6 +96,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         mydetails.setAttribute("open", "open");
         mydetails.style.height = mydetails.scrollHeight + "px";
+        if (!hasBeenOpenedOnce) {
+          // 当动画结束后，将高度设置为auto
+          mydetails.style.height = "auto";
+          mydetails.style.height = mydetails.scrollHeight + "px";
+        }
+        hasBeenOpenedOnce = true;
       }
     });
   });
