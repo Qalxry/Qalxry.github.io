@@ -16,16 +16,16 @@
   <meta name="author" content="しずり雪">
   <meta name="keywords" content="">
   
-    <meta name="description" content="DP优化   0 基本概念  1D&#x2F;1D 方程  (1) \(w(i,j)\) 为多项式函数  a. \(w(i,j)\) 为一次函数：单调队列优化 b. \(w(i,j)\) 为高次函数：斜率&#x2F;凸壳优化  (2) \(w(i,j)\) 为非多项式函数  a. \(w(i,j)\) 满足四边形不等式：决策单调性优化   2D&#x2F;1D 方程  (">
+    <meta name="description" content="DP优化   0 基本概念  1D&#x2F;1D 方程 2D&#x2F;1D 方程  1 (1D&#x2F;1D) 单调队列优化  概念 单调队列优化模板题  2 (1D&#x2F;1D) 斜率&#x2F;凸壳优化  概念 (1) \(k\) 单调不减，\(x\) 单调不减：单调队列 (2) \(k\) 无单调性，\(x\) 单调不减：二分单调栈 (3) \(k\) 单调不减，\(x\) 无单">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【算法】【DP】DP优化总结">
 <meta property="og:url" content="https://qalxry.github.io/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="しずり雪 の Blog">
-<meta property="og:description" content="DP优化   0 基本概念  1D&#x2F;1D 方程  (1) \(w(i,j)\) 为多项式函数  a. \(w(i,j)\) 为一次函数：单调队列优化 b. \(w(i,j)\) 为高次函数：斜率&#x2F;凸壳优化  (2) \(w(i,j)\) 为非多项式函数  a. \(w(i,j)\) 满足四边形不等式：决策单调性优化   2D&#x2F;1D 方程  (">
+<meta property="og:description" content="DP优化   0 基本概念  1D&#x2F;1D 方程 2D&#x2F;1D 方程  1 (1D&#x2F;1D) 单调队列优化  概念 单调队列优化模板题  2 (1D&#x2F;1D) 斜率&#x2F;凸壳优化  概念 (1) \(k\) 单调不减，\(x\) 单调不减：单调队列 (2) \(k\) 无单调性，\(x\) 单调不减：二分单调栈 (3) \(k\) 单调不减，\(x\) 无单">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/piclib/ve04_b.jpg">
 <meta property="article:published_time" content="2024-01-20T12:55:20.000Z">
-<meta property="article:modified_time" content="2024-02-05T14:01:42.401Z">
+<meta property="article:modified_time" content="2024-02-05T14:16:55.014Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="Algorithm 算法">
 <meta property="article:tag" content="DP">
@@ -73,6 +73,8 @@
   
 <link rel="stylesheet" href="/css/custom/mydetails.css">
 <link rel="stylesheet" href="/css/custom/fonts.css">
+<link rel="stylesheet" href="/css/custom/toc.css">
+<link rel="stylesheet" href="/css/custom/base.css">
 
 
 
@@ -285,7 +287,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          34k 字
+          33k 字
         
       </span>
     
@@ -296,7 +298,7 @@
         
         
         
-          140 分钟
+          137 分钟
         
       </span>
     
@@ -332,7 +334,7 @@
 
 <div class="container-fluid nopadding-x">
   <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
+    <div class="left-sidebar side-col d-none d-lg-block col-lg-2">
       
 
     </div>
@@ -347,7 +349,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年2月5日 晚上 22:01
+                    本文最后更新于：2024年2月5日 晚上 22:16
                   
                 
               </p>
@@ -361,33 +363,10 @@
 <li><a href="#0----%25E5%259F%25BA%25E6%259C%25AC%25E6%25A6%2582%25E5%25BF%25B5">0
 基本概念</a>
 <ul>
-<li><a href="#1Dx2F1D-%25E6%2596%25B9%25E7%25A8%258B">1D/1D 方程</a>
-<ul>
-<li><a href="#(1)--%24w(i%2Cj)%24-%25E4%25B8%25BA%25E5%25A4%259A%25E9%25A1%25B9%25E5%25BC%258F%25E5%2587%25BD%25E6%2595%25B0">(1)
-<span class="math inline">\(w(i,j)\)</span> 为多项式函数</a>
-<ul>
-<li><a href="#a.--%24w(i%2Cj)%24-%25E4%25B8%25BA%25E4%25B8%2580%25E6%25AC%25A1%25E5%2587%25BD%25E6%2595%25B0%25EF%25BC%259A%25E5%258D%2595%25E8%25B0%2583%25E9%2598%259F%25E5%2588%2597%25E4%25BC%2598%25E5%258C%2596">a.
-<span class="math inline">\(w(i,j)\)</span>
-为一次函数：单调队列优化</a></li>
-<li><a href="#b.--%24w(i%2Cj)%24-%25E4%25B8%25BA%25E9%25AB%2598%25E6%25AC%25A1%25E5%2587%25BD%25E6%2595%25B0%25EF%25BC%259A%25E6%2596%259C%25E7%258E%2587x2F%25E5%2587%25B8%25E5%25A3%25B3%25E4%25BC%2598%25E5%258C%2596">b.
-<span class="math inline">\(w(i,j)\)</span>
-为高次函数：斜率/凸壳优化</a></li>
-</ul></li>
-<li><a href="#(2)--%24w(i%2Cj)%24-%25E4%25B8%25BA%25E9%259D%259E%25E5%25A4%259A%25E9%25A1%25B9%25E5%25BC%258F%25E5%2587%25BD%25E6%2595%25B0">(2)
-<span class="math inline">\(w(i,j)\)</span> 为非多项式函数</a>
-<ul>
-<li><a href="#a.--%24w(i%2Cj)%24-%25E6%25BB%25A1%25E8%25B6%25B3%25E5%259B%259B%25E8%25BE%25B9%25E5%25BD%25A2%25E4%25B8%258D%25E7%25AD%2589%25E5%25BC%258F%25EF%25BC%259A%25E5%2586%25B3%25E7%25AD%2596%25E5%258D%2595%25E8%25B0%2583%25E6%2580%25A7%25E4%25BC%2598%25E5%258C%2596">a.
-<span class="math inline">\(w(i,j)\)</span>
-满足四边形不等式：决策单调性优化</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#2Dx2F1D-%25E6%2596%25B9%25E7%25A8%258B">2D/1D 方程</a>
-<ul>
-<li><a href="#(1)-%24f(i%2Cj)%24-%25E5%2585%25B7%25E6%259C%2589%25E5%2587%25B8%25E6%2580%25A7">(1)
-<span class="math inline">\(f(i,j)\)</span> 具有凸性</a></li>
-<li><a href="#(2)--%24w(i%2Cj)%24-%25E6%25BB%25A1%25E8%25B6%25B3%25E5%259B%259B%25E8%25BE%25B9%25E5%25BD%25A2%25E4%25B8%258D%25E7%25AD%2589%25E5%25BC%258F">(2)
-<span class="math inline">\(w(i,j)\)</span> 满足四边形不等式</a></li>
-</ul></li>
+<li><a href="#1Dx2F1D-%25E6%2596%25B9%25E7%25A8%258B">1D/1D
+方程</a></li>
+<li><a href="#2Dx2F1D-%25E6%2596%25B9%25E7%25A8%258B">2D/1D
+方程</a></li>
 </ul></li>
 <li><a href="#1-----(1Dx2F1D)-%25E5%258D%2595%25E8%25B0%2583%25E9%2598%259F%25E5%2588%2597%25E4%25BC%2598%25E5%258C%2596">1
 (1D/1D) 单调队列优化</a>
@@ -400,16 +379,7 @@
 <ul>
 <li><a href="#%25E6%25A6%2582%25E5%25BF%25B5">概念</a></li>
 <li><a href="#(1)-%24k%24-%25E5%258D%2595%25E8%25B0%2583%25E4%25B8%258D%25E5%2587%258F%25EF%25BC%258C%24x%24-%25E5%258D%2595%25E8%25B0%2583%25E4%25B8%258D%25E5%2587%258F%25EF%25BC%259A%25E5%258D%2595%25E8%25B0%2583%25E9%2598%259F%25E5%2588%2597">(1)
-<span class="math inline">\(k\)</span> 单调不减，<span class="math inline">\(x\)</span> 单调不减：单调队列</a>
-<ul>
-<li><a href="#%25E6%2596%259C%25E7%258E%2587%25E4%25BC%2598%25E5%258C%2596%2B%25E5%258D%2595%25E8%25B0%2583%25E9%2598%259F%25E5%2588%2597%25E6%25A8%25A1%25E6%259D%25BF%25E9%25A2%2598">斜率优化+单调队列模板题</a></li>
-<li><a href="#1.-%255BPrint-Article-HDU3507%255D(httpsx2Fx2Fvjudge.netx2Fproblemx2FHDU-3507%23author%3Dyizhexu)">1.
-[Print Article
-HDU3507](https://vjudge.net/problem/HDU-3507#author=yizhexu)</a>
-<ul>
-<li><a href="#%25E6%2596%259C%25E7%258E%2587%25E4%25BC%2598%25E5%258C%2596%2B%25E5%258D%2595%25E8%25B0%2583%25E9%2598%259F%25E5%2588%2597%25E9%25A2%2598%25E8%25A7%25A3">斜率优化+单调队列题解</a></li>
-</ul></li>
-</ul></li>
+<span class="math inline">\(k\)</span> 单调不减，<span class="math inline">\(x\)</span> 单调不减：单调队列</a></li>
 <li><a href="#(2)--%24k%24-%25E6%2597%25A0%25E5%258D%2595%25E8%25B0%2583%25E6%2580%25A7%25EF%25BC%258C%24x%24-%25E5%258D%2595%25E8%25B0%2583%25E4%25B8%258D%25E5%2587%258F%25EF%25BC%259A%25E4%25BA%258C%25E5%2588%2586%25E5%258D%2595%25E8%25B0%2583%25E6%25A0%2588">(2)
 <span class="math inline">\(k\)</span> 无单调性，<span class="math inline">\(x\)</span> 单调不减：二分单调栈</a></li>
 <li><a href="#(3)--%24k%24-%25E5%258D%2595%25E8%25B0%2583%25E4%25B8%258D%25E5%2587%258F%25EF%25BC%258C%24x%24-%25E6%2597%25A0%25E5%258D%2595%25E8%25B0%2583%25E6%2580%25A7%25EF%25BC%259A%25E5%258A%25A8%25E6%2580%2581%25E5%2587%25B8%25E5%258C%2585">(3)
@@ -418,84 +388,18 @@ HDU3507](https://vjudge.net/problem/HDU-3507#author=yizhexu)</a>
 <span class="math inline">\(k\)</span> 无单调性，<span class="math inline">\(x\)</span> 无单调性：动态凸包</a></li>
 </ul></li>
 <li><a href="#3-----(1Dx2F1D)-%25E5%2586%25B3%25E7%25AD%2596%25E5%258D%2595%25E8%25B0%2583%25E6%2580%25A7%25E4%25BC%2598%25E5%258C%2596">3
-(1D/1D) 决策单调性优化</a>
-<ul>
-<li><a href="#%25E6%25A6%2582%25E5%25BF%25B5">概念</a></li>
-<li><a href="#(1)--%24w(i%2Cj)%24-%25E6%25BB%25A1%25E8%25B6%25B3%25E5%258C%25BA%25E9%2597%25B4%25E5%258D%2595%25E8%25B0%2583%25E6%2580%25A7%25EF%25BC%259A%25E5%258D%2595%25E8%25B0%2583%25E9%2598%259F%25E5%2588%2597">(1)
-<span class="math inline">\(w(i,j)\)</span>
-满足区间单调性：单调队列</a></li>
-<li><a href="#(2)--%24w(i%2Cj)%24-%25E6%2597%25A0%25E5%258C%25BA%25E9%2597%25B4%25E5%258D%2595%25E8%25B0%2583%25E6%2580%25A7">(2)
-<span class="math inline">\(w(i,j)\)</span> 无区间单调性</a></li>
-</ul></li>
+(1D/1D) 决策单调性优化</a></li>
 <li><a href="#4-----(2Dx2F1D)-WQS%25E5%25B8%25A6%25E6%259D%2583%25E4%25BA%258C%25E5%2588%2586%25E4%25BC%2598%25E5%258C%2596">4
 (2D/1D) WQS带权二分优化</a>
 <ul>
 <li><a href="#%25E9%25A2%2598%25E7%259B%25AE%25E7%25B1%25BB%25E5%259E%258B">题目类型</a></li>
 <li><a href="#%25E6%259C%25B4%25E7%25B4%25A0DP%25E6%2580%259D%25E8%25B7%25AF">朴素DP思路</a></li>
-<li><a href="#WQS%25E4%25BA%258C%25E5%2588%2586%25E8%25A7%25A3%25E9%25A2%2598%25E6%2580%259D%25E8%25B7%25AF">WQS二分解题思路</a>
-<ul>
-<li><a href="#1.-%25E6%25A3%2580%25E6%259F%25A5-%24f(i%3DC%2Cj)%24-%25E5%2585%25B3%25E4%25BA%258E-%24j%24-%25E7%259A%2584%25E5%2587%25B8%25E6%2580%25A7">1.
-检查 <span class="math inline">\(f(i=C,j)\)</span> 关于 <span class="math inline">\(j\)</span> 的凸性</a></li>
-<li><a href="#2.-%25E7%25AE%2580%25E5%258C%2596%25E9%2597%25AE%25E9%25A2%2598%25EF%25BC%259A%25E4%25B8%258D%25E9%2599%2590%25E5%2588%25B6-%24j%24-%25E6%2597%25B6%25E7%259A%2584-%24f(i%2Cj%3D%25E4%25B8%258D%25E9%2599%2590%25E5%2588%25B6)%24-%25E5%25BE%2588%25E5%25A5%25BD%25E7%25AE%2597">2.
-简化问题：不限制 <span class="math inline">\(j\)</span> 时的 <span class="math inline">\(f(i,j=不限制)\)</span> 很好算</a></li>
-<li><a href="#3.-%25E5%2587%25B8%25E5%2587%25BD%25E6%2595%25B0%25EF%25BC%259A%25E5%258A%25A0%25E5%2587%258F-%24kx%24-%25E5%2587%25B8%25E6%2580%25A7%25E4%25B8%258D%25E5%258F%2598%25EF%25BC%258C%25E6%259C%2580%25E5%2580%25BC%25E7%2582%25B9%25E5%258D%2595%25E8%25B0%2583%25E7%25A7%25BB%25E5%258A%25A8">3.
-凸函数：加减 <span class="math inline">\(kx\)</span>
-凸性不变，最值点单调移动</a></li>
-<li><a href="#4.-%25E5%258A%25A0%25E5%2587%258F-%24kx%24-%25E6%259E%2584%25E9%2580%25A0%25E6%2596%25B0%25E5%2587%25B8%25E5%2587%25BD%25E6%2595%25B0%25EF%25BC%258C%25E7%2594%25A8%25E5%2585%25B6%25E6%259C%2580%25E5%2580%25BC%25E7%2582%25B9%25E6%25B1%2582-%24f(i%2Cj)%24">4.
-加减 <span class="math inline">\(kx\)</span> 构造新凸函数，用其最值点求
-<span class="math inline">\(f(i,j)\)</span></a></li>
-<li><a href="#5.-%25E4%25BA%258C%25E5%2588%2586%25E6%2590%259C%25E7%25B4%25A2%25E5%2590%2588%25E9%2580%2582%25E7%259A%2584-%24k%24-%25E5%2580%25BC%25EF%25BC%258C%25E5%25BE%2597%25E5%2588%25B0-%24f(N%2CM)%24">5.
-二分搜索合适的 <span class="math inline">\(k\)</span> 值，得到 <span class="math inline">\(f(N,M)\)</span></a></li>
-<li><a href="#6.-%25E7%2589%25B9%25E5%2588%25AB%25E6%25B3%25A8%25E6%2584%258F%25E4%25BA%258B%25E9%25A1%25B9">6.
-特别注意事项</a>
-<ul>
-<li><a href="#(1)-%25E6%25B3%25A8%25E6%2584%258F%25E5%25A4%259A%25E7%2582%25B9%25E5%2585%25B1%25E7%25BA%25BF">(1)
-注意多点共线</a></li>
-<li><a href="#(2)-%25E6%25B3%25A8%25E6%2584%258F-M-%25E6%2598%25AF%25E5%2590%25A6%25E6%25B0%25B8%25E8%25BF%259C%25E6%2597%25A0%25E6%25B3%2595%25E9%2580%259A%25E8%25BF%2587%25E4%25BA%258C%25E5%2588%2586%25E5%258F%2596%25E5%2588%25B0">(2)
-注意 M 是否永远无法通过二分取到</a></li>
-</ul></li>
-<li><a href="#WQS%25E4%25BA%258C%25E5%2588%2586%25E7%259A%2584%25E6%258B%2593%25E5%25B1%2595">WQS二分的拓展</a>
-<ul>
-<li><a href="#A.-%25E5%25A4%259A%25E9%2587%258DWQS%25E4%25BA%258C%25E5%2588%2586">A.
-多重WQS二分</a></li>
-<li><a href="#B.-%25E5%25AF%25B9%25E4%25BB%25BB%25E6%2584%258F%25E5%2587%25B8%25E5%2587%25BD%25E6%2595%25B0%25E4%25B8%25AD%25E5%258F%2597%25E9%2599%2590%25E5%2588%25B6%25E5%258F%2598%25E9%2587%258F%25E8%25BF%259B%25E8%25A1%258C%25E4%25BA%258C%25E5%2588%2586">B.
-对任意凸函数中受限制变量进行二分</a></li>
-<li><a href="#C.-%25E5%25AF%25B9%25E9%259D%259E%25E5%2587%25B8%25E5%2587%25BD%25E6%2595%25B0%25E8%25BF%259B%25E8%25A1%258CWQS%25E4%25BA%258C%25E5%2588%2586">C.
-对非凸函数进行WQS二分</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#WQS%25E4%25BA%258C%25E5%2588%2586%25E6%25A8%25A1%25E6%259D%25BF%25E9%25A2%2598">WQS二分模板题</a>
-<ul>
-<li><a href="#1.-%255BP4767-%255BIOI2000%255D-%25E9%2582%25AE%25E5%25B1%2580%255D(httpsx2Fx2Fwww.luogu.com.cnx2Fproblemx2FP4767)">1.
-[P4767 [IOI2000] 邮局](https://www.luogu.com.cn/problem/P4767)</a>
-<ul>
-<li><a href="#WQS%25E8%25A7%25A3%25E9%25A2%2598%25E6%2580%259D%25E8%25B7%25AF">WQS解题思路</a></li>
-</ul></li>
-<li><a href="#2.-%255BCF739E-Gosha-is-hunting%255D(httpsx2Fx2Fwww.luogu.com.cnx2Fproblemx2FCF739E)">2.
-[CF739E Gosha is hunting](https://www.luogu.com.cn/problem/CF739E)</a>
-<ul>
-<li><a href="#WQS%25E8%25A7%25A3%25E9%25A2%2598%25E6%2580%259D%25E8%25B7%25AF">WQS解题思路</a></li>
-</ul></li>
-<li><a href="#3.-%255BP2619-%255B%25E5%259B%25BD%25E5%25AE%25B6%25E9%259B%2586%25E8%25AE%25AD%25E9%2598%259F%255D-Tree-I%255D(httpsx2Fx2Fwww.luogu.com.cnx2Fproblemx2FP2619)">3.
-[P2619 [国家集训队] Tree I](https://www.luogu.com.cn/problem/P2619)</a>
-<ul>
-<li><a href="#WQS%25E8%25A7%25A3%25E9%25A2%2598%25E6%2580%259D%25E8%25B7%25AF">WQS解题思路</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#WQS%25E4%25BA%258C%25E5%2588%2586%25E7%25BB%2583%25E4%25B9%25A0%25E9%25A2%2598">WQS二分练习题</a>
-<ul>
-<li><a href="#%255BP1484-%25E7%25A7%258D%25E6%25A0%2591%255D(httpsx2Fx2Fwww.luogu.com.cnx2Fproblemx2FP1484)">P1484
-种树</a></li>
-<li><a href="#%255BP5896-%255BIOI2016%255D-aliens%255D(httpsx2Fx2Fwww.luogu.com.cnx2Fproblemx2FP5896)">[P5896
-[IOI2016] aliens](https://www.luogu.com.cn/problem/P5896)</a></li>
-</ul></li>
+<li><a href="#WQS%25E4%25BA%258C%25E5%2588%2586%25E8%25A7%25A3%25E9%25A2%2598%25E6%2580%259D%25E8%25B7%25AF">WQS二分解题思路</a></li>
+<li><a href="#WQS%25E4%25BA%258C%25E5%2588%2586%25E6%25A8%25A1%25E6%259D%25BF%25E9%25A2%2598">WQS二分模板题</a></li>
+<li><a href="#WQS%25E4%25BA%258C%25E5%2588%2586%25E7%25BB%2583%25E4%25B9%25A0%25E9%25A2%2598">WQS二分练习题</a></li>
 </ul></li>
 <li><a href="#5-----(2Dx2F1D)-%25E5%259B%259B%25E8%25BE%25B9%25E5%25BD%25A2%25E4%25B8%258D%25E7%25AD%2589%25E5%25BC%258F%25E4%25BC%2598%25E5%258C%2596">5
-(2D/1D) 四边形不等式优化</a>
-<ul>
-<li><a href="#%25E6%25A6%2582%25E5%25BF%25B5">概念</a></li>
-<li><a href="#%25E5%259B%259B%25E8%25BE%25B9%25E5%25BD%25A2%25E4%25B8%258D%25E7%25AD%2589%25E5%25BC%258F%25E4%25BC%2598%25E5%258C%2596%25E6%25A8%25A1%25E6%259D%25BF%25E4%25BB%25A3%25E7%25A0%2581">四边形不等式优化模板代码</a></li>
-</ul></li>
+(2D/1D) 四边形不等式优化</a></li>
 <li><a href="#6----%25E7%259F%25A9%25E9%2598%25B5%25E4%25B9%2598%25E6%25B3%2595%25E4%25BC%2598%25E5%258C%2596">6
 矩阵乘法优化</a></li>
 </ul>
@@ -656,11 +560,10 @@ k\)</span>）。</p>
 <span class="math inline">\(i = 3\)</span>
 时是最新的点，它与1、2、3组成凸壳，但是当 <span class="math inline">\(i
 = 4\)</span> 时，随着点 4 的加入，点 3 被排除，1、2、4重新组成凸壳。</p>
-<p><mydetails></mydetails></p>
+<mydetails>
 <summary>
 <summary-title>Algorithm</summary-title><summary-subtitle>凸包构造算法</summary-subtitle>
 </summary>
-<blockquote>
 <p>这种算法为计算几何中一种简单的凸包算法：安德鲁算法（Andrew's
 Algorithm）</p>
 <p>这个是利用单调队列以及斜率的单调性来得到凸包。</p>
@@ -671,7 +574,7 @@ Algorithm）</p>
 </figure>
 <p>另有别的凸包构建算法：Graham’s Scan</p>
 <p>先找到最左下的点(y
-最小的最左边的点），计算其他点以该点为原点的极角，并用极角对点进行排序。同样用一个单调队列来维护凸包上的点。</p>
+最小的最左边的点)，计算其他点以该点为原点的极角，并用极角对点进行排序。同样用一个单调队列来维护凸包上的点。</p>
 <figure>
 <img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/5rtTjsI-17071392712874.gif" srcset="/img/loading.gif" lazyload alt="Graham’s Scan 构建凸包的过程">
 <figcaption aria-hidden="true">Graham’s Scan 构建凸包的过程</figcaption>
@@ -679,8 +582,7 @@ Algorithm）</p>
 <p>两者时间复杂度受限于排序，为 <span class="math inline">\(O(n\log
 n)\)</span> 。由于这里给出的 <span class="math inline">\(x=d[j]\le
 d[j+1]\)</span> ，所以省去了排序的过程。</p>
-</blockquote>
-<p></p>
+<p></p></mydetails><p></p>
 <p>对于计算 <span class="math inline">\(dp[i] = b_{\min}\)</span>
 ，我们就在斜率 <span class="math inline">\(k=a[i]\)</span>
 的情况下，<strong>从左到右遍历</strong>凸壳上的点寻找最优 <span class="math inline">\((x_j,y_j)\)</span> 。该项时间复杂度为 <span class="math inline">\(O(n)\)</span>。考虑 <span class="math inline">\(i\)</span> 有 <span class="math inline">\(n\)</span> 次循环，总时间复杂度为 <span class="math inline">\(O(n^2)\)</span>。</p>
@@ -733,7 +635,7 @@ a[i+1], \quad d[j]\ge d[j+1]
 <span class="math inline">\([0,i-1]\)</span>
 ）从原来的【由左到右】变为了【由右到左】而已。我们维护凸壳的时候，要按照斜率递减的方式维护。</p>
 </blockquote>
-<p><mydetails></mydetails></p>
+<mydetails>
 <summary>
 <summary-title>More</summary-title><summary-subtitle>斜率优化+单调队列的另外一种视角</summary-subtitle>
 </summary>
@@ -750,7 +652,7 @@ F(i)&amp;=\min\{G(j)\} + W(i),W(i)=0
 \]</span></p>
 <p>通过单调队列维护 <span class="math inline">\(G(j)=\frac{Y(j)-Y(j-1)}{X(j)-X(j-1)}\)</span> 实现
 <span class="math inline">\(O(n)\)</span> 时间复杂度。</p>
-<p></p>
+<p></p></mydetails><p></p>
 <p><strong>斜率/凸壳优化模板代码</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;<br>    <span class="hljs-comment">// 删除凸壳上在最优点Pi左边的点，剩下的队列的队首即为最优点Pi</span><br>    <span class="hljs-keyword">while</span> (head &lt; tail &amp;&amp; <span class="hljs-built_in">slope</span>(q[head], q[head+<span class="hljs-number">1</span>]) &lt; k) head++;<br>    <span class="hljs-comment">// 根据最优点Pi计算dp[i] = b_min</span><br>    <span class="hljs-type">int</span> j = q[head];<br>    dp[i] = ...;<br>    <span class="hljs-comment">// 下一轮的点(x_j,y_j)(j = i)加入图中，并更新凸壳（因为j &lt; i，所以这里是下一轮）</span><br>    <span class="hljs-keyword">while</span> (head &lt; tail &amp;&amp; <span class="hljs-built_in">slope</span>(i, q[tail<span class="hljs-number">-1</span>]) &lt; <span class="hljs-built_in">slope</span>(q[tail<span class="hljs-number">-1</span>], q[tail])) tail--;<br>    q[++tail] = i; <span class="hljs-comment">// 加入队尾</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>上面的代码计算的顺序和前面我们描述的过程不太一样，主要是因为 <span class="math inline">\(0 \le j &lt; i\)</span>。</p>
@@ -790,7 +692,7 @@ y=kx+b
 <p><span class="math inline">\(x=sum[j]\)</span> 和 <span class="math inline">\(k=2\times sum[i]\)</span>
 都是单调不减，满足斜率优化的要求。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">500007</span>;<br><span class="hljs-type">int</span> n, m, c[N], sum[N], dp[N];  <span class="hljs-comment">// dp[i] 表示前 i 个字的最小打印成本</span><br><span class="hljs-type">int</span> q[N], head, tail;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> K(p) (2 * sum[i])</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> X(p) (sum[p])</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> Y(p) (dp[p] + sum[p] * sum[p])</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> B(p) (dp[i] - sum[i] * sum[i] - m)</span><br><span class="hljs-comment">// le -&gt; less or equal (&lt;=) , ge -&gt; greater or equal (&gt;=)</span><br><span class="hljs-comment">// lt -&gt; less than (&lt;) , gt -&gt; greater than (&gt;)</span><br><span class="hljs-comment">// 以下两行可以避免除法（除法会有误差和除数为0的情况）</span><br><span class="hljs-comment">// 一定要注意p1和p2的顺序，p1在p2的右边，即p1的x坐标大于p2的x坐标，否则斜率算的是反的</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> slope_le_k(p1, p2 ,k) ((Y(p1) - Y(p2)) &lt;= (X(p1) - X(p2)) * (k))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> k1_le_k2(p1, p2, p3, p4) ((Y(p1) - Y(p2)) * (X(p3) - X(p4)) &lt;= (Y(p3) - Y(p4)) * (X(p1) - X(p2)))</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">while</span> (cin &gt;&gt; n &gt;&gt; m) &#123;<br>        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>        sum[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;<br>            cin &gt;&gt; c[i];<br>            sum[i] = sum[i - <span class="hljs-number">1</span>] + c[i];<br>        &#125;<br>        head = <span class="hljs-number">1</span>, tail = <span class="hljs-number">1</span>; <span class="hljs-comment">// 初始化单调队列: 放入一个元素0 (也抛弃了q[0]，选择下标从1开始)</span><br>        q[tail] = <span class="hljs-number">0</span>;        <span class="hljs-comment">// 这里是 j == 0的情况，只有一个点，所以不需要判断斜率直接放入</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;<br>            <span class="hljs-comment">// 这里不能是 head &lt;= tail ！！！因为至少要有两个元素才能计算斜率</span><br>            <span class="hljs-comment">// 并且也可能是特殊情况：当所有线段的斜率都 &lt;= k 时，此时队列必须剩下一个元素</span><br>            <span class="hljs-comment">// 注意q[head + 1], q[head]的顺序，确保斜率不要反了！！！</span><br>            <span class="hljs-keyword">while</span> (head &lt; tail &amp;&amp; <span class="hljs-built_in">slope_le_k</span>(q[head + <span class="hljs-number">1</span>], q[head], <span class="hljs-built_in">K</span>(i))) head++;   <br>            <span class="hljs-type">int</span> j = q[head];    <span class="hljs-comment">// 队首的 j 是最优决策点</span><br>            dp[i] = dp[j] + (sum[i] - sum[j]) * (sum[i] - sum[j]) + m;  <span class="hljs-comment">// 计算 dp[i]</span><br>            <span class="hljs-comment">// 下一轮的点(x_j,y_j)(j = i)加入图中，并更新凸壳（因为j &lt; i，所以这里是下一轮）</span><br>            <span class="hljs-comment">// 由于队列中的点都是凸包上的点，所以这里只需要判断队尾的点是否在凸包外即可</span><br>            <span class="hljs-keyword">while</span> (head &lt; tail &amp;&amp; <span class="hljs-built_in">k1_le_k2</span>(q[tail], i, q[tail - <span class="hljs-number">1</span>], q[tail])) tail--;<br>            q[++tail] = i;<br>        &#125;<br>        cout &lt;&lt; dp[n] &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p><mydetails></mydetails></p>
+<mydetails>
 <summary>
 <summary-title>More</summary-title><summary-subtitle>斜率优化推导练习</summary-subtitle>
 </summary>
@@ -822,7 +724,7 @@ y[j]+\left(\frac{dp[i]}{a[i]}-\frac{w[i]}{a[i]}\right)\\
 \end{align}
 \]</span></p>
 <hr>
-<p></p>
+<p></p></mydetails><p></p>
 <h3 id="k-无单调性x-单调不减二分单调栈">(2) <span class="math inline">\(k\)</span> 无单调性，<span class="math inline">\(x\)</span> 单调不减：二分单调栈</h3>
 <p>即：</p>
 <p><span class="math display">\[
@@ -1715,7 +1617,7 @@ k(i,j-1) \le k(i,j) \le k(i+1,j)
       </div>
     </div>
 
-    <div class="side-col d-none d-lg-block col-lg-2">
+    <div class="right-sidebar side-col d-none d-lg-block col-lg-2">
       
   <aside class="sidebar" style="margin-left: -1rem">
     <div id="toc">
