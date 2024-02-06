@@ -1,0 +1,949 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start --><script src="/js/custom/auto_generate/theme_config.js" defer></script><!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Tricks of Algorithm  &gt;&gt; 非常好的汇总博客 &lt;&lt; https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Appleblue17&#x2F;p&#x2F;14295686.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Appleblue17&#x2F;p&#x2F;14318717.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Appleblue17&#x2F;p&#x2F;15314">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【算法】Tricks of Algorithm">
+<meta property="og:url" content="https://qalxry.github.io/2024/02/06/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91Tricks-of-Algorithm/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="Tricks of Algorithm  &gt;&gt; 非常好的汇总博客 &lt;&lt; https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Appleblue17&#x2F;p&#x2F;14295686.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Appleblue17&#x2F;p&#x2F;14318717.html https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Appleblue17&#x2F;p&#x2F;15314">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/piclib/bg_sc15.jpg">
+<meta property="article:published_time" content="2024-02-06T01:45:51.000Z">
+<meta property="article:modified_time" content="2024-02-06T01:48:46.571Z">
+<meta property="article:author" content="しずり雪">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/piclib/bg_sc15.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【算法】Tricks of Algorithm - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom/mydetails.css">
+<link rel="stylesheet" href="/css/custom/fonts.css">
+<link rel="stylesheet" href="/css/custom/toc.css">
+<link rel="stylesheet" href="/css/custom/base.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+            <script>
+            document.subthemes = {
+                default: "none",
+                list: [{"name":"none","path":"/"},{"name":"classic","path":"/subthemes/classic/"},{"name":"modern","path":"/subthemes/modern/"}]
+            };
+            </script>
+
+            <script src="/subthemes/subthemes.js" defer></script>
+            <style>
+                #theme-toggle-btn .nav-link {
+                    display: block;
+                    color: var(--navbar-text-color);
+                    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+                }
+                #theme-toggle-btn .nav-link svg {
+                    transition: fill 0.2s ease-in-out;
+                    fill: var(--navbar-text-color);
+                }
+                #theme-toggle-btn .nav-link:hover svg {
+                    fill: var(--link-hover-color);
+                }
+            </style>
+            <link rel="stylesheet" href="/subthemes/classic/css/main.css">
+<link rel="stylesheet" href="/subthemes/modern/css/main.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start -->
+        <script>
+        console.log('[Extend Features] running...');
+        document.extend_features = {"enable":false,"code_font":{"enable":false,"font_family":"SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace","font_weight":400},"fixed_background":{"enable":false,"mask":{"enable":true,"list":[{"selector":"#web_bg","enable":true,"style":"background-color: rgba(0, 0, 0, 0.3);  border-radius: 1rem;"},{"selector":"#board","enable":true,"style":"background-color: rgba(0, 0, 0, 0);    border-radius: 1rem;"},{"selector":"#toc","enable":true,"style":"background-color: rgba(0, 0, 0, 0.15); border-radius: 1rem;"}]}}};
+        </script>
+        <script src="/extend_features/extend_features.js"></script>
+        <!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/diary/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/piclib/bg_sc15.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【算法】Tricks of Algorithm"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-02-06 09:45" pubdate>
+          2024年2月6日 上午 09:45
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="left-sidebar side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【算法】Tricks of Algorithm</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年2月6日 上午 09:48
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="tricks-of-algorithm">Tricks of Algorithm</h1>
+<hr>
+<h2 id="非常好的汇总博客">&gt;&gt; 非常好的汇总博客 &lt;&lt;</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Appleblue17/p/14295686.html" class="uri">https://www.cnblogs.com/Appleblue17/p/14295686.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Appleblue17/p/14318717.html" class="uri">https://www.cnblogs.com/Appleblue17/p/14318717.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Appleblue17/p/15314982.html" class="uri">https://www.cnblogs.com/Appleblue17/p/15314982.html</a></p>
+<hr>
+<h2 id="鞅与停时定理">鞅与停时定理</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Appleblue17/p/15659128.html" class="uri">https://www.cnblogs.com/Appleblue17/p/15659128.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/littleZ-meow-0v0/gai-shuai-lun-ke-ji-yang-yu-ting-shi-ding-li" class="uri">https://www.luogu.com.cn/blog/littleZ-meow-0v0/gai-shuai-lun-ke-ji-yang-yu-ting-shi-ding-li</a></p>
+<h2 id="多项式">多项式</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Appleblue17/p/14360752.html" class="uri">https://www.cnblogs.com/Appleblue17/p/14360752.html</a></p>
+<h2 id="二项式反演与容斥">二项式反演与容斥</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Appleblue17/p/14192176.html" class="uri">https://www.cnblogs.com/Appleblue17/p/14192176.html</a></p>
+<h2 id="拉格朗日插值">拉格朗日插值</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4781" class="uri">https://www.luogu.com.cn/problem/P4781</a></p>
+<h2 id="matrix-tree-定理">Matrix-Tree 定理</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6178" class="uri">https://www.luogu.com.cn/problem/P6178</a></p>
+<h2 id="berlekampmassey-算法">Berlekamp–Massey 算法</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5487Berlekamp-Massey" class="uri">https://www.luogu.com.cn/problem/P5487Berlekamp-Massey</a></p>
+<p>简称BM算法，是用来求解一个数列最短线性递推式的算法，时间复杂度为
+<span class="math inline">\(O(n^2)\)</span>。</p>
+<h2 id="子集卷积">子集卷积</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6097" class="uri">https://www.luogu.com.cn/problem/P6097</a></p>
+<h2 id="快速莫比乌斯沃尔什变换-fmtfwt">快速莫比乌斯/沃尔什变换
+(FMT/FWT)</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4717" class="uri">https://www.luogu.com.cn/problem/P4717</a></p>
+<h2 id="常系数齐次线性递推">常系数齐次线性递推</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4723" class="uri">https://www.luogu.com.cn/problem/P4723</a></p>
+<h2 id="常系数非齐次线性递推">常系数非齐次线性递推</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5808" class="uri">https://www.luogu.com.cn/problem/P5808</a></p>
+<h2 id="扩展欧几里德算法exgcd">扩展欧几里德算法（exgcd）</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5656" class="uri">https://www.luogu.com.cn/problem/P5656</a></p>
+<h2 id="扩展中国剩余定理excrt">扩展中国剩余定理（exCRT）</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4777" class="uri">https://www.luogu.com.cn/problem/P4777</a></p>
+<h2 id="bsgs大步小步算法">BSGS：大步小步算法</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3846" class="uri">https://www.luogu.com.cn/problem/P3846</a></p>
+<h2 id="扩展-bsgsexbsgs">扩展 BSGS（exBSGS）</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4195" class="uri">https://www.luogu.com.cn/problem/P4195</a></p>
+<h2 id="线性基">线性基</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4869" class="uri">https://www.luogu.com.cn/problem/P4869</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3812" class="uri">https://www.luogu.com.cn/problem/P3812</a></p>
+<h2 id="类欧几里得算法">类欧几里得算法</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5170" class="uri">https://www.luogu.com.cn/problem/P5170</a></p>
+<h2 id="具体数学">具体数学</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Appleblue17/p/16653961.html#!comments" class="uri">https://www.cnblogs.com/Appleblue17/p/16653961.html#!comments</a></p>
+<h2 id="生成函数母函数">生成函数（母函数）</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dragonylee/article/details/107660418" class="uri">https://blog.csdn.net/dragonylee/article/details/107660418</a></p>
+<h2 id="wqs-带权二分">wqs 带权二分</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Appleblue17/p/14219912.html" class="uri">https://www.cnblogs.com/Appleblue17/p/14219912.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/corsica6/article/details/88040699" class="uri">https://blog.csdn.net/corsica6/article/details/88040699</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wxywxywxy/p/15640693.html" class="uri">https://www.cnblogs.com/wxywxywxy/p/15640693.html</a></p>
+<h2 id="garsiawachs-算法">Garsia–Wachs 算法</h2>
+<p>用于石子合并、最优二叉搜索树。</p>
+<p>时间复杂度：<span class="math inline">\(O(n\log{n})\)</span></p>
+<p>显著优于使用四边形不等式优化后的 <span class="math inline">\(O(n^2)\)</span></p>
+<h2 id="cdq-分治">CDQ 分治</h2>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/misc/cdq-divide/" class="uri">https://oi-wiki.org/misc/cdq-divide/</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/260683793" class="uri">https://zhuanlan.zhihu.com/p/260683793</a></p>
+<h2 id="三维偏序cdq-分治">三维偏序：CDQ 分治</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3810" class="uri">https://www.luogu.com.cn/problem/P3810</a></p>
+<h2 id="线段树合并">线段树合并</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4556" class="uri">https://www.luogu.com.cn/problem/P4556</a></p>
+<h2 id="zkw线段树">zkw线段树</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43960287/article/details/108246164" class="uri">https://blog.csdn.net/weixin_43960287/article/details/108246164</a></p>
+<p>重口味线段树不仅比普通线段树速度快、空间小，而且码量小得多，循环结构思路也很清晰，很适合用来优化Dijkstra和套在树剖以及树套树上。</p>
+<p>其中最重要的一点是，zkw的常数很小，仅次于树状数组。一个打得很烂的zkw，常数也不会劣于卡常卡得最好的普通线段树。（拿<a target="_blank" rel="noopener" href="https://loj.ac/p/132">LOJ132</a>为例，我的zkw和树状数组的码量差不多，跑得比所有普通线段树做法和部分树状数组做法快）</p>
+<h2 id="杜教筛">杜教筛</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4213" class="uri">https://www.luogu.com.cn/problem/P4213</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yaoxi-std/p/16558980.html" class="uri">https://www.cnblogs.com/yaoxi-std/p/16558980.html</a></p>
+<p>时间复杂度： <span class="math display">\[ O(n^\frac23) \]</span></p>
+<h2 id="pn筛">PN筛</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yaoxi-std/p/16558980.html" class="uri">https://www.cnblogs.com/yaoxi-std/p/16558980.html</a></p>
+<p>Powerful Number 筛 (PN 筛)</p>
+<p>时间复杂度：<span class="math display">\[ O(\sqrt n \log{n})
+\]</span></p>
+<h2 id="min25筛">min25筛</h2>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/60378354" class="uri">https://zhuanlan.zhihu.com/p/60378354</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Appleblue17/p/14185584.html" class="uri">https://www.cnblogs.com/Appleblue17/p/14185584.html</a></p>
+<p>求一类积性函数的和</p>
+<p>时间复杂度： <span class="math display">\[
+O(\frac{n^\frac34}{\log{n}}) \]</span></p>
+<h2 id="朱震霆筛法">朱震霆筛法</h2>
+<p>时间复杂度： <span class="math display">\[
+O(\frac{n^\frac23}{\log{n}}) \]</span></p>
+<h2 id="洲阁筛">洲阁筛</h2>
+<p>求一类积性函数的和</p>
+<p>时间复杂度： <span class="math display">\[
+O(\frac{n^\frac34}{\log{n}}) \]</span></p>
+<h2 id="最小树形图朱刘算法">最小树形图：朱刘算法</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/txl199106/article/details/62045479" class="uri">https://blog.csdn.net/txl199106/article/details/62045479</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/discuss/752758" class="uri">https://www.luogu.com.cn/discuss/752758</a></p>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/graph/dmst/" class="uri">https://oi-wiki.org/graph/dmst/</a></p>
+<h2 id="模拟退火">模拟退火</h2>
+<h2 id="圆方树仙人掌"><a target="_blank" rel="noopener" href="https://oi-wiki.org/graph/block-forest/">圆方树</a>：仙人掌</h2>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/graph/block-forest/" class="uri">https://oi-wiki.org/graph/block-forest/</a></p>
+<h2 id="动态仙人掌">动态仙人掌</h2>
+<h2 id="后缀平衡树">后缀平衡树</h2>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/string/suffix-bst/" class="uri">https://oi-wiki.org/string/suffix-bst/</a></p>
+<h2 id="sbt">SBT</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/chenhuan001/p/5788272.html" class="uri">https://www.cnblogs.com/chenhuan001/p/5788272.html</a></p>
+<h2 id="prufer-序列">Prufer 序列</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6086" class="uri">https://www.luogu.com.cn/problem/P6086</a></p>
+<h2 id="树上启发式合并dsu-on-tree">树上启发式合并（DSU on Tree）</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF600E" class="uri">https://www.luogu.com.cn/problem/CF600E</a></p>
+<h2 id="后缀自动机sam">后缀自动机（SAM）</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3804" class="uri">https://www.luogu.com.cn/problem/P3804</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/Kesdiael3/hou-zhui-zi-dong-ji-yang-xie" class="uri">https://www.luogu.com.cn/blog/Kesdiael3/hou-zhui-zi-dong-ji-yang-xie</a></p>
+<h2 id="runs">Runs</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6656" class="uri">https://www.luogu.com.cn/problem/P6656</a></p>
+<p>一个字符串 <span class="math inline">\(s\)</span> 中的一个 runs
+是一个循环子串，例如 <code>aabcabcabb</code> 中 <code>abcabcab</code>
+这个子串就是一个 runs。</p>
+<h2 id="lyndon-分解duval算法">Lyndon 分解：Duval算法</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P6114" class="uri">https://www.luogu.com.cn/problem/P6114</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/664357638" class="uri">https://zhuanlan.zhihu.com/p/664357638</a></p>
+<p>一个串是 Lyndon 串，当且仅当这个串的最小后缀就是这个串本身。</p>
+<h2 id="回文自动机pam">回文自动机（PAM）</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5496" class="uri">https://www.luogu.com.cn/problem/P5496</a></p>
+<h2 id="笛卡尔树">笛卡尔树</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5854" class="uri">https://www.luogu.com.cn/problem/P5854</a></p>
+<h2 id="文艺平衡树">文艺平衡树</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3391" class="uri">https://www.luogu.com.cn/problem/P3391</a></p>
+<h2 id="珂朵莉树">珂朵莉树</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/blog/602632/ke-duo-li-shi-quan-shi-jie-zui-xing-fu-di-ru-hai" class="uri">https://www.luogu.com.cn/blog/602632/ke-duo-li-shi-quan-shi-jie-zui-xing-fu-di-ru-hai</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lyp-Bird/p/10310609.html" class="uri">https://www.cnblogs.com/lyp-Bird/p/10310609.html</a></p>
+<p>旧称 ODT（Old Driver Tree）</p>
+<h2 id="动态树link-cut-treelct">动态树（Link Cut Tree，LCT）</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3690" class="uri">https://www.luogu.com.cn/problem/P3690</a></p>
+<h2 id="树上-k-级祖先">树上 K 级祖先</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P5903" class="uri">https://www.luogu.com.cn/problem/P5903</a></p>
+<h2 id="虚树">虚树</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P2495" class="uri">https://www.luogu.com.cn/problem/P2495</a></p>
+<h2 id="重链剖分树链剖分">重链剖分/树链剖分</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3384" class="uri">https://www.luogu.com.cn/problem/P3384</a></p>
+<h2 id="缩点">缩点</h2>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3387" class="uri">https://www.luogu.com.cn/problem/P3387</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【算法】Tricks of Algorithm</div>
+      <div>https://qalxry.github.io/2024/02/06/【算法】Tricks-of-Algorithm/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年2月6日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年2月6日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/27/%E3%80%90Hexo%E3%80%91%E7%BD%91%E7%AB%99%E5%BB%BA%E8%AE%BE%E8%AE%B0%E5%BD%95-2024%E5%B9%B41%E6%9C%8826%E6%97%A5/" title="【Hexo】网站建设记录-2024年1月26日">
+                        <span class="hidden-mobile">【Hexo】网站建设记录-2024年1月26日</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-sidebar side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href='https://hexo.io' target='_blank' rel='nofollow noopener'><span>Hexo</span></a> 
+<i class='iconfont icon-love'></i>
+<a href='https://github.com/fluid-dev/hexo-theme-fluid' target='_blank' rel='nofollow noopener'><span>Fluid</span></a>
+<div style='font-size: 0.85rem'>
+<span id='timeDate'>载入天数...</span>
+<span id='times'>载入时分秒...</span>
+<script src='/js/duration.js'></script>
+</div>
+
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              },
+              lazyAlwaysTypeset: (function() {
+                // 检查页面上是否存在 'mydetails' 元素
+                if (!document.querySelector('mydetails')) {
+                  return null; // 如果不存在，返回 null
+                } else {
+                  return ['mydetails']; // 如果存在，返回包含 'mydetails' 的数组
+                }
+                // 如果你直接给一个列表，那么如果页面上不存在这个元素，MathJax 将会崩溃
+              })(),
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/d3.v7.min.js"></script>
+<script src="/js/custom/mydetails.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

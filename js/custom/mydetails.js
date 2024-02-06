@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       }
     });
     resizeObserver.observe(summary);
-    hasBeenOpenedOnce = false;
+    mydetails.hasBeenOpenedOnce = false;
     summary.addEventListener("click", function () {
       let isOpen = mydetails.hasAttribute("open");
       if (isOpen) {
@@ -96,12 +96,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         mydetails.setAttribute("open", "open");
         mydetails.style.height = mydetails.scrollHeight + "px";
-        if (!hasBeenOpenedOnce) {
-          // 当动画结束后，将高度设置为auto
-          mydetails.style.height = "auto";
-          mydetails.style.height = mydetails.scrollHeight + "px";
+        if (!mydetails.hasBeenOpenedOnce) {
+          mydetails.hasBeenOpenedOnce = true;
+          // 添加延时，以便动画结束后再设置高度
+          setTimeout(() => {
+            // 当动画结束后，再次检查高度，以避免其中的元素没有被完全显示就被计算高度
+            if (mydetails.hasAttribute("open")) {
+              mydetails.style.height = mydetails.scrollHeight + "px";
+            }
+          }, 600);
         }
-        hasBeenOpenedOnce = true;
       }
     });
   });
