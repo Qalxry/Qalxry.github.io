@@ -4,3 +4,11 @@
   background-color: var(--highlight-bg-color);
   border-left: 0.25em solid #919498;
 }
+.task-list {
+  list-style-type: none;
+  margin-left: 0.2em;
+}
+.task-list input[type="checkbox"] {
+  margin-right: 0.7em;
+  margin-left: -1.7em;
+}
