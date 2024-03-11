@@ -132,9 +132,9 @@
     
     <tags>
       
-      <tag>Algorithm 算法</tag>
-      
       <tag>DP</tag>
+      
+      <tag>Algorithm 算法</tag>
       
     </tags>
     
@@ -161,13 +161,13 @@
     
     <tags>
       
-      <tag>算法</tag>
-      
       <tag>DP</tag>
       
-      <tag>状压DP</tag>
+      <tag>算法</tag>
       
       <tag>图论</tag>
+      
+      <tag>状压DP</tag>
       
     </tags>
     
@@ -495,9 +495,9 @@
       
       <tag>C++</tag>
       
-      <tag>Algorithm 算法</tag>
-      
       <tag>DP</tag>
+      
+      <tag>Algorithm 算法</tag>
       
     </tags>
     
@@ -551,9 +551,9 @@
       
       <tag>C++</tag>
       
-      <tag>Algorithm 算法</tag>
-      
       <tag>DP</tag>
+      
+      <tag>Algorithm 算法</tag>
       
       <tag>树</tag>
       
@@ -765,9 +765,9 @@
     
     <tags>
       
-      <tag>Python</tag>
-      
       <tag>问题排查</tag>
+      
+      <tag>Python</tag>
       
     </tags>
     
@@ -879,11 +879,11 @@
     
     <tags>
       
-      <tag>问题排查</tag>
-      
       <tag>服务器</tag>
       
       <tag>linux</tag>
+      
+      <tag>问题排查</tag>
       
     </tags>
     
