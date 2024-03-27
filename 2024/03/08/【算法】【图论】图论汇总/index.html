@@ -16,16 +16,16 @@
   <meta name="author" content="しずり雪">
   <meta name="keywords" content="">
   
-    <meta name="description" content="图论算法汇总   00 前瞻 01 图的存储  1 邻接矩阵 2 邻接表 3 链式前向星  02 拓扑排序  概念 1 基于入度&#x2F;出度的拓扑排序 2 基于DFS的拓扑排序 3 计算所有拓扑排序 4 计算拓扑排序的数量  03 欧拉路径  概念 1 欧拉路径和欧拉回路存在性判断 2 输出一个欧拉回路  04 哈密顿路径 05">
+    <meta name="description" content="图论算法汇总   00 前瞻 01 图的存储  1 邻接矩阵 2 邻接表 3 链式前向星  02 拓扑排序  概念 1 基于入度&#x2F;出度的拓扑排序 2 基于DFS的拓扑排序 3 计算所有拓扑排序 4 计算拓扑排序的数量  03 欧拉路径  概念 1 欧拉路径和欧拉回路存在性判断 2 输出一个欧拉回路  04 哈密顿路径">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【算法】【图论】图论汇总">
 <meta property="og:url" content="https://qalxry.github.io/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90%E5%9B%BE%E8%AE%BA%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/index.html">
 <meta property="og:site_name" content="しずり雪 の Blog">
-<meta property="og:description" content="图论算法汇总   00 前瞻 01 图的存储  1 邻接矩阵 2 邻接表 3 链式前向星  02 拓扑排序  概念 1 基于入度&#x2F;出度的拓扑排序 2 基于DFS的拓扑排序 3 计算所有拓扑排序 4 计算拓扑排序的数量  03 欧拉路径  概念 1 欧拉路径和欧拉回路存在性判断 2 输出一个欧拉回路  04 哈密顿路径 05">
+<meta property="og:description" content="图论算法汇总   00 前瞻 01 图的存储  1 邻接矩阵 2 邻接表 3 链式前向星  02 拓扑排序  概念 1 基于入度&#x2F;出度的拓扑排序 2 基于DFS的拓扑排序 3 计算所有拓扑排序 4 计算拓扑排序的数量  03 欧拉路径  概念 1 欧拉路径和欧拉回路存在性判断 2 输出一个欧拉回路  04 哈密顿路径">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/piclib/bg_sc03.jpg">
 <meta property="article:published_time" content="2024-03-08T12:19:28.000Z">
-<meta property="article:modified_time" content="2024-03-27T15:45:41.705Z">
+<meta property="article:modified_time" content="2024-03-27T17:42:23.603Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="Algorithm 算法">
 <meta property="article:tag" content="图论">
@@ -287,7 +287,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.8k 字
+          12k 字
         
       </span>
     
@@ -298,7 +298,7 @@
         
         
         
-          41 分钟
+          50 分钟
         
       </span>
     
@@ -349,7 +349,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年3月27日 晚上 23:45
+                    本文最后更新于：2024年3月28日 凌晨 01:42
                   
                 
               </p>
@@ -394,7 +394,14 @@
 输出一个欧拉回路</a></li>
 </ul></li>
 <li><a href="#04----%25E5%2593%2588%25E5%25AF%2586%25E9%25A1%25BF%25E8%25B7%25AF%25E5%25BE%2584">04
-哈密顿路径</a></li>
+哈密顿路径</a>
+<ul>
+<li><a href="#%25E6%25A6%2582%25E5%25BF%25B5">概念</a></li>
+<li><a href="#1----%25E8%258E%25B7%25E5%258F%2596%25E4%25B8%2580%25E4%25B8%25AA%25E5%2593%2588%25E5%25AF%2586%25E9%25A1%25BF%25E8%25B7%25AF%25E5%25BE%2584">1
+获取一个哈密顿路径</a></li>
+<li><a href="#2----%25E6%259C%2580%25E7%259F%25AD%25E5%2593%2588%25E5%25AF%2586%25E9%25A1%25BF%25E8%25B7%25AF%25E5%25BE%2584%25EF%25BC%2588TSP%25E9%2597%25AE%25E9%25A2%2598%25EF%25BC%2589">2
+最短哈密顿路径（TSP问题）</a></li>
+</ul></li>
 <li><a href="#05----%25E6%2597%25A0%25E5%2590%2591%25E5%259B%25BE%25E7%259A%2584%25E8%25BF%259E%25E9%2580%259A%25E6%2580%25A7">05
 无向图的连通性</a></li>
 <li><a href="#06----%25E6%259C%2589%25E5%2590%2591%25E5%259B%25BE%25E7%259A%2584%25E8%25BF%259E%25E9%2580%259A%25E6%2580%25A7">06
@@ -588,14 +595,47 @@
 </ul>
 </blockquote>
 <h2 id="哈密顿路径">04 哈密顿路径</h2>
-<p>这是一个NP-Hard问题，使用状压DP求解。</p>
+<h3 id="概念-2">概念</h3>
+<p>由指定的起点前往指定的终点，途中经过全部节点且只经过一次。</p>
+<h3 id="获取一个哈密顿路径">1 获取一个哈密顿路径</h3>
+<p>可采用回溯法、分支限界法、动态规划等等方法。</p>
+<p>（有待后续补充）</p>
+<h3 id="最短哈密顿路径tsp问题">2 最短哈密顿路径（TSP问题）</h3>
+<p><strong><em>概念</em></strong></p>
+<p>给定一个<strong>有权无向图</strong>，给定起点 <span class="math inline">\(0\)</span> 和终点 <span class="math inline">\(n-1\)</span>。求是否存在一条路径，使得每个点恰好经过一次，且路径权值和最小。</p>
+<p>同样是NP-Hard问题，使用状压DP求解。</p>
+<p><strong>这里我们加强问题，改为任意起点和终点，求解全局最短哈密顿路径。</strong></p>
+<blockquote>
+<p>详细讲解：<a href="https://qalxry.github.io/2024/01/17/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90%E7%8A%B6%E5%8E%8BDP%E3%80%91%E6%9C%80%E7%9F%AD-Hamilton-%E8%B7%AF%E5%BE%84%E4%B8%AD%E8%A2%AB%E5%BF%BD%E8%A7%86%E7%9A%84%E7%8E%84%E5%A6%99%E4%B9%8B%E5%A4%84/">【算法】【状压DP】最短
+Hamilton 路径中被忽视的玄妙之处</a></p>
+</blockquote>
+<p><strong><em>常规分析</em></strong></p>
+<p>点的编号从 <span class="math inline">\(0\)</span> 开始到 <span class="math inline">\(n-1\)</span> 。</p>
+<p>用 <span class="math inline">\(dp[S][j]\)</span> 表示点集 <span class="math inline">\(S\)</span> 中，以 <span class="math inline">\(j\)</span>
+为终点的最短路径长度。（注意此处并没有指定起点）</p>
+<p>我们从最小的点集开始枚举，直到逐步扩大到包含所有点的点集。最后的答案就是
+<span class="math inline">\(dp[S_{final}][n-1]\)</span>。</p>
+<p>容易发现，<span class="math inline">\(dp[S][j]\)</span>
+的状态转移方程为：</p>
+<p><span class="math display">\[
+dp[S][j] = min\{dp[S-j][k] + dist[k][j]\} \quad (k \in S-j)
+\]</span></p>
+<p>其中 <span class="math inline">\(S-j\)</span> 表示 <span class="math inline">\(S\)</span> 中除去 <span class="math inline">\(j\)</span> 之外的点集。</p>
+<p>这个状态转移方程的意思是，我们枚举 <span class="math inline">\(S-j\)</span> 中的一个点 <span class="math inline">\(k\)</span>，然后计算 <span class="math inline">\(dp[S-j][k] + dist[k][j]\)</span>，即 <span class="math inline">\(S-j\)</span> 中以 <span class="math inline">\(k\)</span> 为终点的最短路径长度加上 <span class="math inline">\(k\)</span> 到 <span class="math inline">\(j\)</span> 的距离，这个值就是 <span class="math inline">\(S\)</span> 中以 <span class="math inline">\(j\)</span> 为终点的最短路径长度。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">20</span>;      <span class="hljs-comment">// 最多20个点</span><br><span class="hljs-type">int</span> n, dp[<span class="hljs-number">1</span> &lt;&lt; N][N];  <span class="hljs-comment">// dp[S][j]表示点集S中，以j为终点的最短路径长度</span><br><span class="hljs-type">int</span> dist[N][N];        <span class="hljs-comment">// dist[i][j]表示点i到点j的距离</span><br><span class="hljs-type">int</span> pre[<span class="hljs-number">1</span> &lt;&lt; N][N];    <span class="hljs-comment">// pre[S][j]记录在S中，以j为终点的前一个节点</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printPath</span><span class="hljs-params">(<span class="hljs-type">int</span> S, <span class="hljs-type">int</span> j)</span> </span>&#123;<br>    stack&lt;<span class="hljs-type">int</span>&gt; path;<br>    <span class="hljs-keyword">while</span> (S) &#123;<br>        path.<span class="hljs-built_in">push</span>(j);<br>        <span class="hljs-type">int</span> nextS = S ^ (<span class="hljs-number">1</span> &lt;&lt; j);<br>        j = pre[S][j];<br>        S = nextS;<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Path: &quot;</span>;<br>    <span class="hljs-keyword">while</span> (!path.<span class="hljs-built_in">empty</span>()) &#123;<br>        <span class="hljs-type">int</span> p = path.<span class="hljs-built_in">top</span>();<br>        path.<span class="hljs-built_in">pop</span>();<br>        cout &lt;&lt; p &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    &#125;<br>    cout &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>            cin &gt;&gt; dist[i][j];<br><br>    <span class="hljs-built_in">memset</span>(dp, <span class="hljs-number">0x3f</span>, <span class="hljs-built_in">sizeof</span>(dp));         <span class="hljs-comment">// 初始化为无穷大</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <br>        dp[<span class="hljs-number">1</span> &lt;&lt; i][i] = <span class="hljs-number">0</span>;                <span class="hljs-comment">// 开始：集合中起点到起点的距离为0</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> S = <span class="hljs-number">1</span>; S &lt; (<span class="hljs-number">1</span> &lt;&lt; n); S++) &#123;  <span class="hljs-comment">// 枚举所有点集</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++) &#123;     <span class="hljs-comment">// 计算在 S 中以 j 为终点的最短路径长度</span><br>            <span class="hljs-keyword">if</span> ((S &gt;&gt; j) &amp; <span class="hljs-number">1</span>) &#123;           <span class="hljs-comment">// S 中必须包含点 j</span><br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; n; k++) &#123;     <span class="hljs-comment">// 取出 S-j 中的一个点 k，通过枚举</span><br>                    <span class="hljs-keyword">if</span> ((S ^ (<span class="hljs-number">1</span> &lt;&lt; j)) &gt;&gt; k &amp; <span class="hljs-number">1</span>) &#123;  <span class="hljs-comment">// 判断 S-j 中是否包含点 k</span><br>                        <span class="hljs-keyword">if</span> (dp[S][j] &gt; dp[S ^ (<span class="hljs-number">1</span> &lt;&lt; j)][k] + dist[k][j]) &#123;<br>                            dp[S][j] = dp[S ^ (<span class="hljs-number">1</span> &lt;&lt; j)][k] + dist[k][j];<br>                            pre[S][j] = k;  <span class="hljs-comment">// 记录前一个节点</span><br>                        &#125;<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-type">int</span> ans = INT_MAX;<br>    <span class="hljs-type">int</span> ans_idx = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        <span class="hljs-keyword">if</span> (ans &gt; dp[(<span class="hljs-number">1</span> &lt;&lt; n) - <span class="hljs-number">1</span>][i]) &#123;<br>            ans = dp[(<span class="hljs-number">1</span> &lt;&lt; n) - <span class="hljs-number">1</span>][i];<br>            ans_idx = i;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Shortest Hamilton Path length: &quot;</span> &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-built_in">printPath</span>((<span class="hljs-number">1</span> &lt;&lt; n) - <span class="hljs-number">1</span>, ans_idx);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>测试数据：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs txt">4<br>0 10 15 20<br>10 0 35 25<br>15 35 0 30<br>20 25 30 0<br></code></pre></td></tr></table></figure>
+<p><img src="/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90%E5%9B%BE%E8%AE%BA%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/hamilton.png" srcset="/img/loading.gif" lazyload style="zoom: 50%;"></p>
+<p>结果：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs txt">Shortest Hamilton Path length: 50<br>Path: 3 1 0 2 <br></code></pre></td></tr></table></figure>
+<p>可见代码正确。</p>
 <h2 id="无向图的连通性">05 无向图的连通性</h2>
 <h2 id="有向图的连通性">06 有向图的连通性</h2>
 <h3 id="kosaraju-算法">Kosaraju 算法</h3>
 <h3 id="tarjan-算法">Tarjan 算法</h3>
 <h2 id="基环树">07 基环树</h2>
 <h2 id="sat-问题">08 2-SAT 问题</h2>
-<h3 id="概念-2">概念</h3>
+<h3 id="概念-3">概念</h3>
 <p><img src="/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90%E5%9B%BE%E8%AE%BA%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/2sat.gif" srcset="/img/loading.gif" lazyload alt="2-SAT搜索过程与num、low、scc的确定" style="zoom:67%;"></p>
 <h3 id="sat-模板题">2-SAT 模板题</h3>
 <h4 id="p4782-模板2-sat">1. <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4782">P4782
@@ -704,7 +744,7 @@ iostream 快 5 倍之多。</p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年3月27日</div>
+          <div>2024年3月28日</div>
         </div>
       
       
