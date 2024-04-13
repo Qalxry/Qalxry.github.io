@@ -16,19 +16,20 @@
   <meta name="author" content="しずり雪">
   <meta name="keywords" content="">
   
-    <meta name="description" content="DP优化   0 基本概念  1D&#x2F;1D 方程 2D&#x2F;1D 方程  1 (1D&#x2F;1D) 单调队列优化  概念 (1) \(ds[j]\) 与 \(i\) 无关：单调队列 (2) \(ds[j]\) 与 \(i\) 有关：二分单调栈 单调队列优化模板题  2 (1D&#x2F;1D) 斜率&#x2F;凸壳优化  概念 (1) \(k,x\) 同单调：单调队列 (2)">
+    <meta name="description" content="DP优化总结   0 基本概念  1D&#x2F;1D 方程 2D&#x2F;1D 方程  1 (1D&#x2F;1D) 单调队列优化  概念 (1) \(ds[j]\) 与 \(i\) 无关：单调队列 (2) \(ds[j]\) 与 \(i\) 有关：二分单调栈 单调队列优化模板题  2 (1D&#x2F;1D) 斜率&#x2F;凸壳优化  概念 (1) \(k,x\) 同单调：单调队列 (">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【算法】【DP】DP优化总结">
-<meta property="og:url" content="https://qalxry.github.io/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:url" content="https://qalxry.github.io/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="しずり雪 の Blog">
-<meta property="og:description" content="DP优化   0 基本概念  1D&#x2F;1D 方程 2D&#x2F;1D 方程  1 (1D&#x2F;1D) 单调队列优化  概念 (1) \(ds[j]\) 与 \(i\) 无关：单调队列 (2) \(ds[j]\) 与 \(i\) 有关：二分单调栈 单调队列优化模板题  2 (1D&#x2F;1D) 斜率&#x2F;凸壳优化  概念 (1) \(k,x\) 同单调：单调队列 (2)">
+<meta property="og:description" content="DP优化总结   0 基本概念  1D&#x2F;1D 方程 2D&#x2F;1D 方程  1 (1D&#x2F;1D) 单调队列优化  概念 (1) \(ds[j]\) 与 \(i\) 无关：单调队列 (2) \(ds[j]\) 与 \(i\) 有关：二分单调栈 单调队列优化模板题  2 (1D&#x2F;1D) 斜率&#x2F;凸壳优化  概念 (1) \(k,x\) 同单调：单调队列 (">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/piclib/ve04_b.jpg">
 <meta property="article:published_time" content="2024-01-20T12:55:20.000Z">
-<meta property="article:modified_time" content="2024-04-13T08:07:36.116Z">
+<meta property="article:modified_time" content="2024-04-13T12:10:25.213Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="Algorithm 算法">
 <meta property="article:tag" content="DP">
+<meta property="article:tag" content="DP优化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://qalxry.github.io/img/piclib/ve04_b.jpg">
   
@@ -349,7 +350,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年4月13日 下午 16:07
+                    本文最后更新于：2024年4月13日 晚上 20:10
                   
                 
               </p>
@@ -357,7 +358,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="dp优化">DP优化</h1>
+                <h1 id="dp优化总结">DP优化总结</h1>
 <!-- toc -->
 <ul>
 <li><a href="#0----%25E5%259F%25BA%25E6%259C%25AC%25E6%25A6%2582%25E5%25BF%25B5">0
@@ -617,7 +618,7 @@ y=kx+b
 <li>寻找 <span class="math inline">\((x_j,y_j)\)</span> ，在斜率 <span class="math inline">\(k=a[i]\)</span> 的情况下，能够使截距 <span class="math inline">\(b=dp[i]\)</span> 达到最小值。</li>
 </ul>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/monoqueue1_200-1712573757009-1.svg" srcset="/img/loading.gif" lazyload alt="寻找最小的 b">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/monoqueue1_200-1712573757009-1.svg" srcset="/img/loading.gif" lazyload alt="寻找最小的 b">
 <figcaption aria-hidden="true">寻找最小的 <span class="math inline">\(b\)</span></figcaption>
 </figure>
 <p>通过构造“<strong>凸壳</strong>”的技巧，我们可以很快寻找到使截距 <span class="math inline">\(b=dp[i]\)</span> 达到最小值的 <span class="math inline">\((x_j,y_j)\)</span>。</p>
@@ -627,7 +628,7 @@ y=kx+b
 （也可能是是凸壳中第一个或最后一个点，当所有线段的斜率都 <span class="math inline">\(\le k\)</span> 或 <span class="math inline">\(\ge
 k\)</span>）。</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/monoqueue2_200-1712573757009-2.svg" srcset="/img/loading.gif" lazyload alt="下凸壳">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/monoqueue2_200-1712573757009-2.svg" srcset="/img/loading.gif" lazyload alt="下凸壳">
 <figcaption aria-hidden="true">下凸壳</figcaption>
 </figure>
 <p>当我们随着 <span class="math inline">\(i\)</span> 的遍历，计算最新的
@@ -644,7 +645,7 @@ k\)</span>）。</p>
 Algorithm）</p>
 <p>这个是利用单调队列以及斜率的单调性来得到凸包。</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/R6VuVuU-1712573757009-3.gif" srcset="/img/loading.gif" lazyload alt="Andrew&#39;s Algorithm 构建凸包的过程">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/R6VuVuU-1712573757009-3.gif" srcset="/img/loading.gif" lazyload alt="Andrew&#39;s Algorithm 构建凸包的过程">
 <figcaption aria-hidden="true">Andrew's Algorithm
 构建凸包的过程</figcaption>
 </figure>
@@ -652,7 +653,7 @@ Algorithm）</p>
 <p>先找到最左下的点（y
 最小的最左边的点），计算其他点以该点为原点的极角，并用极角对点进行排序。同样用一个单调队列来维护凸包上的点。</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/5rtTjsI-1712573757009-4.gif" srcset="/img/loading.gif" lazyload alt="Graham’s Scan 构建凸包的过程">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/5rtTjsI-1712573757009-4.gif" srcset="/img/loading.gif" lazyload alt="Graham’s Scan 构建凸包的过程">
 <figcaption aria-hidden="true">Graham’s Scan 构建凸包的过程</figcaption>
 </figure>
 <p>两者时间复杂度受限于排序，为 <span class="math inline">\(O(n\log
@@ -754,7 +755,7 @@ a[i]~\text{无单调性},\quad d[j]\le d[j+1]
 <p>因为没有对队首的操作，<strong>单调队列成了单调栈</strong>。</p>
 <p>唯一要注意的就是：凸壳上有<strong>多点共线</strong>的情况。二分搜索是搜索不到共线的中间的点的，只能搜索到两边的点，并且取哪一边需要看题目的要求如何。</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/monoqueue3_200-1712573757009-5.svg" srcset="/img/loading.gif" lazyload alt="有多点共线">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/monoqueue3_200-1712573757009-5.svg" srcset="/img/loading.gif" lazyload alt="有多点共线">
 <figcaption aria-hidden="true">有多点共线</figcaption>
 </figure>
 <h3 id="k-单调x-不单调动态凸包">(3) <span class="math inline">\(k\)</span> 单调，<span class="math inline">\(x\)</span> 不单调：动态凸包</h3>
@@ -902,7 +903,7 @@ w&#39;(x,y_0+\Delta)\)</span> 。 <span class="math inline">\(y\)</span>
 越大的 <span class="math inline">\(w(x,y_0)\)</span> 的导数越小。</p>
 <p>这里我们求取的是<strong>最小值</strong>。<strong>因此 <span class="math inline">\(y\)</span> 更小的 <span class="math inline">\(w(x,y_0)\)</span> 在后面会被 <span class="math inline">\(y\)</span> 更大的 <span class="math inline">\(w(x,y_0+\Delta)\)</span>
 反超</strong>，并保持一小段的最小优势。形成一个类似于下凸壳的东西。</p>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/GIF%202024-2-7%2011-58-30-min-1712573757009-6.gif" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/GIF%202024-2-7%2011-58-30-min-1712573757009-6.gif" srcset="/img/loading.gif" lazyload></p>
 <p>将不同 <span class="math inline">\(y=j\)</span> 的函数 <span class="math inline">\(w(x=i,y=j)\)</span> 绘制在 <span class="math inline">\(w-x\)</span> 平面上。</p>
 <p>我们称呼使得 <span class="math inline">\(f(i)\)</span> 取得最优值的
 <span class="math inline">\(w(x=i,y=j)\)</span>
@@ -910,21 +911,21 @@ w&#39;(x,y_0+\Delta)\)</span> 。 <span class="math inline">\(y\)</span>
 <p>容易发现，在满足四边形不等式的条件下，所取得的决策 <span class="math inline">\(j\)</span> 随 <span class="math inline">\(i\)</span>
 的增大而单调不减。故称为<strong>决策单调性</strong>。</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7-1712573757010-7.png" srcset="/img/loading.gif" lazyload alt="决策单调性">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7-1712573757010-7.png" srcset="/img/loading.gif" lazyload alt="决策单调性">
 <figcaption aria-hidden="true">决策单调性</figcaption>
 </figure>
 <hr>
 <h5 id="b.-fracpartial2-wpartial-xpartial-y-le-0">b. <span class="math inline">\(\frac{\partial^2 w}{\partial x\partial y} \le
 0\)</span></h5>
 <p>再来看看酷炫的3D动画吧~</p>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/GIF%202024-2-7%2015-17-33-min-1712573757010-8.gif" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/GIF%202024-2-7%2015-17-33-min-1712573757010-8.gif" srcset="/img/loading.gif" lazyload></p>
 <p>将不同 <span class="math inline">\(x=i\)</span> 的函数 <span class="math inline">\(w(x=i,y=j)\)</span> 绘制在 <span class="math inline">\(w-y\)</span> 平面上。</p>
 <p>我们发现，由于 <span class="math inline">\(\frac{\partial^2
 w}{\partial x\partial y} \le 0\)</span> ，这些函数的导数随着 <span class="math inline">\(i\)</span> 的增大而递减。</p>
 <p>这导致了一个特点：由于这些函数的导数依次减小，所以从起点到最小值点的距离依次增加，最终形成当
 <span class="math inline">\(x = i\)</span> 增大时，最小值点对应的 <span class="math inline">\(y=j\)</span> 也随之单调增加。</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7_w-y-1712573757010-9.png" srcset="/img/loading.gif" lazyload alt="决策单调性 w-y">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7_w-y-1712573757010-9.png" srcset="/img/loading.gif" lazyload alt="决策单调性 w-y">
 <figcaption aria-hidden="true">决策单调性 <span class="math inline">\(w-y\)</span></figcaption>
 </figure>
 <blockquote>
@@ -957,11 +958,11 @@ w}{\partial x\partial y} \le 0\)</span> ，这些函数的导数随着 <span cla
 <p>容易想到，每个决策都将有自己的一席之地。（没有 <span class="math inline">\(g(j)\)</span> 时已经就是这样的格局，再加上递减的
 <span class="math inline">\(g(j)\)</span>
 ，局面更加稳固（说的啥🤣））</p>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7-1712573757010-7.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7-1712573757010-7.png" srcset="/img/loading.gif" lazyload></p></li>
 <li><p>如果 <span class="math inline">\(g(j)\)</span> 无明显性质：</p>
 <p>可能导致有的决策因为 <span class="math inline">\(g(j)\)</span>
 变贵了，被其他策略战胜。类似于斜率优化维护凸壳把点弹走的感觉。</p>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7(1)-1712573757010-10.png" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7(1)-1712573757010-10.png" srcset="/img/loading.gif" lazyload></p></li>
 </ul></li>
 <li><p>反四边形不等式的性质和上面的一切完全相反。注意它求的是最大值。</p></li>
 </ol>
@@ -1010,7 +1011,7 @@ f(i)=\min\limits_{1\le j &lt; i}\{g(j)+w(i,j)\}
 \frac{\partial^2 w}{\partial x\partial y}=\frac{\partial ^2 w}{\partial
 y\partial x}=0
 \]</span></p>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/GIF%202024-2-7%2018-12-37-1712573757010-11.gif" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/GIF%202024-2-7%2018-12-37-1712573757010-11.gif" srcset="/img/loading.gif" lazyload></p></li>
 <li><p>对于斜率优化适用的情况： <span class="math inline">\(w(i,j)=-a(i)d(j)\)</span> 。</p>
 <ol type="1">
 <li><p><span class="math inline">\(a(i)\)</span> 单调，<span class="math inline">\(d(j)\)</span> 单调，且两者单调性相同</p>
@@ -1021,7 +1022,7 @@ y\partial x}=-a&#39;(x)b&#39;(y)\le0
 <p>故满足四边形不等式。所以斜率优化实际上是决策单调性的一个特殊情况。</p>
 <p>当然还有 <span class="math inline">\(dp(j)\)</span>
 的影响，所以一般不是下图如此完美的凸壳，具体见前文“值得关注的地方”</p>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/GIF%202024-2-7%2018-04-20-1712573757010-12.gif" srcset="/img/loading.gif" lazyload></p></li>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/GIF%202024-2-7%2018-04-20-1712573757010-12.gif" srcset="/img/loading.gif" lazyload></p></li>
 </ol></li>
 </ul>
 <ol start="2" type="1">
@@ -1036,7 +1037,7 @@ y\partial x}=-a&#39;(x)b&#39;(y)\le0
 <span class="math inline">\(f_i\)</span> 前就要先求出前面的所有 <span class="math inline">\(f\)</span>，称这个问题为<strong>在线问题</strong>，无法采用方法二的分治做法。此时可以采用顺序计算的单调队列
 + 二分算法。</p>
 <p>我们参考斜率优化中用单调队列维护凸壳的策略。不过这里我们构成“凸壳”（不太严谨，或称为最优策略集合）的函数可不是直线了，而是一条条曲线。</p>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7(1)-1712573757010-10.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7(1)-1712573757010-10.png" srcset="/img/loading.gif" lazyload></p>
 <p>可是，为什么标题中又还有“二分”呢？</p>
 <p>原来，在斜率优化中，由于 <span class="math inline">\(w(i,j)=-a(i)d(j)\)</span>
 ，我们可以轻松得知凸壳上的最优决策<strong>分界点坐标</strong> <span class="math inline">\((d(j),f(j))\)</span> ，也就是上图中的 <span class="math inline">\(A,F,D\)</span> 这几个点。然后就可以 <span class="math inline">\(O(1)\)</span>
@@ -1435,7 +1436,7 @@ f(i,x=不限制)=\max\{f(i-1),f(i-1)+w(i)\}, \quad i \in [1,N]
 <p><strong>“用原凸函数构造新凸函数，用新凸函数的最值点，可以反求原凸函数上横坐标相同的点。”</strong></p>
 <p><strong>“而凸函数的最值点很好计算，进而加速了原凸函数上任意一点的计算。”</strong></p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS%E4%BA%8C%E5%88%86-%E4%BB%A5%E4%BA%8C%E6%AC%A1%E5%87%BD%E6%95%B0%E4%B8%BA%E4%BE%8B-17071412833312-1712573757010-13.gif" srcset="/img/loading.gif" lazyload alt="WQS二分-以二次函数为例">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS%E4%BA%8C%E5%88%86-%E4%BB%A5%E4%BA%8C%E6%AC%A1%E5%87%BD%E6%95%B0%E4%B8%BA%E4%BE%8B-17071412833312-1712573757010-13.gif" srcset="/img/loading.gif" lazyload alt="WQS二分-以二次函数为例">
 <figcaption aria-hidden="true">WQS二分-以二次函数为例</figcaption>
 </figure>
 <p>在二次函数 <span class="math inline">\(y=ax^2+bx+c\)</span>
@@ -1467,7 +1468,7 @@ f(j) = kj + b
 <p>假设 <span class="math inline">\(x=t\)</span> 时取得 <span class="math inline">\(F(N,x)\)</span> 的最大值，此时 <span class="math inline">\(b_{max}=F_{max}(N,x)=F(N,t)\)</span> 就是 <span class="math inline">\(f(N,x)\)</span> 的切线的截距。根据计算得出的切线
 <span class="math inline">\(y=kx+b_{max}\)</span> ，我们就可以计算得到
 <span class="math inline">\(f(t)=kt+b_{max}\)</span> 。</p>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS_%E4%BF%AE%E6%AD%A3_%E7%9B%B4%E7%BA%BF%E4%B8%8E%E5%87%B8%E5%87%BD%E6%95%B0-1712573757010-14.svg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS_%E4%BF%AE%E6%AD%A3_%E7%9B%B4%E7%BA%BF%E4%B8%8E%E5%87%B8%E5%87%BD%E6%95%B0-1712573757010-14.svg" srcset="/img/loading.gif" lazyload></p>
 <p>现在我们思考 <span class="math inline">\(F(N,x=不限制)\)</span>
 的情况：</p>
 <p>我们计算 <span class="math inline">\(F(N,x=不限制)\)</span>
@@ -1535,7 +1536,7 @@ F(i)=max\{F(i-1),F(i-1)+w(i)-k\},\quad i \in [1,N]
 的价值，从而间接限制DP对物品的选择数量。</p>
 </blockquote>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS_%E4%BF%AE%E6%AD%A3-17067678589501-1712573757010-15.svg" srcset="/img/loading.gif" lazyload alt="WQS二分中不同的k值所对应的F极值点">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS_%E4%BF%AE%E6%AD%A3-17067678589501-1712573757010-15.svg" srcset="/img/loading.gif" lazyload alt="WQS二分中不同的k值所对应的F极值点">
 <figcaption aria-hidden="true">WQS二分中不同的k值所对应的F极值点</figcaption>
 </figure>
 <blockquote>
@@ -1558,7 +1559,7 @@ f(N,x)\)</span> 的 <span class="math inline">\(k\)</span>
 <p>当我们计算出共线的某一个端点的 <span class="math inline">\(F_{max}(N,x)\)</span>
 时，则可以计算出这条线段上的所有 <span class="math inline">\(f(N,x)\)</span> 的值，具体见模板题。</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS_%E5%85%B1%E7%BA%BF-1712573757010-16.svg" srcset="/img/loading.gif" lazyload alt="WQS_共线">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS_%E5%85%B1%E7%BA%BF-1712573757010-16.svg" srcset="/img/loading.gif" lazyload alt="WQS_共线">
 <figcaption aria-hidden="true">WQS_共线</figcaption>
 </figure>
 <p><strong>如果一不注意就会 WA ！！！！！！！！！！！！QwQ</strong></p>
@@ -1617,7 +1618,7 @@ f(N,x)&amp;=f(x)=\frac{\ln(x)}{x},~f&#39;(x)=\frac{1-\ln x}{x^2}
 <span class="math inline">\(\ln x =1\)</span> 的时候。同时可知 <span class="math inline">\(F\)</span> 也是有且仅有一个极值点，即 <span class="math inline">\(\ln x =1-k\)</span>
 的时候。因此可以使用WQS二分</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS%20%E9%9D%9E%E5%87%B8%E5%87%BD%E6%95%B0-1712573757010-17.gif" srcset="/img/loading.gif" lazyload alt="WQS 非凸函数">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS%20%E9%9D%9E%E5%87%B8%E5%87%BD%E6%95%B0-1712573757010-17.gif" srcset="/img/loading.gif" lazyload alt="WQS 非凸函数">
 <figcaption aria-hidden="true">WQS 非凸函数</figcaption>
 </figure>
 <p>可见此方法可能在特定情境下有作用。</p>
@@ -1631,7 +1632,7 @@ F(N,x)=F(x)=-\frac{1}{f(x)}+kx=x^2+kx+1
 <p>则此时 <span class="math inline">\(f(x)=\frac{1}{kx-F(x)}\)</span>
 。由 <span class="math inline">\(F(N, x=不限制)\)</span> 获得 <span class="math inline">\(f(N,x)\)</span> 的过程如下图所示：</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS%E4%BA%8C%E5%88%86%E9%9D%9E%E5%87%B8%E5%87%BD%E6%95%B0%E7%8C%9C%E6%83%B3%20%E4%BE%8B2-1712573757010-18.gif" srcset="/img/loading.gif" lazyload alt="WQS二分非凸函数猜想 例2">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/WQS%E4%BA%8C%E5%88%86%E9%9D%9E%E5%87%B8%E5%87%BD%E6%95%B0%E7%8C%9C%E6%83%B3%20%E4%BE%8B2-1712573757010-18.gif" srcset="/img/loading.gif" lazyload alt="WQS二分非凸函数猜想 例2">
 <figcaption aria-hidden="true">WQS二分非凸函数猜想 例2</figcaption>
 </figure>
 <p><strong>后记</strong></p>
@@ -1714,12 +1715,12 @@ w(i,j)=w(i+1,j-1)+a_j-a_i\ ,\ i\le j-1
 <p>注意整数二分的时候，答案的计算一定是在二分循环里面的，因为考虑到共线的情况，如果要算的点在共线的线段中间，我们整数二分搜索是肯定搜不到的，必须通过端点来计算！（端点选哪一个根据你
 <span class="math inline">\(F\)</span> 选择的贪心策略）</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-02-01%20015608%20-%20%E5%89%AF%E6%9C%AC-1712573757010-19.png" srcset="/img/loading.gif" lazyload alt="代码差异">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-02-01%20015608%20-%20%E5%89%AF%E6%9C%AC-1712573757010-19.png" srcset="/img/loading.gif" lazyload alt="代码差异">
 <figcaption aria-hidden="true">代码差异</figcaption>
 </figure>
 <p>两种都能成功AC。但你要是搞错了一步就是一片的WA了！！！！虽然有的时候也能因为共线而AC。(～￣▽￣)～</p>
 <figure>
-<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/image-20240201020150336-1712573757010-20.png" srcset="/img/loading.gif" lazyload alt="两种方式都可AC">
+<img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/image-20240201020150336-1712573757010-20.png" srcset="/img/loading.gif" lazyload alt="两种方式都可AC">
 <figcaption aria-hidden="true">两种方式都可AC</figcaption>
 </figure>
 <h4 id="cf739e-gosha-is-hunting">2. <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF739E">CF739E Gosha is
@@ -1858,9 +1859,9 @@ l_{j+1} \\&amp; 0,\quad r_j &lt; l_{j+1}\end{aligned}\right.\end{align}
 </ol>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">typedef</span> <span class="hljs-type">long</span> <span class="hljs-type">long</span> ll;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAXN 100007</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">seg</span> &#123;ll l, r;&#125; a[MAXN];<br>ll n, m, k;<br>ll q[MAXN], head = <span class="hljs-number">0</span>, tail = <span class="hljs-number">-1</span>;<br>ll F[MAXN], CNT[MAXN], C;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SQ(x) ((x)*(x))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> X(j) (a[j+1].l)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> G(j) (a[j].r&gt;=a[j+1].l?SQ(a[j].r-a[j+1].l+1):0)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> Y(j) (F[j]+SQ(a[j+1].l)-G(j)+C)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> K(i) (2*(a[i].r+1))</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> B(i) (F[i]-SQ(a[i].r+1))</span><br><span class="hljs-comment">// 使用 &lt;= 尽可能多拍照片</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> slope_le_k(p1,p2,k) ((Y(p1)-Y(p2))&lt;=(X(p1)-X(p2))*(k))  </span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> k1_le_k2(p1,p2,p3,p4) ((Y(p1)-Y(p2))*(X(p3)-X(p4))&lt;=(Y(p3)-Y(p4))*(X(p1)-X(p2)))</span><br><span class="hljs-comment">// 斜率优化</span><br><span class="hljs-function">pair&lt;ll, ll&gt; <span class="hljs-title">check</span><span class="hljs-params">()</span> </span>&#123;<br>    head = <span class="hljs-number">1</span>, tail = <span class="hljs-number">1</span>;<br>    q[tail] = <span class="hljs-number">0</span>, F[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>, CNT[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;<br>        <span class="hljs-keyword">while</span> (head &lt; tail &amp;&amp; <span class="hljs-built_in">slope_le_k</span>(q[head+<span class="hljs-number">1</span>], q[head], <span class="hljs-built_in">K</span>(i))) head++;<br>        ll j = q[head];<br>        F[i] = F[j] + <span class="hljs-built_in">SQ</span>(a[i].r-a[j+<span class="hljs-number">1</span>].l+<span class="hljs-number">1</span>) - <span class="hljs-built_in">G</span>(j) + C;<br>        CNT[i] = CNT[j] + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span> (head &lt; tail &amp;&amp; <span class="hljs-built_in">k1_le_k2</span>(q[tail], i, q[tail<span class="hljs-number">-1</span>], q[tail])) tail--;<br>        q[++tail] = i;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">make_pair</span>(F[n], CNT[n]);<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    ios::<span class="hljs-built_in">sync_with_stdio</span>(<span class="hljs-literal">false</span>); cin.<span class="hljs-built_in">tie</span>(<span class="hljs-number">0</span>);<br>    cin &gt;&gt; n &gt;&gt; m &gt;&gt; k;<br>    a[<span class="hljs-number">0</span>].l = <span class="hljs-number">-1</span>, a[<span class="hljs-number">0</span>].r = <span class="hljs-number">-1</span>;   <span class="hljs-comment">// 非常重要，否则一开始G(0)会出错</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;<br>        cin &gt;&gt; a[i].l &gt;&gt; a[i].r;<br>        <span class="hljs-keyword">if</span> (a[i].l &gt; a[i].r) <span class="hljs-built_in">swap</span>(a[i].l, a[i].r);<br>    &#125;;<br>    <span class="hljs-built_in">sort</span>(a+<span class="hljs-number">1</span>, a+n+<span class="hljs-number">1</span>, [](seg _a, seg _b)&#123;<span class="hljs-keyword">return</span> _a.l==_b.l?_a.r&gt;_b.r:_a.l&lt;_b.l;&#125;);<br><br>    <span class="hljs-comment">// 去掉被包含的线段</span><br>    ll wp = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>, prev_r = a[<span class="hljs-number">1</span>].r; i &lt;= n; i++)<br>        <span class="hljs-keyword">if</span> (prev_r &lt; a[i].r) a[++wp] = a[i], prev_r = a[i].r;<br>    n = wp;<br><br>    <span class="hljs-comment">// WQS二分</span><br>    ll lt = <span class="hljs-number">0</span>, rt = <span class="hljs-number">1e12</span>, val, cnt, ans = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">if</span> (k &gt; n) k = n;  <span class="hljs-comment">// 用了这个优化，就不需要下面的 if (ans == -1) 了</span><br>    <span class="hljs-keyword">while</span> (lt &lt;= rt) &#123;<br>        C = (lt + rt) &gt;&gt; <span class="hljs-number">1</span>;<br>        <span class="hljs-built_in">tie</span>(val, cnt) = <span class="hljs-built_in">check</span>();<br>        <span class="hljs-comment">// 在多点共线的线段上，[val, cnt] 是最后一个 &gt;= k 的值</span><br>        <span class="hljs-keyword">if</span> (cnt &gt;= k) lt = C + <span class="hljs-number">1</span>, ans = val - k * C;  <span class="hljs-comment">// [val, k] 和 [val, cnt] 共线</span><br>        <span class="hljs-keyword">else</span> rt = C - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span> (cnt == k) <span class="hljs-keyword">break</span>;  <span class="hljs-comment">// 非常必要的小优化</span><br>    &#125;<br>    <span class="hljs-comment">// 虽然是凸函数，但是单调不增，并且最终无论拍多少次，都会收敛到一个值。</span><br>    <span class="hljs-comment">// 所以当 k &gt; n 时，cnt 必然小于 k，而 k 会和 n 共线</span><br>    <span class="hljs-comment">// if (ans == -1) ans = val - k * C;  </span><br>    cout &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>同样对比两种不同的二分方式和F计算：</p>
-<p><img title src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/aliens%E5%AF%B9%E6%AF%94-1712573757010-21.png" srcset="/img/loading.gif" lazyload alt="aliens对比" data-align="inline"></p>
+<p><img title src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/aliens%E5%AF%B9%E6%AF%94-1712573757010-21.png" srcset="/img/loading.gif" lazyload alt="aliens对比" data-align="inline"></p>
 <p>两种都可成功AC：</p>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/image-20240203165559581-1712573757011-22.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/image-20240203165559581-1712573757011-22.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="d0d-矩阵乘法优化">6 (2D/0D) 矩阵乘法优化</h2>
 <p>https://www.cnblogs.com/Xing-Ling/p/11594147.html</p>
 <h2 id="d1d-闵可夫斯基和优化">7 (1D/1D) 闵可夫斯基和优化</h2>
@@ -1913,13 +1914,13 @@ f_{u,i}=\max_{j=0}^{siz_v}\{f_{u,i-j}+f_{v,j}+j(k-j)\times w(u,v)\}
 <p>这里使用的场景是：凸函数 <span class="math inline">\(f\)</span> +
 凸函数 <span class="math inline">\(g\)</span> = 凸函数 <span class="math inline">\(h\)</span> （当然，他们的凸性必须相同）</p>
 <h3 id="概述-1">概述</h3>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/image-20240408194711081.png" srcset="/img/loading.gif" lazyload alt="两个下凸包" style="zoom: 50%;"></p>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/image-20240408194711081.png" srcset="/img/loading.gif" lazyload alt="两个下凸包" style="zoom: 50%;"></p>
 <p>如图，是两个下凸包。通常，我们保存每一个点的坐标。</p>
 <p>然而，这种方式在合并两个凸包时是比较麻烦的：我们必须对每个下标对应的元素进行加法操作。当然这在凸包比较多转折点时还是比较合理的。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// Convex hull 1</span><br>    <span class="hljs-type">int</span> ch1[<span class="hljs-number">7</span>] = &#123;<span class="hljs-number">5</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span> ,<span class="hljs-number">4</span>&#125;;<br><span class="hljs-comment">// Convex hull 2</span><br>    <span class="hljs-type">int</span> ch2[<span class="hljs-number">7</span>] = &#123;<span class="hljs-number">6</span>, <span class="hljs-number">4</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span> ,<span class="hljs-number">2</span>&#125;;<br><span class="hljs-comment">// All</span><br>    <span class="hljs-type">int</span> ch[<span class="hljs-number">7</span>] = &#123;<span class="hljs-number">11</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">6</span>&#125;;<br></code></pre></td></tr></table></figure>
 <p>现在有一种新的方法来存储凸函数：保存斜率的变化点，在这个点处，斜率增加（或减少）了多少，就存几次这个点的下标。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">// Convex hull 1</span><br>    <span class="hljs-type">int</span> k1 = <span class="hljs-number">-3</span>, b1 = <span class="hljs-number">5</span>;<br>    <span class="hljs-type">int</span> ch1[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>&#125;;<br><span class="hljs-comment">// Convex hull 2</span><br>    <span class="hljs-type">int</span> k2 = <span class="hljs-number">-2</span>, b2 = <span class="hljs-number">6</span>;<br>    <span class="hljs-type">int</span> ch2[<span class="hljs-number">5</span>] = &#123;<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>&#125;;<br><span class="hljs-comment">// All</span><br>    <span class="hljs-type">int</span> k = <span class="hljs-number">-5</span>, b = <span class="hljs-number">11</span>;<br>    <span class="hljs-type">int</span> ch[<span class="hljs-number">10</span>] = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>&#125;;<br></code></pre></td></tr></table></figure>
-<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90DP%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/image-20240408200327345.png" srcset="/img/loading.gif" lazyload alt="合并后的凸包" style="zoom:50%;"></p>
+<p><img src="/2024/01/20/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/image-20240408200327345.png" srcset="/img/loading.gif" lazyload alt="合并后的凸包" style="zoom:50%;"></p>
 <p>这种新方法需要将两个序列进行归并排序。</p>
 <h3 id="例题-1">例题</h3>
 <h4 id="cf713c-sonya-and-problem-wihtout-a-legend">1. <a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/713/C">CF713C Sonya and
@@ -2007,6 +2008,8 @@ f_{i,j}=\min\{\min\limits_{t\le j}\{f_{i-1, t}\} +
       
         <a href="/tags/DP/">#DP</a>
       
+        <a href="/tags/DP%E4%BC%98%E5%8C%96/">#DP优化</a>
+      
     </div>
   
 </div>
@@ -2018,7 +2021,7 @@ f_{i,j}=\min\{\min\limits_{t\le j}\{f_{i-1, t}\} +
   <div class="license-box my-3">
     <div class="license-title">
       <div>【算法】【DP】DP优化总结</div>
-      <div>https://qalxry.github.io/2024/01/20/【算法】【DP】DP优化总结/</div>
+      <div>https://qalxry.github.io/2024/01/20/【算法】DP优化总结/</div>
     </div>
     <div class="license-meta">
       

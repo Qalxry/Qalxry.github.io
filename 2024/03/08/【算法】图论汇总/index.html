@@ -1,0 +1,1258 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start --><script src="/js/custom/auto_generate/theme_config.js" defer></script><!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="图论汇总   00 前瞻 01 图的存储  1 邻接矩阵 2 邻接表 3 链式前向星  02 拓扑排序  概念 1 基于入度&#x2F;出度的拓扑排序 2 基于DFS的拓扑排序 3 计算所有拓扑排序 4 计算拓扑排序的数量  03 欧拉路径  概念 1 欧拉路径和欧拉回路存在性判断 2 输出一个欧拉回路 3 混合图的欧拉路径与欧拉回路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【算法】图论汇总">
+<meta property="og:url" content="https://qalxry.github.io/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="图论汇总   00 前瞻 01 图的存储  1 邻接矩阵 2 邻接表 3 链式前向星  02 拓扑排序  概念 1 基于入度&#x2F;出度的拓扑排序 2 基于DFS的拓扑排序 3 计算所有拓扑排序 4 计算拓扑排序的数量  03 欧拉路径  概念 1 欧拉路径和欧拉回路存在性判断 2 输出一个欧拉回路 3 混合图的欧拉路径与欧拉回路">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/piclib/bg_sc03.jpg">
+<meta property="article:published_time" content="2024-03-08T12:19:28.000Z">
+<meta property="article:modified_time" content="2024-04-13T12:08:38.976Z">
+<meta property="article:author" content="しずり雪">
+<meta property="article:tag" content="Algorithm 算法">
+<meta property="article:tag" content="图论">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/piclib/bg_sc03.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【算法】图论汇总 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom/mydetails.css">
+<link rel="stylesheet" href="/css/custom/fonts.css">
+<link rel="stylesheet" href="/css/custom/toc.css">
+<link rel="stylesheet" href="/css/custom/base.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+            <script>
+            document.subthemes = {
+                default: "none",
+                list: [{"name":"none","path":"/"},{"name":"classic","path":"/subthemes/classic/"},{"name":"modern","path":"/subthemes/modern/"}]
+            };
+            </script>
+
+            <script src="/subthemes/subthemes.js" defer></script>
+            <style>
+                #theme-toggle-btn .nav-link {
+                    display: block;
+                    color: var(--navbar-text-color);
+                    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+                }
+                #theme-toggle-btn .nav-link svg {
+                    transition: fill 0.2s ease-in-out;
+                    fill: var(--navbar-text-color);
+                }
+                #theme-toggle-btn .nav-link:hover svg {
+                    fill: var(--link-hover-color);
+                }
+            </style>
+            <link rel="stylesheet" href="/subthemes/classic/css/main.css">
+<link rel="stylesheet" href="/subthemes/modern/css/main.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start -->
+        <script>
+        console.log('[Extend Features] running...');
+        document.extend_features = {"enable":false,"code_font":{"enable":false,"font_family":"SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace","font_weight":400},"fixed_background":{"enable":false,"mask":{"enable":true,"list":[{"selector":"#web_bg","enable":true,"style":"background-color: rgba(0, 0, 0, 0.3);  border-radius: 1rem;"},{"selector":"#board","enable":true,"style":"background-color: rgba(0, 0, 0, 0);    border-radius: 1rem;"},{"selector":"#toc","enable":true,"style":"background-color: rgba(0, 0, 0, 0.15); border-radius: 1rem;"}]}}};
+        </script>
+        <script src="/extend_features/extend_features.js"></script>
+        <!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/2024/02/26/%E6%88%91%E7%9A%84%E6%97%A5%E8%AE%B0%E4%B8%8E%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/piclib/bg_sc03.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【算法】图论汇总"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-08 20:19" pubdate>
+          2024年3月8日 晚上 20:19
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          23k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          98 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="left-sidebar side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【算法】图论汇总</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年4月13日 晚上 20:08
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="图论汇总">图论汇总</h1>
+<!-- toc -->
+<ul>
+<li><a href="#00----%25E5%2589%258D%25E7%259E%25BB">00 前瞻</a></li>
+<li><a href="#01----%25E5%259B%25BE%25E7%259A%2584%25E5%25AD%2598%25E5%2582%25A8">01
+图的存储</a>
+<ul>
+<li><a href="#1----%25E9%2582%25BB%25E6%258E%25A5%25E7%259F%25A9%25E9%2598%25B5">1
+邻接矩阵</a></li>
+<li><a href="#2----%25E9%2582%25BB%25E6%258E%25A5%25E8%25A1%25A8">2
+邻接表</a></li>
+<li><a href="#3----%25E9%2593%25BE%25E5%25BC%258F%25E5%2589%258D%25E5%2590%2591%25E6%2598%259F">3
+链式前向星</a></li>
+</ul></li>
+<li><a href="#02----%25E6%258B%2593%25E6%2589%2591%25E6%258E%2592%25E5%25BA%258F">02
+拓扑排序</a>
+<ul>
+<li><a href="#%25E6%25A6%2582%25E5%25BF%25B5">概念</a></li>
+<li><a href="#1----%25E5%259F%25BA%25E4%25BA%258E%25E5%2585%25A5%25E5%25BA%25A6x2F%25E5%2587%25BA%25E5%25BA%25A6%25E7%259A%2584%25E6%258B%2593%25E6%2589%2591%25E6%258E%2592%25E5%25BA%258F">1
+基于入度/出度的拓扑排序</a></li>
+<li><a href="#2----%25E5%259F%25BA%25E4%25BA%258EDFS%25E7%259A%2584%25E6%258B%2593%25E6%2589%2591%25E6%258E%2592%25E5%25BA%258F">2
+基于DFS的拓扑排序</a></li>
+<li><a href="#3----%25E8%25AE%25A1%25E7%25AE%2597%25E6%2589%2580%25E6%259C%2589%25E6%258B%2593%25E6%2589%2591%25E6%258E%2592%25E5%25BA%258F">3
+计算所有拓扑排序</a></li>
+<li><a href="#4----%25E8%25AE%25A1%25E7%25AE%2597%25E6%258B%2593%25E6%2589%2591%25E6%258E%2592%25E5%25BA%258F%25E7%259A%2584%25E6%2595%25B0%25E9%2587%258F">4
+计算拓扑排序的数量</a></li>
+</ul></li>
+<li><a href="#03----%25E6%25AC%25A7%25E6%258B%2589%25E8%25B7%25AF%25E5%25BE%2584">03
+欧拉路径</a>
+<ul>
+<li><a href="#%25E6%25A6%2582%25E5%25BF%25B5">概念</a></li>
+<li><a href="#1----%25E6%25AC%25A7%25E6%258B%2589%25E8%25B7%25AF%25E5%25BE%2584%25E5%2592%258C%25E6%25AC%25A7%25E6%258B%2589%25E5%259B%259E%25E8%25B7%25AF%25E5%25AD%2598%25E5%259C%25A8%25E6%2580%25A7%25E5%2588%25A4%25E6%2596%25AD">1
+欧拉路径和欧拉回路存在性判断</a></li>
+<li><a href="#2----%25E8%25BE%2593%25E5%2587%25BA%25E4%25B8%2580%25E4%25B8%25AA%25E6%25AC%25A7%25E6%258B%2589%25E5%259B%259E%25E8%25B7%25AF">2
+输出一个欧拉回路</a></li>
+<li><a href="#3----%25E6%25B7%25B7%25E5%2590%2588%25E5%259B%25BE%25E7%259A%2584%25E6%25AC%25A7%25E6%258B%2589%25E8%25B7%25AF%25E5%25BE%2584%25E4%25B8%258E%25E6%25AC%25A7%25E6%258B%2589%25E5%259B%259E%25E8%25B7%25AF">3
+混合图的欧拉路径与欧拉回路</a></li>
+</ul></li>
+<li><a href="#04----%25E5%2593%2588%25E5%25AF%2586%25E9%25A1%25BF%25E8%25B7%25AF%25E5%25BE%2584">04
+哈密顿路径</a>
+<ul>
+<li><a href="#%25E6%25A6%2582%25E5%25BF%25B5">概念</a></li>
+<li><a href="#%25E6%2580%25A7%25E8%25B4%25A8">性质</a></li>
+<li><a href="#1----%25E8%258E%25B7%25E5%258F%2596%25E4%25B8%2580%25E6%259D%25A1%25E5%2593%2588%25E5%25AF%2586%25E9%25A1%25BF%25E8%25B7%25AF%25E5%25BE%2584">1
+获取一条哈密顿路径</a></li>
+<li><a href="#2----%25E6%259C%2580%25E7%259F%25AD%25E5%2593%2588%25E5%25AF%2586%25E9%25A1%25BF%25E8%25B7%25AF%25E5%25BE%2584%25EF%25BC%2588TSP%25E9%2597%25AE%25E9%25A2%2598%25EF%25BC%2589">2
+最短哈密顿路径（TSP问题）</a></li>
+</ul></li>
+<li><a href="#05----%25E6%2597%25A0%25E5%2590%2591%25E5%259B%25BE%25E7%259A%2584%25E8%25BF%259E%25E9%2580%259A%25E6%2580%25A7">05
+无向图的连通性</a></li>
+<li><a href="#06----%25E6%259C%2589%25E5%2590%2591%25E5%259B%25BE%25E7%259A%2584%25E8%25BF%259E%25E9%2580%259A%25E6%2580%25A7">06
+有向图的连通性</a>
+<ul>
+<li><a href="#Kosaraju-%25E7%25AE%2597%25E6%25B3%2595">Kosaraju
+算法</a></li>
+<li><a href="#Tarjan-%25E7%25AE%2597%25E6%25B3%2595">Tarjan
+算法</a></li>
+</ul></li>
+<li><a href="#07----%25E5%259F%25BA%25E7%258E%25AF%25E6%25A0%2591">07
+基环树</a></li>
+<li><a href="#08----2-SAT-%25E9%2597%25AE%25E9%25A2%2598">08 2-SAT
+问题</a>
+<ul>
+<li><a href="#%25E6%25A6%2582%25E5%25BF%25B5">概念</a></li>
+<li><a href="#2-SAT-%25E6%25A8%25A1%25E6%259D%25BF%25E9%25A2%2598">2-SAT
+模板题</a></li>
+</ul></li>
+<li><a href="#09----%25E5%259C%2586%25E6%2596%25B9%25E6%25A0%2591">09
+圆方树</a></li>
+<li><a href="#10----%25E6%259C%2580%25E7%259F%25AD%25E8%25B7%25AF%25E5%25BE%2584%25E9%2597%25AE%25E9%25A2%2598">10
+最短路径问题</a>
+<ul>
+<li><a href="#Floyd">Floyd</a></li>
+<li><a href="#Dijkstra">Dijkstra</a></li>
+<li><a href="#Bellman-Ford">Bellman-Ford</a></li>
+<li><a href="#SPFA">SPFA</a></li>
+</ul></li>
+<li><a href="#11----%25E5%2590%258C%25E4%25BD%2599%25E6%259C%2580%25E7%259F%25AD%25E8%25B7%25AF">11
+同余最短路</a></li>
+<li><a href="#12----%25E6%259C%2580%25E5%25B0%258F%25E7%2594%259F%25E6%2588%2590%25E6%25A0%2591">12
+最小生成树</a></li>
+<li><a href="#13----%25E6%259C%2580%25E5%25B0%258F%25E7%259B%25B4%25E5%25BE%2584%25E7%2594%259F%25E6%2588%2590%25E6%25A0%2591">13
+最小直径生成树</a></li>
+<li><a href="#14----%25E6%259C%2580%25E5%25B0%258F%25E6%25A0%2591%25E5%25BD%25A2%25E5%259B%25BE">14
+最小树形图</a></li>
+<li><a href="#15----%25E6%259C%2580%25E5%25B0%258F%25E6%2596%25AF%25E7%25BA%25B3%25E5%259D%25A6%25E6%25A0%2591">15
+最小斯纳坦树</a></li>
+<li><a href="#16----%25E7%25BD%2591%25E7%25BB%259C%25E6%25B5%2581">16
+网络流</a></li>
+<li><a href="#17----%25E4%25BA%258C%25E5%2588%2586%25E5%259B%25BE">17
+二分图</a></li>
+<li><a href="#18----%25E5%259B%25BE%25E7%259D%2580%25E8%2589%25B2%25E9%2597%25AE%25E9%25A2%2598">18
+图着色问题</a></li>
+<li><a href="#19----%25E5%259B%25BE%25E5%258C%25B9%25E9%2585%258D%25E9%2597%25AE%25E9%25A2%2598">19
+图匹配问题</a></li>
+<li><a href="#20----%25E5%25BC%25A6%25E5%259B%25BE">20 弦图</a></li>
+<li><a href="#21----%25E6%259C%2580%25E5%25A4%25A7%25E5%259B%25A2%25E6%2590%259C%25E7%25B4%25A2">21
+最大团搜索</a></li>
+</ul>
+<!-- tocstop -->
+<h2 id="前瞻">00 前瞻</h2>
+<p>此篇汇总主要参考了《算法竞赛》和 oi-wiki
+内的知识汇总。同时也是我个人的学习笔记，如果没有编写的，大概是还没去吧。</p>
+<p>这里主要讲图上的问题，树上问题将会专门划分出一篇专题汇总（好吧其实是因为树上的问题有点多放在这里太挤了~）</p>
+<p>Have a good time!</p>
+<h2 id="图的存储">01 图的存储</h2>
+<h3 id="邻接矩阵">1 邻接矩阵</h3>
+<p>适合稠密图，非常简单。</p>
+<h3 id="邻接表">2 邻接表</h3>
+<p>使用<strong>动态数组</strong>存图，缺点是寻找指定邻居的效率较慢，不过邻居一般较少影响较小。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">edge</span> &#123;<br>    <span class="hljs-type">int</span> from, to, w;<br>    <span class="hljs-built_in">edge</span>(<span class="hljs-type">int</span> _from, <span class="hljs-type">int</span> _to, <span class="hljs-type">int</span> _w) : <span class="hljs-built_in">from</span>(_from), <span class="hljs-built_in">to</span>(_to), <span class="hljs-built_in">w</span>(_w) &#123;&#125;<br>&#125;<br>vector&lt;edge&gt; G[N];<br></code></pre></td></tr></table></figure>
+<h3 id="链式前向星">3 链式前向星</h3>
+<p>使用静态数组模拟<strong>邻接表</strong>，相当于链表实现的邻接表，只不过使用<strong>数组模拟链表</strong>。</p>
+<p>使用 -1 表示一条边尚未使用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span>+<span class="hljs-number">5</span>, M = <span class="hljs-number">2e6</span>+<span class="hljs-number">5</span>;<br><span class="hljs-type">int</span> head[N], ecnt;<br><span class="hljs-keyword">struct</span> &#123; <span class="hljs-type">int</span> from, to, next, w; &#125; edge[M];	<span class="hljs-comment">// 这里的 from 其实可以省去</span><br><span class="hljs-comment">// 用 -1 表示空，需要init函数。如果用 0 表示空则可省去</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i) head[i] = <span class="hljs-number">-1</span>;       <span class="hljs-comment">// 点的邻居列表索引初始化</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; ++i) edge[i].next = <span class="hljs-number">-1</span>;  <span class="hljs-comment">// 边初始化</span><br>    ecnt = <span class="hljs-number">0</span>;                                       <span class="hljs-comment">// 边计数器初始化</span><br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addedge</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span> </span>&#123;<br>    edge[ecnt] = &#123;u, v, head[u], w&#125;;<br>    head[u] = ecnt++;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">init</span>();<br>    <span class="hljs-type">int</span> n, m; cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) &#123;<span class="hljs-type">int</span> u, v, w; cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; <span class="hljs-built_in">addedge</span>(u, v, w);&#125;<br>    <span class="hljs-comment">// 遍历所有点的邻居</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> u = <span class="hljs-number">0</span>; u &lt; N; u++) <br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = head[u]; ~i; i = edge[i].next)    <span class="hljs-comment">// ~i 表示 i != -1</span><br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d -&gt; %d: %d\n&quot;</span>, edge[i].from, edge[i].to, edge[i].w);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>更加简洁的版本，使用 0 来表示一条边是未使用的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span>+<span class="hljs-number">5</span>, M = <span class="hljs-number">2e6</span>+<span class="hljs-number">5</span>;<br><span class="hljs-type">int</span> head[N], ecnt = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">struct</span> &#123; <span class="hljs-type">int</span> to, next, w; &#125; edge[M];<br><span class="hljs-comment">// 用 0 表示空</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addedge</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span> </span>&#123;<br>    ecnt++; <span class="hljs-comment">// 需要确保第 0 个位置不存储边，因为 0 表示空</span><br>    edge[ecnt] = &#123;u, v, head[u], w&#125;;<br>    head[u] = ecnt;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-built_in">init</span>();<br>    <span class="hljs-type">int</span> n, m; cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; m; i++) &#123;<span class="hljs-type">int</span> u, v, w; cin &gt;&gt; u &gt;&gt; v &gt;&gt; w; <span class="hljs-built_in">addedge</span>(u, v, w);&#125;<br>    <span class="hljs-comment">// 遍历所有点的邻居</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> u = <span class="hljs-number">0</span>; u &lt; N; u++) <br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = head[u]; i &gt; <span class="hljs-number">0</span>; i = edge[i].next)    <span class="hljs-comment">// 0 表示空，所以当 i = 0 时退出</span><br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d -&gt; %d: %d\n&quot;</span>, edge[i].from, edge[i].to, edge[i].w);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="拓扑排序">02 拓扑排序</h2>
+<h3 id="概念">概念</h3>
+<p>对一个有向无环图（Directed Acyclic Graph，DAG）<span class="math inline">\(G\)</span> 进行拓扑排序，是将 <span class="math inline">\(G\)</span>
+中所有顶点排成一个线性序列，使得图中任意一对顶点 <span class="math inline">\(u\)</span> 和 <span class="math inline">\(v\)</span> ，若边 <span class="math inline">\(&lt;u,v&gt;\in E(G)\)</span>，则 <span class="math inline">\(u\)</span> 在线性序列中出现在 <span class="math inline">\(v\)</span>​ 之前。</p>
+<p><strong><em>入度（Indegree）：</em></strong>以点 <span class="math inline">\(v\)</span> 为终点的边的数量，称为点 <span class="math inline">\(v\)</span> 的入度。</p>
+<p><strong><em>出度（Outdegree）：</em></strong>以点 <span class="math inline">\(u\)</span> 为起点的边的数量，称为点 <span class="math inline">\(u\)</span>​ 的出度。</p>
+<p>点的入度和出度，体现了这个点在DAG中的先后关系或者优先级。</p>
+<h3 id="基于入度出度的拓扑排序">1 基于入度/出度的拓扑排序</h3>
+<p><strong><em>原理</em></strong></p>
+<p>该算法也称为 <strong><em>Kahn
+算法</em></strong>。这个方法就是从拓扑排序的定义出发，每次找到所有入度为
+0 的点，将其加入拓扑排序的结果中，然后将这个点指向的点的入度减
+1。重复这个过程，直到所有点都加入拓扑排序的结果中。</p>
+<p><strong><em>算法步骤（BFS实现）</em></strong></p>
+<ol type="1">
+<li>统计所有点的入度；</li>
+<li>找到所有入度为 0
+的点，放入队列，作为起点（如果对这些点的顺序有要求，可以使用优先队列）；</li>
+<li>如果队列初始就为空，说明图中有环，无法进行拓扑排序；</li>
+<li>从队列中取出一个点，将其加入拓扑排序的结果中，然后将这个点指向的点的入度减
+1；</li>
+<li>如果这个点指向的点的入度被减为 0，将其加入队列；</li>
+<li>重复 4、5 步骤，直到队列为空。</li>
+<li>如果拓扑排序的结果不是 n
+个点，说明有环。否则，返回拓扑排序的结果。</li>
+</ol>
+<blockquote>
+<p>此处也可采用DFS实现，这个和后面的DFS不同，后面的DFS不依赖度数，这里的DFS依赖度数。</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">100</span>;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;<br>    <span class="hljs-type">int</span> to, w;<br>&#125;;<br>vector&lt;Edge&gt; G[N];<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TopoSort</span> &#123;<br>    vector&lt;<span class="hljs-type">int</span>&gt; inDegree;<br>    vector&lt;<span class="hljs-type">int</span>&gt; res;<br><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-comment">// Method 1: BFS实现（推荐！！）</span><br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">topoSort_BFS</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        inDegree.<span class="hljs-built_in">resize</span>(n);<br>        <span class="hljs-built_in">fill</span>(inDegree.<span class="hljs-built_in">begin</span>(), inDegree.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);<br>        res.<span class="hljs-built_in">clear</span>();<br>        res.<span class="hljs-built_in">reserve</span>(n);<br>        queue&lt;<span class="hljs-type">int</span>&gt; q;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">for</span> (Edge&amp; e : graph[i])<br>                inDegree[e.to]++;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">if</span> (inDegree[i] == <span class="hljs-number">0</span>) q.<span class="hljs-built_in">push</span>(i);<br>        <span class="hljs-keyword">while</span> (!q.<span class="hljs-built_in">empty</span>()) &#123;<br>            <span class="hljs-type">int</span> u = q.<span class="hljs-built_in">front</span>();<br>            q.<span class="hljs-built_in">pop</span>();<br>            res.<span class="hljs-built_in">push_back</span>(u);<br>            <span class="hljs-keyword">for</span> (Edge&amp; e : graph[u]) &#123;<br>                inDegree[e.to]--;<br>                <span class="hljs-keyword">if</span> (inDegree[e.to] == <span class="hljs-number">0</span>)<br>                    q.<span class="hljs-built_in">push</span>(e.to);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (res.<span class="hljs-built_in">size</span>() != n)<br>            <span class="hljs-keyword">return</span> &#123;&#125;;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>    <span class="hljs-comment">// Method 2: DFS实现（不推荐！！直接用另外一个DFS比较好）</span><br>    vector&lt;<span class="hljs-type">int</span>&gt; vis;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">topoSort_DFS</span><span class="hljs-params">(<span class="hljs-type">const</span> vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        res.<span class="hljs-built_in">clear</span>();<br>        res.<span class="hljs-built_in">reserve</span>(n);<br>        inDegree.<span class="hljs-built_in">resize</span>(n);<br>        vis.<span class="hljs-built_in">resize</span>(n);<br>        <span class="hljs-built_in">fill</span>(vis.<span class="hljs-built_in">begin</span>(), vis.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);<br>        <span class="hljs-built_in">fill</span>(inDegree.<span class="hljs-built_in">begin</span>(), inDegree.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> Edge&amp; e : graph[i])<br>                inDegree[e.to]++;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">if</span> (inDegree[i] == <span class="hljs-number">0</span> &amp;&amp; !vis[i])<br>                <span class="hljs-built_in">dfs</span>(graph, i);<br>        <span class="hljs-keyword">return</span> res.<span class="hljs-built_in">size</span>() == n ? res : <span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;();<br>    &#125;<br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">const</span> vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> u)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>-&gt;res.<span class="hljs-built_in">push_back</span>(u);<br>        vis[u] = <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> Edge&amp; e : graph[u]) &#123;<br>            inDegree[e.to]--;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">const</span> Edge&amp; e : graph[u])<br>            <span class="hljs-keyword">if</span> (inDegree[e.to] == <span class="hljs-number">0</span> &amp;&amp; !vis[e.to])<br>                <span class="hljs-built_in">dfs</span>(graph, e.to);<br>    &#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> n = <span class="hljs-number">7</span>;<br>    G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;); G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;); G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">4</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;); G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">5</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">3</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">6</span>, <span class="hljs-number">0</span>&#125;); <br>    G[<span class="hljs-number">4</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">6</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">5</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">6</span>, <span class="hljs-number">0</span>&#125;);<br><br>    TopoSort ts;<br>    vector&lt;<span class="hljs-type">int</span>&gt; res = ts.<span class="hljs-built_in">topoSort_BFS</span>(G, n);<br>    <span class="hljs-keyword">if</span> (res.<span class="hljs-built_in">empty</span>())<br>        cout &lt;&lt; <span class="hljs-string">&quot;Cycle detected!&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; res.<span class="hljs-built_in">size</span>(); i++)<br>            cout &lt;&lt; res[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>        cout &lt;&lt; endl;<br>    &#125;<br>    res = ts.<span class="hljs-built_in">topoSort_DFS</span>(G, n);<br>    <span class="hljs-keyword">if</span> (res.<span class="hljs-built_in">empty</span>())<br>        cout &lt;&lt; <span class="hljs-string">&quot;Cycle detected!&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; res.<span class="hljs-built_in">size</span>(); i++)<br>            cout &lt;&lt; res[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>        cout &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs txt">0 1 2 4 5 3 6 <br>0 1 4 2 5 3 6 <br></code></pre></td></tr></table></figure>
+<h3 id="基于dfs的拓扑排序">2 基于DFS的拓扑排序</h3>
+<p><strong><em>原理</em></strong></p>
+<p>由于DFS的原理，沿着一条路径一直搜索到末端（出度为0的点），然后才开始回退，所以它遍历的顺序天然就是拓扑排序的逆序。我们需要做的只是在DFS的基础上添加对环的处理。如果图中有环，则DFS会处理到回退边，通过检测是否存在回退边则可以判断是否有环。</p>
+<p>而回退边，我们用三个状态描述一个节点：未访问、已访问、访问中。</p>
+<ul>
+<li>未访问：DFS没有经过这个点。</li>
+<li>已访问：DFS结束了对该点的邻居节点的搜索，从该点往上回退。</li>
+<li>访问中：DFS在这个点经过，正在搜索这个点的邻居节点，但是还没有从这个点回退。</li>
+</ul>
+<p>如果DFS访问到一个正在访问中的节点，说明这是一个回退边，即存在环，拓扑排序无解。</p>
+<p><strong><em>算法步骤</em></strong></p>
+<ol type="1">
+<li>初始化所有点的状态为未访问；</li>
+<li>从所有未访问的点开始DFS，如果DFS返回 false ，说明有环，无解；</li>
+<li>如果DFS返回 true ，则将结果逆序，即为拓扑排序的结果。</li>
+<li>DFS 对点 <span class="math inline">\(u\)</span> 的操作：
+<ul>
+<li>将 <span class="math inline">\(u\)</span> 状态设为访问中；</li>
+<li>遍历 <span class="math inline">\(u\)</span> 的邻居 <span class="math inline">\(v\)</span> ，如果 <span class="math inline">\(v\)</span> 是访问中的，返回 false ；</li>
+<li>如果 <span class="math inline">\(v\)</span> 是未访问的，递归访问
+<span class="math inline">\(v\)</span> ；</li>
+<li>将 <span class="math inline">\(u\)</span> 状态设为已访问。</li>
+<li>将 <span class="math inline">\(u\)</span> 加入拓扑排序的结果。</li>
+</ul></li>
+<li>记得逆序结果！</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">100</span>;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123; <span class="hljs-type">int</span> to, w; &#125;;<br>vector&lt;Edge&gt; G[N];<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TopoSort</span> &#123;<br>    <span class="hljs-keyword">enum</span> <span class="hljs-title class_">NodeStatus</span> &#123; UNVISITED, VISITED, VISITING &#125;;<br>    vector&lt;<span class="hljs-type">int</span>&gt; res;<br>    vector&lt;<span class="hljs-type">int</span>&gt; status;<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span> </span>&#123;<br>        status[u] = VISITING;<br>        <span class="hljs-keyword">for</span> (Edge&amp; e : G[u]) &#123;<br>            <span class="hljs-keyword">if</span> (status[e.to] == VISITING) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            <span class="hljs-keyword">if</span> (status[e.to] == UNVISITED &amp;&amp; !<span class="hljs-built_in">dfs</span>(e.to)) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        status[u] = VISITED;<br>        res.<span class="hljs-built_in">push_back</span>(u);<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">topoSort</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        res.<span class="hljs-built_in">clear</span>(); <br>        status.<span class="hljs-built_in">resize</span>(n);<br>        <span class="hljs-built_in">fill</span>(status.<span class="hljs-built_in">begin</span>(), status.<span class="hljs-built_in">end</span>(), UNVISITED);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            <span class="hljs-keyword">if</span> (status[i] == UNVISITED &amp;&amp; !<span class="hljs-built_in">dfs</span>(i)) <span class="hljs-keyword">return</span> &#123;&#125;;<br>        &#125;<br>        <span class="hljs-built_in">reverse</span>(res.<span class="hljs-built_in">begin</span>(), res.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> n = <span class="hljs-number">4</span>;<br>    G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;); G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;); G[<span class="hljs-number">3</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);<br>    <span class="hljs-comment">// G[3].push_back(&#123;0, 0&#125;);</span><br>    TopoSort ts;<br>    vector&lt;<span class="hljs-type">int</span>&gt; res = ts.<span class="hljs-built_in">topoSort</span>(G, n);<br>    <span class="hljs-keyword">if</span> (res.<span class="hljs-built_in">empty</span>()) cout &lt;&lt; <span class="hljs-string">&quot;Cycle detected!&quot;</span> &lt;&lt; endl;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; res.<span class="hljs-built_in">size</span>(); i++) &#123;<br>        cout &lt;&lt; res[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="计算所有拓扑排序">3 计算所有拓扑排序</h3>
+<p>这里使用基于入度的拓扑排序，同时使用回溯法搜索所有解，所以这里采用DFS来实现。</p>
+<p>如果输入的图有环，这里将没有输出，工作非常良好。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">100</span>;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123; <span class="hljs-type">int</span> to, w; &#125;;<br>vector&lt;Edge&gt; G[N];<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">TopoSort</span> &#123;<br>    vector&lt;<span class="hljs-type">int</span>&gt; res;<br>    vector&lt;<span class="hljs-type">int</span>&gt; inDegree;<br>    <span class="hljs-type">int</span> nodeCnt;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(<span class="hljs-type">int</span> cnt)</span> </span>&#123;<br>        <span class="hljs-comment">// 当前路径长度等于节点个数时，输出路径</span><br>        <span class="hljs-keyword">if</span> (cnt == nodeCnt) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> i : res) cout &lt;&lt; i &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>            cout &lt;&lt; endl;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; nodeCnt; i++) &#123;<br>            <span class="hljs-keyword">if</span> (inDegree[i] != <span class="hljs-number">0</span>) <span class="hljs-keyword">continue</span>;<br>            res[cnt] = i;<br>            inDegree[i]--;                          <span class="hljs-comment">// 更新入度</span><br>            <span class="hljs-keyword">for</span> (Edge&amp; e : G[i]) inDegree[e.to]--;<br>            <span class="hljs-built_in">dfs</span>(cnt + <span class="hljs-number">1</span>);                           <span class="hljs-comment">// 递归</span><br>            inDegree[i]++;                          <span class="hljs-comment">// 回溯</span><br>            <span class="hljs-keyword">for</span> (Edge&amp; e : G[i]) inDegree[e.to]++;<br>        &#125;<br>    &#125;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">AllTopoOrder</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        nodeCnt = n;<br>        inDegree.<span class="hljs-built_in">resize</span>(n);<br>        res.<span class="hljs-built_in">resize</span>(n);<br>        <span class="hljs-built_in">fill</span>(inDegree.<span class="hljs-built_in">begin</span>(), inDegree.<span class="hljs-built_in">end</span>(), <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">for</span> (Edge&amp; e : graph[i])<br>                inDegree[e.to]++;<br>        <span class="hljs-built_in">dfs</span>(<span class="hljs-number">0</span>);<br>    &#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> n = <span class="hljs-number">7</span>;<br>    G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;); G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;); G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">4</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;); G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">5</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">3</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">6</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">4</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">6</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">5</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">6</span>, <span class="hljs-number">0</span>&#125;);<br>    TopoSort ts;<br>    ts.<span class="hljs-built_in">AllTopoOrder</span>(G, n);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>上面测试用例的DAG图：</p>
+<p><img src="/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/topo.png" srcset="/img/loading.gif" lazyload alt style="zoom:50%;"></p>
+<p>输出的所有拓扑排序：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs txt">0 1 2 3 4 5 6 <br>0 1 2 3 5 4 6 <br>0 1 2 4 3 5 6 <br>0 1 2 4 5 3 6 <br>0 1 2 5 3 4 6 <br>0 1 2 5 4 3 6 <br>0 1 4 2 3 5 6 <br>0 1 4 2 5 3 6 <br>0 2 1 3 4 5 6 <br>0 2 1 3 5 4 6 <br>0 2 1 4 3 5 6 <br>0 2 1 4 5 3 6 <br>0 2 1 5 3 4 6 <br>0 2 1 5 4 3 6<br>0 2 5 1 3 4 6<br>0 2 5 1 4 3 6<br></code></pre></td></tr></table></figure>
+<h3 id="计算拓扑排序的数量">4 计算拓扑排序的数量</h3>
+<p>统计DAG中的拓扑排序的个数等价于统计一个偏序集合上线性组合的个数，而后者是
+<strong>#P-Complete</strong> 问题，没有多项式时间的算法。</p>
+<p>或许可以用状压DP来解？暂时没有仔细想。所以，直接使用上面的算法即可。</p>
+<mydetails>
+<summary>
+<summary-title>Exploration</summary-title>
+<summary-subtitle>关于使用状压DP求解的探究</summary-subtitle>
+</summary>
+<p>有待研究。</p>
+<p></p></mydetails><p></p>
+<h2 id="欧拉路径">03 欧拉路径</h2>
+<h3 id="概念-1">概念</h3>
+<p>“一笔画”问题。</p>
+<p>欧拉路径要求在一个图中的<strong>每条边</strong>恰好只经过一次，点可以重复经过。</p>
+<ul>
+<li><p>如果一个图中存在至少一条这样的路径，则该路径被称为<strong>欧拉路径</strong>，图被称为<strong>半欧拉图</strong>；</p></li>
+<li><p>如果这样的路径可以形成一个闭环，即起点和终点相同，则称为<strong>欧拉回路</strong>，图被称为<strong>欧拉图</strong>。</p></li>
+</ul>
+<p>欧拉路径的存在性由图的顶点的度数（与顶点相连的边数）决定：对于无向图，若有0个或2个顶点的度数是奇数，则存在欧拉路径。</p>
+<p><strong><em>在无向图中：</em></strong></p>
+<ul>
+<li>一个节点的度数是奇数，则称这个点为<strong>奇点</strong>。</li>
+<li>一个节点的度数是偶数，则称这个点为<strong>偶点</strong>。</li>
+</ul>
+<h3 id="欧拉路径和欧拉回路存在性判断">1
+欧拉路径和欧拉回路存在性判断</h3>
+<p>首先必须得是连通图，这个可通过并查集或者DFS判断。</p>
+<p><strong><em>无向连通图</em></strong></p>
+<ul>
+<li>如果图中的点<strong>全部是偶点</strong>，则存在<strong>欧拉回路</strong>，任意点均可作为起点和终点。</li>
+<li>如果<strong>仅有两个奇点</strong>，则<strong>只有欧拉路</strong>，这两个奇点分别是起点和终点。</li>
+<li>其他情况，没有欧拉路。</li>
+</ul>
+<p><strong><em>有向连通图</em></strong></p>
+<ul>
+<li>将一个点的一条<strong>出边记为 1</strong> ，一条<strong>入边记为
+-1</strong>，这个点的所有出度和入度相加即为这个点的度数。</li>
+<li>存在<strong>欧拉回路</strong>：当且仅当图中<strong>所有点的度数为
+0</strong> 。</li>
+<li>存在<strong>欧拉路径</strong>：图中<strong>只有一个度数为 1
+的点和一个度数为 -1 的点</strong>，其余的点的度数均为 0 。其中度数为 1
+的点是起点，度数为 0 的点是终点。</li>
+</ul>
+<h3 id="输出一个欧拉回路">2 输出一个欧拉回路</h3>
+<h4 id="hierholzer-算法dfs-搜索">Hierholzer 算法（DFS 搜索）</h4>
+<p>首先需要用上述方法来判断是否有欧拉回路，</p>
+<p>对连通图做DFS，即可输出一个欧拉回路。</p>
+<ul>
+<li>DFS寻找到第一个无边可走的节点，则这个节点必定为终点。同时这个终点和起点是相连的。</li>
+<li>接下来由于DFS的递归回溯，会退回终点的上一个节点。</li>
+<li>继续往下搜索，直到寻找到第二个无边可走的节点，则这个节点必定为欧拉路中终点前最后访问的节点。</li>
+<li>以此类推，直到所有边都被访问。</li>
+</ul>
+<p><img src="/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/euler.png" srcset="/img/loading.gif" lazyload style="zoom: 67%;"></p>
+<p>如果是有向图，则需要用栈将DFS的输出逆序。</p>
+<blockquote>
+<p>从图中可知：</p>
+<ul>
+<li><p>对于一个度数大于2的点：</p>
+<p>其中2个度数用于进入该点和离开该点，其余度数用于画圈（即从该点出发然后又回到该点的一条路径）。</p></li>
+<li><p>对于一个度数为2的点：</p>
+<p>2个度数分别用于进入该点和离开该点</p></li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>注意事项</strong></p>
+<ul>
+<li>不要使用邻接矩阵存图，这样在DFS遍历边的时候太慢了，时间复杂度退化为
+<span class="math inline">\(O(|V||E|)\)</span>
+，应该使用邻接表存图，可以用vector或者前向星，这样时间复杂度是 <span class="math inline">\(O(|V|+|E|)\)</span> 。</li>
+</ul>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/*</span><br><span class="hljs-comment">Euler Path: A path that visits every edge exactly once.</span><br><span class="hljs-comment">*/</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">100</span>;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;<br>    <span class="hljs-type">int</span> to, w;<br>&#125;;<br>vector&lt;Edge&gt; G[N];<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">EulerPath</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">hasEulerPath_Undirected</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-type">int</span> odd = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">if</span> (graph[i].<span class="hljs-built_in">size</span>() &amp; <span class="hljs-number">1</span>) odd++;<br>        <span class="hljs-keyword">return</span> odd == <span class="hljs-number">0</span> || odd == <span class="hljs-number">2</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">hasEulerPath_Directed</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">in</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span>, <span class="hljs-title">out</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">for</span> (Edge&amp; e : graph[i])<br>                out[i]++, in[e.to]++;<br>        <span class="hljs-type">int</span> in0 = <span class="hljs-number">0</span>, out0 = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            <span class="hljs-keyword">if</span> (in[i] == out[i]) <span class="hljs-keyword">continue</span>;<br>            <span class="hljs-keyword">if</span> (in[i] - out[i] == <span class="hljs-number">1</span>)<br>                in0++;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (out[i] - in[i] == <span class="hljs-number">1</span>)<br>                out0++;<br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> in0 == <span class="hljs-number">0</span> &amp;&amp; out0 == <span class="hljs-number">0</span> || in0 == <span class="hljs-number">1</span> &amp;&amp; out0 == <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">hasEulerCycle_Undirected</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-type">int</span> odd = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">if</span> (graph[i].<span class="hljs-built_in">size</span>() &amp; <span class="hljs-number">1</span>) odd++;<br>        <span class="hljs-keyword">return</span> odd == <span class="hljs-number">0</span>;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">hasEulerCycle_Directed</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">in</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span>, <span class="hljs-title">out</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">for</span> (Edge&amp; e : graph[i])<br>                out[i]++, in[e.to]++;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">if</span> (in[i] != out[i]) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">getEulerPath_Undirected</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        path.<span class="hljs-built_in">clear</span>();<br>        nodeNum = n;<br>        vis.<span class="hljs-built_in">clear</span>();<br>        <span class="hljs-type">int</span> start = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            <span class="hljs-keyword">if</span> (graph[i].<span class="hljs-built_in">size</span>() &amp; <span class="hljs-number">1</span>) &#123;<br>                start = i;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-built_in">dfs_undirected</span>(start, graph);<br>        <span class="hljs-keyword">return</span> path;<br>    &#125;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">getEulerPath_Directed</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        path.<span class="hljs-built_in">clear</span>();<br>        nodeNum = n;<br>        vis.<span class="hljs-built_in">clear</span>();<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">in</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span>, <span class="hljs-title">out</span><span class="hljs-params">(n, <span class="hljs-number">0</span>)</span></span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            <span class="hljs-keyword">for</span> (Edge&amp; e : graph[i])<br>                out[i]++, in[e.to]++;<br>        <span class="hljs-type">int</span> start = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>            <span class="hljs-keyword">if</span> (out[i] - in[i] == <span class="hljs-number">1</span>) &#123;<br>                start = i;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-built_in">dfs_directed</span>(start, graph);<br>        <span class="hljs-built_in">reverse</span>(path.<span class="hljs-built_in">begin</span>(), path.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-keyword">return</span> path;<br>    &#125;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">getEulerCycle_Undirected</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        path.<span class="hljs-built_in">clear</span>();<br>        vis.<span class="hljs-built_in">clear</span>();<br>        <span class="hljs-built_in">dfs_undirected</span>(<span class="hljs-number">0</span>, graph);<br>        <span class="hljs-keyword">return</span> path;<br>    &#125;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">getEulerCycle_Directed</span><span class="hljs-params">(vector&lt;Edge&gt; graph[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        path.<span class="hljs-built_in">clear</span>();<br>        vis.<span class="hljs-built_in">clear</span>();<br>        <span class="hljs-built_in">dfs_directed</span>(<span class="hljs-number">0</span>, graph);<br>        <span class="hljs-built_in">reverse</span>(path.<span class="hljs-built_in">begin</span>(), path.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-keyword">return</span> path;<br>    &#125;<br><br><span class="hljs-keyword">private</span>:<br>    <span class="hljs-type">int</span> nodeNum = <span class="hljs-number">0</span>;<br>    vector&lt;<span class="hljs-type">int</span>&gt; path;<br>    unordered_set&lt;<span class="hljs-type">int</span>&gt; vis;<br>    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title">hash_undirected</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> v)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">min</span>(u, v) * nodeNum + <span class="hljs-built_in">max</span>(u, v);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">int</span> <span class="hljs-title">hash_directed</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> v)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> u * nodeNum + v;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs_directed</span><span class="hljs-params">(<span class="hljs-type">int</span> u, vector&lt;Edge&gt; graph[])</span> </span>&#123;<br>        <span class="hljs-keyword">for</span> (Edge&amp; e : graph[u]) &#123;<br>            <span class="hljs-keyword">if</span> (vis.<span class="hljs-built_in">count</span>(<span class="hljs-built_in">hash_directed</span>(u, e.to))) <span class="hljs-keyword">continue</span>;<br>            vis.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">hash_directed</span>(u, e.to));<br>            <span class="hljs-built_in">dfs_directed</span>(e.to, graph);<br>        &#125;<br>        path.<span class="hljs-built_in">push_back</span>(u);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">dfs_undirected</span><span class="hljs-params">(<span class="hljs-type">int</span> u, vector&lt;Edge&gt; graph[])</span> </span>&#123;<br>        <span class="hljs-keyword">for</span> (Edge&amp; e : graph[u]) &#123;<br>            <span class="hljs-keyword">if</span> (vis.<span class="hljs-built_in">count</span>(<span class="hljs-built_in">hash_undirected</span>(u, e.to))) <span class="hljs-keyword">continue</span>;<br>            vis.<span class="hljs-built_in">insert</span>(<span class="hljs-built_in">hash_undirected</span>(u, e.to));<br>            <span class="hljs-built_in">dfs_undirected</span>(e.to, graph);<br>        &#125;<br>        path.<span class="hljs-built_in">push_back</span>(u);<br>    &#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    EulerPath ep;<br>    <span class="hljs-type">int</span> n = <span class="hljs-number">6</span>;<br>    G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">3</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">4</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">4</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">5</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">5</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">3</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">4</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">4</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">5</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;);<br><br>    <span class="hljs-keyword">if</span> (ep.<span class="hljs-built_in">hasEulerPath_Directed</span>(G, n)) &#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; path = ep.<span class="hljs-built_in">getEulerPath_Directed</span>(G, n);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; path.<span class="hljs-built_in">size</span>(); i++)<br>            cout &lt;&lt; path[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>        cout &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>        cout &lt;&lt; <span class="hljs-string">&quot;No Euler Path\n&quot;</span>;<br>    <br>    G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">5</span>, <span class="hljs-number">0</span>&#125;);<br>    <span class="hljs-keyword">if</span> (ep.<span class="hljs-built_in">hasEulerCycle_Directed</span>(G, n)) &#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; path = ep.<span class="hljs-built_in">getEulerCycle_Directed</span>(G, n);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; path.<span class="hljs-built_in">size</span>(); i++)<br>            cout &lt;&lt; path[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>        cout &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>        cout &lt;&lt; <span class="hljs-string">&quot;No Euler Cycle\n&quot;</span>;<br><span class="hljs-comment">// =========================================</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>        G[i].<span class="hljs-built_in">clear</span>();<br>    G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">3</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">3</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">1</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">4</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">4</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">1</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">4</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">5</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">5</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">4</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">5</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">5</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">3</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">4</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">4</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">4</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">2</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">2</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">4</span>, <span class="hljs-number">0</span>&#125;);<br>    G[<span class="hljs-number">5</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">3</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">3</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">5</span>, <span class="hljs-number">0</span>&#125;);<br><br>    <span class="hljs-keyword">if</span> (ep.<span class="hljs-built_in">hasEulerPath_Undirected</span>(G, n)) &#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; path = ep.<span class="hljs-built_in">getEulerPath_Undirected</span>(G, n);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; path.<span class="hljs-built_in">size</span>(); i++)<br>            cout &lt;&lt; path[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>        cout &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>        cout &lt;&lt; <span class="hljs-string">&quot;No Euler Path\n&quot;</span>;<br>    <br>    G[<span class="hljs-number">0</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">5</span>, <span class="hljs-number">0</span>&#125;);    G[<span class="hljs-number">5</span>].<span class="hljs-built_in">push_back</span>(&#123;<span class="hljs-number">0</span>, <span class="hljs-number">0</span>&#125;);<br>    <span class="hljs-keyword">if</span> (ep.<span class="hljs-built_in">hasEulerCycle_Undirected</span>(G, n)) &#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; path = ep.<span class="hljs-built_in">getEulerCycle_Undirected</span>(G, n);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; path.<span class="hljs-built_in">size</span>(); i++)<br>            cout &lt;&lt; path[i] &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>        cout &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>        cout &lt;&lt; <span class="hljs-string">&quot;No Euler Cycle\n&quot;</span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>测试用例如下：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs txt">0 1<br>1 3<br>3 0<br>0 2<br>2 1<br>1 4<br>4 5<br>5 2<br>2 0<br>3 4<br>4 2<br>5 3<br></code></pre></td></tr></table></figure>
+<p><img src="/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/image-20240329154914977.png" srcset="/img/loading.gif" lazyload alt style="zoom:67%;"></p>
+<p>有向图后续添加了<code>2 -&gt; 5</code>的边以构成回路。无向图后续添加了<code>5 - 0</code>的边以构成回路。</p>
+<p>输出：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs txt">5 2 1 3 0 1 4 5 3 4 2 0 2 <br>0 1 3 0 2 1 4 5 2 5 3 4 2 0 <br>5 3 4 2 5 4 1 2 0 3 1 0 <br>0 5 3 4 2 5 4 1 2 0 3 1 0<br></code></pre></td></tr></table></figure>
+<h4 id="fleury-算法">Fleury 算法</h4>
+<blockquote>
+<p>该算法较不推荐，这个更适合人类来使用。</p>
+</blockquote>
+<p>设 <span class="math inline">\(G\)</span>
+为一无向欧拉图。从一个顶点出发，走所有的边。</p>
+<ul>
+<li><p>如果这个边是当前的岛与其他岛相连的桥，则需要特别考虑：</p>
+<ul>
+<li><p>如果当前的岛内的边没有走完：不走这个桥。</p></li>
+<li><p>如果岛内的边走完了：走这个桥到其他岛。</p></li>
+</ul></li>
+<li><p>直到所有边走完。</p></li>
+</ul>
+<p>这个如果使用编程实现，需要用反反复复用Tarjan判断桥，非常麻烦，时间复杂度也爆炸，这里就懒得实现了。这个在算法课纸质作业上用用就好。</p>
+<h3 id="混合图的欧拉路径与欧拉回路">3 混合图的欧拉路径与欧拉回路</h3>
+<blockquote>
+<p>使用到网络流内容，后续写到网络流再补充。</p>
+</blockquote>
+<h2 id="哈密顿路径">04 哈密顿路径</h2>
+<h3 id="概念-2">概念</h3>
+<ul>
+<li>通过图中所有顶点一次且仅一次的通路称为<strong>哈密顿通路</strong>。</li>
+<li>通过图中所有顶点一次且仅一次的回路称为<strong>哈密顿回路</strong>。</li>
+<li>具有哈密顿回路的图称为<strong>哈密顿图</strong>。</li>
+<li>具有哈密顿通路而不具有哈密顿回路的图称为<strong>半哈密顿图</strong>。</li>
+</ul>
+<blockquote>
+<p>判断一个图存不存在哈密顿回路是NP-Complete的。</p>
+</blockquote>
+<h3 id="性质">性质</h3>
+<ul>
+<li>具有3个及以上顶点的<strong>完全图</strong>是哈密顿图。</li>
+<li><strong>正多面体</strong>是哈密顿图。</li>
+<li>大于等于二阶的<strong>竞赛图</strong>存在哈密顿路径。</li>
+<li>大于等于二阶的<strong>强连通竞赛图</strong>存在哈密顿回路。</li>
+</ul>
+<blockquote>
+<p>正多面体：柏拉图立体，只有5个（正四面体、立方体、正八面体、正十二面体、正二十面体）</p>
+<p>竞赛图：在无向完全图中为每个边缘分配方向而获得的有向图。</p>
+</blockquote>
+<p><strong><em>TODO</em></strong></p>
+<p>去看jiangly的最近的一场Div.4是怎么剪枝的。</p>
+<h3 id="获取一条哈密顿路径">1 获取一条哈密顿路径</h3>
+<p>可采用回溯法、分支限界法、动态规划等等方法。</p>
+<p>（有待后续补充）</p>
+<h3 id="最短哈密顿路径tsp问题">2 最短哈密顿路径（TSP问题）</h3>
+<p><strong><em>概念</em></strong></p>
+<p>给定一个<strong>有权无向图</strong>，给定起点 <span class="math inline">\(0\)</span> 和终点 <span class="math inline">\(n-1\)</span>。求是否存在一条路径，使得每个点恰好经过一次，且路径权值和最小。</p>
+<p>同样是NP-Hard问题，使用状压DP求解。</p>
+<p><strong>这里我们加强问题，改为任意起点和终点，求解全局最短哈密顿路径。</strong></p>
+<blockquote>
+<p>详细讲解：<a href="https://qalxry.github.io/2024/01/17/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90%E7%8A%B6%E5%8E%8BDP%E3%80%91%E6%9C%80%E7%9F%AD-Hamilton-%E8%B7%AF%E5%BE%84%E4%B8%AD%E8%A2%AB%E5%BF%BD%E8%A7%86%E7%9A%84%E7%8E%84%E5%A6%99%E4%B9%8B%E5%A4%84/">【算法】【状压DP】最短
+Hamilton 路径中被忽视的玄妙之处</a></p>
+</blockquote>
+<p><strong><em>常规分析</em></strong></p>
+<p>点的编号从 <span class="math inline">\(0\)</span> 开始到 <span class="math inline">\(n-1\)</span> 。</p>
+<p>用 <span class="math inline">\(dp[S][j]\)</span> 表示点集 <span class="math inline">\(S\)</span> 中，以 <span class="math inline">\(j\)</span>
+为终点的最短路径长度。（注意此处并没有指定起点）</p>
+<p>我们从最小的点集开始枚举，直到逐步扩大到包含所有点的点集。最后的答案就是
+<span class="math inline">\(dp[S_{final}][n-1]\)</span>。</p>
+<p>容易发现，<span class="math inline">\(dp[S][j]\)</span>
+的状态转移方程为：</p>
+<p><span class="math display">\[
+dp[S][j] = min\{dp[S-j][k] + dist[k][j]\} \quad (k \in S-j)
+\]</span></p>
+<p>其中 <span class="math inline">\(S-j\)</span> 表示 <span class="math inline">\(S\)</span> 中除去 <span class="math inline">\(j\)</span> 之外的点集。</p>
+<p>这个状态转移方程的意思是，我们枚举 <span class="math inline">\(S-j\)</span> 中的一个点 <span class="math inline">\(k\)</span>，然后计算 <span class="math inline">\(dp[S-j][k] + dist[k][j]\)</span>，即 <span class="math inline">\(S-j\)</span> 中以 <span class="math inline">\(k\)</span> 为终点的最短路径长度加上 <span class="math inline">\(k\)</span> 到 <span class="math inline">\(j\)</span> 的距离，这个值就是 <span class="math inline">\(S\)</span> 中以 <span class="math inline">\(j\)</span> 为终点的最短路径长度。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">20</span>;      <span class="hljs-comment">// 最多20个点</span><br><span class="hljs-type">int</span> n, dp[<span class="hljs-number">1</span> &lt;&lt; N][N];  <span class="hljs-comment">// dp[S][j]表示点集S中，以j为终点的最短路径长度</span><br><span class="hljs-type">int</span> dist[N][N];        <span class="hljs-comment">// dist[i][j]表示点i到点j的距离</span><br><span class="hljs-type">int</span> pre[<span class="hljs-number">1</span> &lt;&lt; N][N];    <span class="hljs-comment">// pre[S][j]记录在S中，以j为终点的前一个节点</span><br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">printPath</span><span class="hljs-params">(<span class="hljs-type">int</span> S, <span class="hljs-type">int</span> j)</span> </span>&#123;<br>    stack&lt;<span class="hljs-type">int</span>&gt; path;<br>    <span class="hljs-keyword">while</span> (S) &#123;<br>        path.<span class="hljs-built_in">push</span>(j);<br>        <span class="hljs-type">int</span> nextS = S ^ (<span class="hljs-number">1</span> &lt;&lt; j);<br>        j = pre[S][j];<br>        S = nextS;<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Path: &quot;</span>;<br>    <span class="hljs-keyword">while</span> (!path.<span class="hljs-built_in">empty</span>()) &#123;<br>        <span class="hljs-type">int</span> p = path.<span class="hljs-built_in">top</span>();<br>        path.<span class="hljs-built_in">pop</span>();<br>        cout &lt;&lt; p &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    &#125;<br>    cout &lt;&lt; endl;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++)<br>            cin &gt;&gt; dist[i][j];<br><br>    <span class="hljs-built_in">memset</span>(dp, <span class="hljs-number">0x3f</span>, <span class="hljs-built_in">sizeof</span>(dp));         <span class="hljs-comment">// 初始化为无穷大</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <br>        dp[<span class="hljs-number">1</span> &lt;&lt; i][i] = <span class="hljs-number">0</span>;                <span class="hljs-comment">// 开始：集合中起点到起点的距离为0</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> S = <span class="hljs-number">1</span>; S &lt; (<span class="hljs-number">1</span> &lt;&lt; n); S++) &#123;  <span class="hljs-comment">// 枚举所有点集</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> j = <span class="hljs-number">0</span>; j &lt; n; j++) &#123;     <span class="hljs-comment">// 计算在 S 中以 j 为终点的最短路径长度</span><br>            <span class="hljs-keyword">if</span> ((S &gt;&gt; j) &amp; <span class="hljs-number">1</span>) &#123;           <span class="hljs-comment">// S 中必须包含点 j</span><br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">0</span>; k &lt; n; k++) &#123;     <span class="hljs-comment">// 取出 S-j 中的一个点 k，通过枚举</span><br>                    <span class="hljs-keyword">if</span> ((S ^ (<span class="hljs-number">1</span> &lt;&lt; j)) &gt;&gt; k &amp; <span class="hljs-number">1</span>) &#123;  <span class="hljs-comment">// 判断 S-j 中是否包含点 k</span><br>                        <span class="hljs-keyword">if</span> (dp[S][j] &gt; dp[S ^ (<span class="hljs-number">1</span> &lt;&lt; j)][k] + dist[k][j]) &#123;<br>                            dp[S][j] = dp[S ^ (<span class="hljs-number">1</span> &lt;&lt; j)][k] + dist[k][j];<br>                            pre[S][j] = k;  <span class="hljs-comment">// 记录前一个节点</span><br>                        &#125;<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-type">int</span> ans = INT_MAX;<br>    <span class="hljs-type">int</span> ans_idx = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        <span class="hljs-keyword">if</span> (ans &gt; dp[(<span class="hljs-number">1</span> &lt;&lt; n) - <span class="hljs-number">1</span>][i]) &#123;<br>            ans = dp[(<span class="hljs-number">1</span> &lt;&lt; n) - <span class="hljs-number">1</span>][i];<br>            ans_idx = i;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-string">&quot;Shortest Hamilton Path length: &quot;</span> &lt;&lt; ans &lt;&lt; endl;<br>    <span class="hljs-built_in">printPath</span>((<span class="hljs-number">1</span> &lt;&lt; n) - <span class="hljs-number">1</span>, ans_idx);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>测试数据：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs txt">4<br>0 10 15 20<br>10 0 35 25<br>15 35 0 30<br>20 25 30 0<br></code></pre></td></tr></table></figure>
+<p><img src="/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/hamilton.png" srcset="/img/loading.gif" lazyload style="zoom: 50%;"></p>
+<p>结果：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs txt">Shortest Hamilton Path length: 50<br>Path: 3 1 0 2 <br></code></pre></td></tr></table></figure>
+<p>可见代码正确。</p>
+<h2 id="无向图的连通性">05 无向图的连通性</h2>
+<h2 id="有向图的连通性">06 有向图的连通性</h2>
+<h3 id="kosaraju-算法">Kosaraju 算法</h3>
+<h3 id="tarjan-算法">Tarjan 算法</h3>
+<h2 id="基环树">07 基环树</h2>
+<h2 id="sat-问题">08 2-SAT 问题</h2>
+<h3 id="概念-3">概念</h3>
+<p><img src="/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/2sat.gif" srcset="/img/loading.gif" lazyload alt="2-SAT搜索过程与num、low、scc的确定" style="zoom:67%;"></p>
+<h3 id="sat-模板题">2-SAT 模板题</h3>
+<h4 id="p4782-模板2-sat">1. <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P4782">P4782
+【模板】2-SAT</a></h4>
+<p><strong>题目描述</strong></p>
+<p>有 <span class="math inline">\(n\)</span> 个布尔变量 <span class="math inline">\(x_1\)</span><span class="math inline">\(\sim\)</span><span class="math inline">\(x_n\)</span>，另有 <span class="math inline">\(m\)</span> 个需要满足的条件，每个条件的形式都是
+「<span class="math inline">\(x_i\)</span> 为 <code>true</code> /
+<code>false</code> 或 <span class="math inline">\(x_j\)</span> 为
+<code>true</code> / <code>false</code>」。比如 「<span class="math inline">\(x_1\)</span> 为真或 <span class="math inline">\(x_3\)</span> 为假」、「<span class="math inline">\(x_7\)</span> 为假或 <span class="math inline">\(x_2\)</span> 为假」。</p>
+<p>2-SAT 问题的目标是给每个变量赋值使得所有条件得到满足。</p>
+<p><strong>输入格式</strong></p>
+<p>第一行两个整数 <span class="math inline">\(n\)</span> 和 <span class="math inline">\(m\)</span>，意义如题面所述。</p>
+<p>接下来 <span class="math inline">\(m\)</span> 行每行 <span class="math inline">\(4\)</span> 个整数 <span class="math inline">\(i\)</span>, <span class="math inline">\(a\)</span>, <span class="math inline">\(j\)</span>, <span class="math inline">\(b\)</span>，表示 「<span class="math inline">\(x_i\)</span> 为 <span class="math inline">\(a\)</span> 或 <span class="math inline">\(x_j\)</span> 为 <span class="math inline">\(b\)</span>」(<span class="math inline">\(a, b\in
+\{0,1\}\)</span>)</p>
+<p><strong>输出格式</strong></p>
+<p>如无解，输出 <code>IMPOSSIBLE</code>；否则输出
+<code>POSSIBLE</code>。</p>
+<p>下一行 <span class="math inline">\(n\)</span> 个整数 <span class="math inline">\(x_1\sim x_n\)</span>（<span class="math inline">\(x_i\in\{0,1\}\)</span>），表示构造出的解。</p>
+<p><strong>解题思路</strong></p>
+<p>2SAT 模板题，没什么好说的。这里 IO 比较大，用快读快写可以比关同步的
+iostream 快 5 倍之多。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">10</span>;<br><span class="hljs-comment">// 链式前向星存边</span><br><span class="hljs-type">int</span> cur, head[N &lt;&lt; <span class="hljs-number">1</span>];<br><span class="hljs-keyword">struct</span> &#123; <span class="hljs-type">int</span> to, next; &#125; edge[N &lt;&lt; <span class="hljs-number">2</span>];<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addedge</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> v)</span> </span>&#123;<br>    edge[++cur].to = v;<br>    edge[cur].next = head[u];<br>    head[u] = cur;<br>&#125;<br><span class="hljs-type">int</span> low[N &lt;&lt; <span class="hljs-number">1</span>], num[N &lt;&lt; <span class="hljs-number">1</span>], st[N &lt;&lt; <span class="hljs-number">1</span>], sccno[N &lt;&lt; <span class="hljs-number">1</span>], dfn, top, cnt;<br><span class="hljs-type">int</span> n, m;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">tarjan</span><span class="hljs-params">(<span class="hljs-type">int</span> u)</span> </span>&#123;<br>    st[top++] = u;<br>    low[u] = num[u] = ++dfn;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = head[u]; i; i = edge[i].next) &#123;<br>        <span class="hljs-type">int</span> v = edge[i].to;<br>        <span class="hljs-keyword">if</span> (!num[v]) &#123;  <span class="hljs-comment">// 没有访问过 v 点，那么递归访问 v 点</span><br>            <span class="hljs-built_in">tarjan</span>(v);<br>            low[u] = <span class="hljs-built_in">min</span>(low[u], low[v]);  <span class="hljs-comment">// 回溯时更新 u 点的 low 值</span><br>        &#125;<br>        <span class="hljs-comment">// 访问过 v 点，但是 v 点还没有被收缩，那么更新 u 点的 low 值</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!sccno[v])<br>            low[u] = <span class="hljs-built_in">min</span>(low[u], num[v]);<br>    &#125;<br>    <span class="hljs-keyword">if</span> (low[u] == num[u]) &#123;<br>        cnt++;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-type">int</span> v = st[--top];  <span class="hljs-comment">// 栈顶元素出栈</span><br>            sccno[v] = cnt;<br>            <span class="hljs-keyword">if</span> (u == v) <span class="hljs-keyword">break</span>;  <span class="hljs-comment">// 回退到了 u 点自己，退出</span><br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">twoSAT</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n * <span class="hljs-number">2</span>; i++)<br>        <span class="hljs-keyword">if</span> (!num[i]) <span class="hljs-built_in">tarjan</span>(i);  <span class="hljs-comment">// 未访问过的点进行 tarjan</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++) &#123;<br>        <span class="hljs-comment">// a 和 !a 在同一个强连通分量中, 无解</span><br>        <span class="hljs-keyword">if</span> (sccno[i] == sccno[i + n]) <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">while</span> (m--) &#123;<br>        <span class="hljs-type">int</span> ai, a, bi, b;<br>        cin &gt;&gt; ai &gt;&gt; a &gt;&gt; bi &gt;&gt; b;<br>        <span class="hljs-type">int</span> nota = a ^ <span class="hljs-number">1</span>, notb = b ^ <span class="hljs-number">1</span>;  <span class="hljs-comment">// a 的非, b 的非</span><br>        <span class="hljs-built_in">addedge</span>(ai + nota * n, bi + b * n);  <span class="hljs-comment">// !a -&gt; b</span><br>        <span class="hljs-built_in">addedge</span>(bi + notb * n, ai + a * n);  <span class="hljs-comment">// !b -&gt; a</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">twoSAT</span>()) &#123;<br>        cout &lt;&lt; <span class="hljs-string">&quot;POSSIBLE&quot;</span> &lt;&lt; endl;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>            cout &lt;&lt; (sccno[i] &gt; sccno[i + n]) &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span> cout &lt;&lt; <span class="hljs-string">&quot;IMPOSSIBLE&quot;</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="圆方树">09 圆方树</h2>
+<h2 id="最短路径问题">10 最短路径问题</h2>
+<h3 id="floyd">Floyd</h3>
+<h3 id="dijkstra">Dijkstra</h3>
+<h4 id="优化1优先队列优化">优化1：优先队列优化</h4>
+<h4 id="优化2线段树优化">优化2：线段树优化</h4>
+<p>https://www.cnblogs.com/ljt12138/p/6684387.html</p>
+<p>https://www.cnblogs.com/ljt12138/p/6684387.html</p>
+<p>zkw线段树作为小根堆来优化，比优先队列要快。</p>
+<p>https://www.mina.moe/archives/2866</p>
+<p>https://cc.bingj.com/cache.aspx?q=%e7%ba%bf%e6%ae%b5%e6%a0%91%e4%bc%98%e5%8c%96dijkstra&amp;d=4930107439588083&amp;mkt=zh-CN&amp;setlang=zh-CN&amp;w=auyqbo1wJQjB9Dyxy_eHVlgY90CozbU-</p>
+<p>啊，就是我们用线段树维护 dis 数组 dis[i]表示起点到点 i的最短距离
+迪杰斯特拉就是每次取出最小的 dis[i],i∈[1,n]且 i没有被选择过对吧
+所以我们用线段树保存一下区间最小值。 每次取出区间 [1,n]中
+dis最小的点，作为当前节点。 根据迪杰斯特拉的思想，当前节点的
+dis已经最小，不可改变。
+所以由当前节点扩展开来，更新与当前节点相连接的点的
+dis（就是松弛操作，如果从当前节点走到下一个点，能使下一个点的
+dis减少，那就从当前节点走到下一个节点）
+然后在线段树中把当前节点位置的值改成 +∞，这样下次在线段树中找
+min(dis)就不会再找到当前节点了（相当于堆优化中的在堆中 pop 当前节点）
+然后一直循环 n次，因为一共 n个节点，每个节点会作为当前节点 1次
+最后就得到了 dis数组啦，就做完迪杰斯特拉的过程了 QvQ</p>
+<h3 id="bellman-ford">Bellman-Ford</h3>
+<p>Bellman-Ford算法是单元最短路径算法，即求一个起点到其他所有点的最短路径。</p>
+<p>计算原理：</p>
+<ul>
+<li>一个有n个点的图</li>
+<li>给每个点n次机会，查询此时经过某个邻居是否有到起点s的更短路径，如果有则更新</li>
+<li>经过n轮查询和更新，就得到了所有点到起点s的最短路径</li>
+</ul>
+<p>时间复杂度：<span class="math inline">\(O(|V||E|)\)</span>​</p>
+<p>能够计算含有负边的图，但下面的代码需要在<code>print_path</code>添加额外判断才能得知有负环。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> INF = <span class="hljs-number">1e6</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">105</span>;<br><span class="hljs-comment">// 由于 bellman_ford 不用搜索邻居，而是直接遍历所有边</span><br><span class="hljs-comment">// 所以这里直接存所有边即可</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;<br>    <span class="hljs-type">int</span> from, to, w;<br>&#125; e[<span class="hljs-number">10005</span>];<br><span class="hljs-type">int</span> n, m, cnt;<br><span class="hljs-type">int</span> pre[N];  <span class="hljs-comment">// 用于记录路径</span><br><span class="hljs-comment">// 如果有负环，则这个print_path需要增加vis来判断路径是否循环</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print_path</span><span class="hljs-params">(<span class="hljs-type">int</span> s, <span class="hljs-type">int</span> t)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (s == t) &#123;<br>        cout &lt;&lt; s &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-built_in">print_path</span>(s, pre[t]);<br>    cout &lt;&lt; t &lt;&lt; <span class="hljs-string">&quot; &quot;</span>;<br>&#125;<br><span class="hljs-comment">// 注意这里实现的是点id从1开始的版本，要改也很简单</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">bellman_ford</span><span class="hljs-params">(<span class="hljs-type">int</span> s = <span class="hljs-number">1</span>, <span class="hljs-type">int</span> t = n)</span> </span>&#123;<br>    <span class="hljs-type">int</span> d[N];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        d[i] = INF;<br>    d[s] = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> k = <span class="hljs-number">1</span>; k &lt;= n; k++) &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; cnt; i++) &#123;<br>            <span class="hljs-type">int</span> from = e[i].from, to = e[i].to, w = e[i].w;<br>            <span class="hljs-keyword">if</span> (d[to] &gt; d[from] + w) &#123;<br>                d[to] = d[from] + w;<br>                pre[to] = from;<br>            &#125;<br>        &#125;<br>    &#125;<br>    cout &lt;&lt; d[t] &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;<br>    <span class="hljs-built_in">print_path</span>(s, t);<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">while</span> (cin &gt;&gt; n &gt;&gt; m) &#123;<br>        <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span> &amp;&amp; m == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        cnt = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span> (m--) &#123;<br>            <span class="hljs-type">int</span> u, v, w;<br>            cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;<br>            e[cnt].from = u, e[cnt].to = v, e[cnt].w = w;<br>            cnt++;<br>            <span class="hljs-comment">// e[cnt].from = v, e[cnt].to = u, e[cnt].w = w;</span><br>            <span class="hljs-comment">// cnt++;</span><br>        &#125;<br>        <span class="hljs-built_in">bellman_ford</span>();<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="spfa">SPFA</h3>
+<p>SPFA是Bellman-Ford的改进版本。</p>
+<p>改进思路很简单：每一轮都有没有变化的点，它们不需要更新它们的邻居。这里就可以用队列来处理。</p>
+<p>SPFA通常和Dijkstra一样快甚至更好，但是能够被刻意构造数据以达到最差时间复杂度<span class="math inline">\(O(|V||E|)\)</span>，有的题目会故意卡SPFA。</p>
+<p><strong>SPFA算法步骤：</strong></p>
+<ol type="1">
+<li>起点s入队</li>
+<li>弹出队首元素u，更新它所有邻居的状态（从起点到u，u再到邻居）。将有变化的邻居入队。</li>
+<li>持续以上过程，直到队列为空。</li>
+</ol>
+<p>负环的判断：</p>
+<ul>
+<li>添加一个数组<code>neq[N]</code>来记录每个点入队的次数，如果入队次数大于n次，则出现了负环。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> INF = <span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N = <span class="hljs-number">1e6</span> + <span class="hljs-number">5</span>, M = <span class="hljs-number">2e6</span> + <span class="hljs-number">5</span>;<br><span class="hljs-type">int</span> n, m;<br><span class="hljs-type">int</span> pre[N];<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">print_path</span><span class="hljs-params">(<span class="hljs-type">int</span> s, <span class="hljs-type">int</span> t)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (s == t) &#123;<br>        cout &lt;&lt; s &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span>;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-built_in">print_path</span>(s, pre[t]);<br>    cout &lt;&lt; t &lt;&lt; <span class="hljs-string">&#x27; &#x27;</span>;<br>&#125;<br><span class="hljs-comment">// 链式前向星存图</span><br><span class="hljs-type">int</span> head[N], cnt;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Edge</span> &#123;<br>    <span class="hljs-type">int</span> to, next, w;<br>&#125; edge[M];<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i)<br>        head[i] = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; M; ++i)<br>        edge[i].next = <span class="hljs-number">-1</span>;<br>    cnt = <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">addedge</span><span class="hljs-params">(<span class="hljs-type">int</span> u, <span class="hljs-type">int</span> v, <span class="hljs-type">int</span> w)</span> </span>&#123;<br>    edge[cnt] = &#123;v, head[u], w&#125;;<br>    head[u] = cnt++;<br>&#125;<br><span class="hljs-comment">// SPFA</span><br><span class="hljs-type">int</span> dis[N];        <span class="hljs-comment">// 记录起点到每个点的最短距离</span><br><span class="hljs-type">bool</span> inQ[N];       <span class="hljs-comment">// 判断邻居是否存在队列中，如果存在，这里只需要修改值即可，不要重复入队</span><br><span class="hljs-type">int</span> pushTimes[N];  <span class="hljs-comment">// 记录每个点入队的次数，如果大于n次则有负环</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">spfa</span><span class="hljs-params">(<span class="hljs-type">int</span> s)</span> </span>&#123;<br>    <span class="hljs-built_in">memset</span>(pushTimes, <span class="hljs-number">0</span>, <span class="hljs-built_in">sizeof</span>(pushTimes));<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        dis[i] = INF, inQ[i] = <span class="hljs-literal">false</span>;<br>    queue&lt;<span class="hljs-type">int</span>&gt; q;<br>    q.<span class="hljs-built_in">push</span>(s);<br>    pushTimes[s] = <span class="hljs-number">1</span>, dis[s] = <span class="hljs-number">0</span>, inQ[s] = <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">while</span> (!q.<span class="hljs-built_in">empty</span>()) &#123;<br>        <span class="hljs-type">int</span> u = q.<span class="hljs-built_in">front</span>();<br>        q.<span class="hljs-built_in">pop</span>();<br>        inQ[u] = <span class="hljs-literal">false</span>;  <span class="hljs-comment">// 出队</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = head[u]; ~i; i = edge[i].next) &#123;<br>            <span class="hljs-type">int</span> to = edge[i].to, w = edge[i].w;<br>            <span class="hljs-keyword">if</span> (dis[to] &gt; dis[u] + w) &#123;<br>                dis[to] = dis[u] + w;<br>                pre[to] = u;<br>                <span class="hljs-comment">// 如果邻居不在队列中，则入队</span><br>                <span class="hljs-comment">// 这样保证每轮最多只入队一次，避免重复入队</span><br>                <span class="hljs-keyword">if</span> (!inQ[to]) &#123;<br>                    inQ[to] = <span class="hljs-literal">true</span>;<br>                    q.<span class="hljs-built_in">push</span>(to);<br>                    pushTimes[to]++;<br>                    <span class="hljs-keyword">if</span> (pushTimes[to] &gt; n) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">while</span> (cin &gt;&gt; n &gt;&gt; m) &#123;<br>        <span class="hljs-built_in">init</span>();<br>        <span class="hljs-keyword">if</span> (n == <span class="hljs-number">0</span> &amp;&amp; m == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span> (m--) &#123;<br>            <span class="hljs-type">int</span> u, v, w;<br>            cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;<br>            <span class="hljs-built_in">addedge</span>(u, v, w);<br>            <span class="hljs-built_in">addedge</span>(v, u, w);<br>        &#125;<br>        <span class="hljs-type">int</span> res = <span class="hljs-built_in">spfa</span>(<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">if</span> (res) &#123;<br>            cout &lt;&lt; <span class="hljs-string">&quot;Have negative circle\n&quot;</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            cout &lt;&lt; dis[n] &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;<br>            <span class="hljs-built_in">print_path</span>(<span class="hljs-number">1</span>, n);<br>            cout &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="spfa优化1slf优化">SPFA优化1：SLF优化</h4>
+<h4 id="spfa优化2lll优化">SPFA优化2：LLL优化</h4>
+<h2 id="同余最短路">11 同余最短路</h2>
+<h2 id="最小生成树">12 最小生成树</h2>
+<h2 id="最小直径生成树">13 最小直径生成树</h2>
+<h2 id="最小树形图">14 最小树形图</h2>
+<h2 id="最小斯纳坦树">15 最小斯纳坦树</h2>
+<h2 id="网络流">16 网络流</h2>
+<h2 id="二分图">17 二分图</h2>
+<h2 id="图着色问题">18 图着色问题</h2>
+<h2 id="图匹配问题">19 图匹配问题</h2>
+<h2 id="弦图">20 弦图</h2>
+<h2 id="最大团搜索">21 最大团搜索</h2>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E8%AE%BA/" class="category-chain-item">图论</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Algorithm-%E7%AE%97%E6%B3%95/">#Algorithm 算法</a>
+      
+        <a href="/tags/%E5%9B%BE%E8%AE%BA/">#图论</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【算法】图论汇总</div>
+      <div>https://qalxry.github.io/2024/03/08/【算法】图论汇总/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月8日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年4月13日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/08/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E3%80%90%E5%9B%BE%E8%AE%BA%E3%80%91%E5%9B%BE%E8%AE%BA%E6%B1%87%E6%80%BB/" title="【算法】【图论】图论汇总">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【算法】【图论】图论汇总</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/02/26/%E6%88%91%E7%9A%84%E6%97%A5%E8%AE%B0%E4%B8%8E%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92/" title="我的日记与未来计划">
+                        <span class="hidden-mobile">我的日记与未来计划</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-sidebar side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href='https://hexo.io' target='_blank' rel='nofollow noopener'><span>Hexo</span></a> 
+<i class='iconfont icon-love'></i>
+<a href='https://github.com/fluid-dev/hexo-theme-fluid' target='_blank' rel='nofollow noopener'><span>Fluid</span></a>
+<div style='font-size: 0.85rem'>
+<span id='timeDate'>载入天数...</span>
+<span id='times'>载入时分秒...</span>
+<script src='/js/duration.js'></script>
+</div>
+
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              },
+              lazyAlwaysTypeset: (function() {
+                // 检查页面上是否存在 'mydetails' 元素
+                if (!document.querySelector('mydetails')) {
+                  return null; // 如果不存在，返回 null
+                } else {
+                  return ['mydetails']; // 如果存在，返回包含 'mydetails' 的数组
+                }
+                // 如果你直接给一个列表，那么如果页面上不存在这个元素，MathJax 将会崩溃
+              })(),
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/d3.v7.min.js"></script>
+<script src="/js/custom/mydetails.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
