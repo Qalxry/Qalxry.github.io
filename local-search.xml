@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>【IDE】关于Sublime Text 4 中包管理器的一个BUG的修复</title>
+    <link href="/2024/04/15/%E3%80%90IDE%E3%80%91%E5%85%B3%E4%BA%8ESublime-Text-4-%E4%B8%AD%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E4%B8%80%E4%B8%AABUG%E7%9A%84%E4%BF%AE%E5%A4%8D/"/>
+    <url>/2024/04/15/%E3%80%90IDE%E3%80%91%E5%85%B3%E4%BA%8ESublime-Text-4-%E4%B8%AD%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E4%B8%80%E4%B8%AABUG%E7%9A%84%E4%BF%AE%E5%A4%8D/</url>
+    
+    <content type="html"><![CDATA[<h1 id="关于sublime-text-4-中包管理器的一个bug的修复">关于Sublime Text 4中包管理器的一个BUG的修复</h1><h2 id="问题描述">问题描述</h2><p>在Sublime Text 4中，当我们使用PackageControl，想要禁用"Vintage"插件时，会发现无法禁用，即使我们在<code>Preferences -&gt; Package Settings -&gt; Package Control -&gt; Settings - User</code>中添加了如下配置：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;ignored_packages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Vintage&quot;</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure><p>当我们重启Sublime Text4后，发现"Vintage"插件依然启用，因为这个JSON配置文件被覆盖了。JSON里重新变成了空的。</p><h2 id="相关issue">相关Issue</h2><p><a href="https://github.com/wbond/package_control/pull/1660">Fixignored_packages setting getting changed at startup if default packageshave been extracted #1660</a></p><p><a href="https://forum.sublimetext.com/t/vintage-mode-automatically-turned-on-after-restart-removed-from-ignored-packages-since-4169/70432">Vintagemode automatically turned on after restart (removed fromignored_packages) since 4169</a></p><h2 id="解决方法">解决方法</h2><p>可以发现，这个BUG在PackageControl的GitHub上已经被修复了，在4.0.1版本，但是目前还没有发布新的版本，所以我们可以手动修复这个BUG。</p><ol type="1"><li><p>打开Sublime Text4，点击<code>Preferences -&gt; Browse Packages</code>，在其上一级目录中找到<code>Installed Packages</code>文件夹，找到<code>Package Control.sublime-package</code>文件，我们需要替换这个文件。</p></li><li><p>在Github上下载最新的<code>Package Control.sublime-package</code>文件，仓库地址：<a href="https://github.com/wbond/package_control">wbond/package_control</a></p></li><li><p>将下载的<code>Package Control.sublime-package</code>文件替换到<code>Installed Packages</code>文件夹中，替换完成后，重启SublimeText 4即可。</p></li></ol><h2 id="后记">后记</h2><p>等到后面应该这个就不需要手动修复了。哎，为啥我要从VSCode转到SublimeText4呢...VSCode真香啊，至少BUG是少的。但我的VScode插件太多了，性能比VisualStudio还差，所以我就转到Sublime Text4作为轻量级IDE了。（同时还是jiangly用的IDE😍，嘿嘿）</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Software</category>
+      
+      <category>IDE</category>
+      
+      <category>Sublime</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Sublime</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>【算法】DP模型总结</title>
     <link href="/2024/04/13/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/"/>
     <url>/2024/04/13/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91DP%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/</url>
@@ -66,7 +95,7 @@
     <link href="/2024/04/13/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/"/>
     <url>/2024/04/13/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E6%A0%91%E4%B8%8A%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB/</url>
     
-    <content type="html"><![CDATA[<h1 id="树上问题汇总">树上问题汇总</h1><!-- toc --><ul><li><a href="#01----%25E5%25B9%25B3%25E8%25A1%25A1%25E6%25A0%2591">01平衡树</a></li><li><a href="#01----%25E7%25AE%2580%25E5%258D%2595%25E6%25A0%2591%25E4%25B8%258A%25E9%2597%25AE%25E9%25A2%2598">01简单树上问题</a></li><li><a href="#02----LCA">02 LCA</a></li><li><a href="#03----%25E6%25A0%2591%25E9%2593%25BE%25E5%2589%2596%25E5%2588%2586">03树链剖分</a></li><li><a href="#04----%25E6%25A0%2591%25E4%25B8%258A%25E5%25B7%25AE%25E5%2588%2586">04树上差分</a></li><li><a href="#05----Link-Cut-Tree">05 Link-Cut Tree</a></li><li><a href="#06----%25E6%25A0%2591%25E4%25B8%258A%25E5%2590%25AF%25E5%258F%2591%25E5%25BC%258F%25E5%2590%2588%25E5%25B9%25B6">06树上启发式合并</a></li></ul><!-- tocstop --><h2 id="平衡树">01 平衡树</h2><h2 id="简单树上问题">01 简单树上问题</h2><h2 id="lca">02 LCA</h2><h2 id="树链剖分">03 树链剖分</h2><h2 id="树上差分">04 树上差分</h2><h2 id="link-cut-tree">05 Link-Cut Tree</h2><h2 id="树上启发式合并">06 树上启发式合并</h2>]]></content>
+    <content type="html"><![CDATA[<h1 id="树上问题汇总">树上问题汇总</h1><!-- toc --><ul><li><a href="#00----%25E5%25B9%25B3%25E8%25A1%25A1%25E6%25A0%2591">00平衡树</a></li><li><a href="#01----%25E7%25AE%2580%25E5%258D%2595%25E6%25A0%2591%25E4%25B8%258A%25E9%2597%25AE%25E9%25A2%2598">01简单树上问题</a></li><li><a href="#02----LCA">02 LCA</a></li><li><a href="#03----%25E6%25A0%2591%25E9%2593%25BE%25E5%2589%2596%25E5%2588%2586">03树链剖分</a></li><li><a href="#04----%25E6%25A0%2591%25E4%25B8%258A%25E5%25B7%25AE%25E5%2588%2586">04树上差分</a></li><li><a href="#05----Link-Cut-Tree">05 Link-Cut Tree</a></li><li><a href="#06----%25E6%25A0%2591%25E4%25B8%258A%25E5%2590%25AF%25E5%258F%2591%25E5%25BC%258F%25E5%2590%2588%25E5%25B9%25B6">06树上启发式合并</a></li></ul><!-- tocstop --><h2 id="平衡树">00 平衡树</h2><h2 id="简单树上问题">01 简单树上问题</h2><h2 id="lca">02 LCA</h2><h2 id="树链剖分">03 树链剖分</h2><h2 id="树上差分">04 树上差分</h2><h2 id="link-cut-tree">05 Link-Cut Tree</h2><h2 id="树上启发式合并">06 树上启发式合并</h2>]]></content>
     
     
     <categories>
