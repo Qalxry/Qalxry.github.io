@@ -1,0 +1,1100 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start --><script src="/js/custom/auto_generate/theme_config.js" defer></script><!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="函数调用约定详解 大致内容源于 https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;X86_calling_conventions 一、IA32 Architecture   714ac521e06e80553869c8adbfc98432  1 (Unix-like) cdecl 采用的操作系统：类Unix系统 全称：C Declaration (声明) cdecl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【计算机系统】函数调用约定详解">
+<meta property="og:url" content="https://qalxry.github.io/2024/04/16/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="函数调用约定详解 大致内容源于 https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;X86_calling_conventions 一、IA32 Architecture   714ac521e06e80553869c8adbfc98432  1 (Unix-like) cdecl 采用的操作系统：类Unix系统 全称：C Declaration (声明) cdecl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="article:published_time" content="2024-04-16T02:17:29.000Z">
+<meta property="article:modified_time" content="2024-04-16T02:18:41.250Z">
+<meta property="article:author" content="しずり雪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【计算机系统】函数调用约定详解 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom/mydetails.css">
+<link rel="stylesheet" href="/css/custom/fonts.css">
+<link rel="stylesheet" href="/css/custom/toc.css">
+<link rel="stylesheet" href="/css/custom/base.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+            <script>
+            document.subthemes = {
+                default: "none",
+                list: [{"name":"none","path":"/"},{"name":"classic","path":"/subthemes/classic/"},{"name":"modern","path":"/subthemes/modern/"}]
+            };
+            </script>
+
+            <script src="/subthemes/subthemes.js" defer></script>
+            <style>
+                #theme-toggle-btn .nav-link {
+                    display: block;
+                    color: var(--navbar-text-color);
+                    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+                }
+                #theme-toggle-btn .nav-link svg {
+                    transition: fill 0.2s ease-in-out;
+                    fill: var(--navbar-text-color);
+                }
+                #theme-toggle-btn .nav-link:hover svg {
+                    fill: var(--link-hover-color);
+                }
+            </style>
+            <link rel="stylesheet" href="/subthemes/classic/css/main.css">
+<link rel="stylesheet" href="/subthemes/modern/css/main.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start -->
+        <script>
+        console.log('[Extend Features] running...');
+        document.extend_features = {"enable":false,"code_font":{"enable":false,"font_family":"SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace","font_weight":400},"fixed_background":{"enable":false,"mask":{"enable":true,"list":[{"selector":"#web_bg","enable":true,"style":"background-color: rgba(0, 0, 0, 0.3);  border-radius: 1rem;"},{"selector":"#board","enable":true,"style":"background-color: rgba(0, 0, 0, 0);    border-radius: 1rem;"},{"selector":"#toc","enable":true,"style":"background-color: rgba(0, 0, 0, 0.15); border-radius: 1rem;"}]}}};
+        </script>
+        <script src="/extend_features/extend_features.js"></script>
+        <!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/2024/02/26/%E6%88%91%E7%9A%84%E6%97%A5%E8%AE%B0%E4%B8%8E%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【计算机系统】函数调用约定详解"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-16 10:17" pubdate>
+          2024年4月16日 上午 10:17
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="left-sidebar side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【计算机系统】函数调用约定详解</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年4月16日 上午 10:18
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="函数调用约定详解">函数调用约定详解</h1>
+<p>大致内容源于
+https://en.wikipedia.org/wiki/X86_calling_conventions</p>
+<h1 id="一ia32-architecture">一、IA32 Architecture</h1>
+<figure>
+<img src="/2024/04/16/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%E8%AF%A6%E8%A7%A3/Code/Class/ComputerSystems/SmallGroup/4/%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E7%25B3%25BB%25E7%25BB%259F%25E7%25AC%25AC%25E5%259B%259B%25E6%25AC%25A1%25E8%25AE%25A8%25E8%25AE%25BA%25E8%25AF%25BE/714ac521e06e80553869c8adbfc98432.jpg" srcset="/img/loading.gif" lazyload alt="714ac521e06e80553869c8adbfc98432">
+<figcaption aria-hidden="true">714ac521e06e80553869c8adbfc98432</figcaption>
+</figure>
+<h2 id="unix-like-cdecl">1 (Unix-like) cdecl</h2>
+<p>采用的操作系统：类Unix系统</p>
+<p>全称：C Declaration (声明)</p>
+<p>cdecl是C语言的默认调用约定。在这种约定下，调用者负责清理堆栈。这意味着函数可以有可变数量的参数。</p>
+<h4 id="参数传递">参数传递</h4>
+<p>在 C
+语言中，函数参数按从右到左的顺序压入堆栈，即最后一个参数首先压入。</p>
+<h4 id="返回值">返回值</h4>
+<ul>
+<li>如果返回值为整数值或是内存地址，则放入 EAX 中</li>
+<li>如果返回值为浮点值，则放入 ST0 x87寄存器中</li>
+</ul>
+<h4 id="示例代码">示例代码</h4>
+<p>C代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">callee</span><span class="hljs-params">(<span class="hljs-type">int</span>, <span class="hljs-type">int</span>, <span class="hljs-type">int</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">caller</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> </span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">callee</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) + <span class="hljs-number">5</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>汇编代码（在godbolt网站上使用 x86-64 gcc 13.2，并启用
+<code>-m32</code> 标志）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs assembly">caller():<br>        pushl   %ebp   <br>        movl    %esp, %ebp<br>        subl    $8, %esp ; 通过向下调整栈指针，为局部变量分配8字节的空间（在栈上预留空间）。<br>        subl    $4, %esp ; 再为额外的局部变量或是准备压入栈的参数预留4字节的空间。<br>        pushl   $3  ; 将值3压入栈中，作为将要调用的函数的第三个参数。           <br>        pushl   $2	; 将值2压入栈中，作为将要调用的函数的第二个参数。<br>        pushl   $1	; 将值1压入栈中，作为将要调用的函数的第一个参数。<br>        <br>        ; call 指令将下一条指令的地址压栈，作为返回地址。<br>        call    callee(int, int, int) ; 调用callee），并传入之前压入栈的三个参数。<br>        addl    $16, %esp	; 函数调用返回后，调整栈指针以移除参数。<br>        <br>        addl    $5, %eax; 将`eax`寄存器的值增加5，这里对返回值进行了修改。<br>        leave		; `leave`指令是`mov %ebp, %esp; pop %ebp`<br>        ret                    <br></code></pre></td></tr></table></figure>
+<p>在 Linux 中，从 GCC 4.5 版开始，调用函数时堆栈必须与 16
+字节对齐（之前的版本只需要 4 字节对齐）。</p>
+<h2 id="microsoft-cdeclstdcallfastcallthiscall">2 (Microsoft)
+cdecl、stdcall、fastcall、thiscall</h2>
+<p>采用的操作系统：Windows</p>
+<h3 id="cdecl">2.1 __cdecl</h3>
+<p><strong><code>__cdecl</code></strong>是 C 和 C++ 程序的默认调用约定。
+因为堆栈是由调用者清理的，所以它可以做可变参数功能。 这
+<strong><code>__cdecl</code></strong>调用约定创建比 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/cpp/stdcall?view=msvc-170">__stdcall</a>更大的可执行文件，因为它要求每个函数调用都包含堆栈清理代码。</p>
+<table>
+
+<thead>
+<tr class="header">
+<th>元素</th>
+<th>执行</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>参数传递顺序</td>
+<td>右到左。</td>
+</tr>
+<tr class="even">
+<td>栈维护责任</td>
+<td>调用函数从栈中弹出参数。</td>
+</tr>
+<tr class="odd">
+<td>名称修饰约定</td>
+<td>下划线字符 (_) 作为名称前缀，除非导出使用 C 链接的 __cdecl
+函数。</td>
+</tr>
+</tbody>
+</table>
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> __cdecl <span class="hljs-title function_">callee</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span> &#123;<span class="hljs-keyword">return</span> a + b + c;&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">caller</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>	<span class="hljs-keyword">return</span> callee(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) + <span class="hljs-number">5</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs assembly">_a$ = 8                                       ; size = 4<br>_b$ = 12                                      ; size = 4<br>_c$ = 16                                      ; size = 4<br>_callee PROC<br>        push    ebp<br>        mov     ebp, esp<br>        mov     eax, DWORD PTR _a$[ebp]<br>        add     eax, DWORD PTR _b$[ebp]<br>        add     eax, DWORD PTR _c$[ebp]<br>        pop     ebp<br>        ret     0		 	; 被调用者不清理栈<br>_callee ENDP<br><br>_caller PROC<br>        push    ebp<br>        mov     ebp, esp<br>        push    3			; 参数全部从右到左依次压栈<br>        push    2<br>        push    1<br>        call    _callee		; 名称前缀为下划线_，无后缀<br>        add     esp, 12		; 由调用函数清理栈，共12字节<br>        add     eax, 5<br>        pop     ebp<br>        ret     0<br>_caller ENDP<br></code></pre></td></tr></table></figure>
+<h3 id="stdcall">2.2 __stdcall</h3>
+<p>https://blog.csdn.net/hellokandy/article/details/54603055</p>
+<p>stdcall 调用约定是 Pascal
+调用约定的变体，其中被调用者负责清理堆栈，但参数按<strong>从右到左</strong>的顺序压入堆栈，类似于
+_cdecl 调用约定。指定寄存器 EAX、ECX 和 EDX 在函数内使用。返回值存储在
+EAX 寄存器中。</p>
+<p>在Microsoft C++系列的C/C++编译器中，使用 PASCAL 宏，WINAPI 宏和
+CALLBACK 宏来指定函数的调用方式都为 stdcall。</p>
+<table>
+
+<tbody>
+<tr class="odd">
+<td>参数传递顺序</td>
+<td>从右到左。</td>
+</tr>
+<tr class="even">
+<td>参数传递约定</td>
+<td>按值传递，除非传递指针或引用类型。</td>
+</tr>
+<tr class="odd">
+<td>栈维护责任</td>
+<td>被调用的函数从栈中弹出它自己的参数。</td>
+</tr>
+<tr class="even">
+<td>名称修饰约定</td>
+<td>下划线（ <code>_</code>) 是名称的前缀。 该名称后跟 at 符号 (
+<code>@</code>) 后跟参数列表中的字节数（十进制）。 因此，函数声明为
+<code>int func( int a, double b )</code>装饰如下：
+<code>_func@12</code></td>
+</tr>
+</tbody>
+</table>
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> __stdcall <span class="hljs-title function_">callee1</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span> &#123;<span class="hljs-keyword">return</span> a + b + c;&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">caller</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>	<span class="hljs-keyword">return</span> callee(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) + <span class="hljs-number">5</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs assembly">_a$ = 8             ; size = 4<br>_b$ = 12			; size = 4<br>_c$ = 16          	; size = 4<br>_callee@12 PROC<br>        push    ebp<br>        mov     ebp, esp<br>        mov     eax, DWORD PTR _a$[ebp]<br>        add     eax, DWORD PTR _b$[ebp]<br>        add     eax, DWORD PTR _c$[ebp]<br>        pop     ebp<br>        ret     12   		; 被调用者清理栈<br>_callee@12 ENDP<br><br>_caller PROC<br>        push    ebp<br>        mov     ebp, esp<br>        push    3			; 参数直接压栈<br>        push    2<br>        push    1<br>        call    _callee@12	; 下划线_为名称前缀，@为名称后缀<br>        					; 后跟函数参数列表的字节数（十进制）<br>        					; 调用者无需清理栈中参数，由被调用者执行<br>        add     eax, 5<br>        pop     ebp<br>        ret     0<br>_caller ENDP<br></code></pre></td></tr></table></figure>
+<h3 id="fastcall">2.3 __fastcall</h3>
+<table>
+
+<tbody>
+<tr class="odd">
+<td>参数传递顺序</td>
+<td>前两个 <code>DWORD</code>或者在参数列表中从左到右找到的较小参数在
+ECX 和 EDX 寄存器中传递； 所有其他参数都在堆栈上从右向左传递。</td>
+</tr>
+<tr class="even">
+<td>栈维护责任</td>
+<td>被调用的函数从栈中弹出参数。</td>
+</tr>
+<tr class="odd">
+<td>名称修饰约定</td>
+<td>at 符号 (@) 是名称的前缀； 参数列表中的 at
+符号后跟字节数（十进制）作为名称的后缀。</td>
+</tr>
+<tr class="even">
+<td>类、结构体和联合</td>
+<td>被视为“多字节”类型（无论大小）并在堆栈上传递。</td>
+</tr>
+<tr class="odd">
+<td>枚举和枚举类</td>
+<td>如果它们的基础类型是通过寄存器传递的，则通过寄存器传递。
+例如，如果基础类型是 <code>int</code>或者
+<code>unsigned int</code>大小为 8、16 或 32 位。</td>
+</tr>
+</tbody>
+</table>
+<p>示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> __fastcall <span class="hljs-title function_">callee</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span> &#123;<span class="hljs-keyword">return</span> a + b + c;&#125;<br><span class="hljs-type">int</span> <span class="hljs-title function_">caller</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>	<span class="hljs-keyword">return</span> callee2(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) + <span class="hljs-number">5</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs assembly">_b$ = -8                                      ; size = 4<br>_a$ = -4                                      ; size = 4<br>_c$ = 8                                       ; size = 4<br>@callee@12 PROC<br>        push    ebp<br>        mov     ebp, esp<br>        sub     esp, 8<br>        mov     DWORD PTR _b$[ebp], edx<br>        mov     DWORD PTR _a$[ebp], ecx<br>        mov     eax, DWORD PTR _a$[ebp]<br>        add     eax, DWORD PTR _b$[ebp]<br>        add     eax, DWORD PTR _c$[ebp]<br>        mov     esp, ebp<br>        pop     ebp<br>        ret     4			; 被调用的函数清理栈中参数<br>@callee@12 ENDP<br><br>_caller PROC<br>        push    ebp<br>        mov     ebp, esp<br>        push    3			; 多出的参数在栈中传递<br>        mov     edx, 2		; 从左往右找到的第2个较小参数用EDX传递<br>        mov     ecx, 1		; 从左往右找到的第2个较小参数用ECX传递<br>        call    @callee@12	; 名称前后都有@符号，后跟函数参数列表的字节数（十进制）<br>        					; 调用者无需清理栈中参数，由被调用者执行<br>        add     eax, 5<br>        pop     ebp<br>        ret     0<br>_caller ENDP<br></code></pre></td></tr></table></figure>
+<h3 id="thiscall">2.4 __thiscall</h3>
+<p>用于 x86 体系结构上的 C++ 类成员函数。
+这是不使用可变参数的成员函数使用的默认调用约定。</p>
+<table>
+
+<tbody>
+<tr class="odd">
+<td>参数传递顺序</td>
+<td>参数从右向左压入栈。
+<strong><code>this</code></strong>指针通过寄存器 ECX
+传递，而不是在栈上传递。</td>
+</tr>
+<tr class="even">
+<td>栈维护责任</td>
+<td>被调用的函数从栈中弹出参数。</td>
+</tr>
+</tbody>
+</table>
+<p>示例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Myclass</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">int</span> a, b, c;<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">callee</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span></span>;<br>&#125;;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">caller</span><span class="hljs-params">(Myclass mc)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> mc.<span class="hljs-built_in">callee</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>) + <span class="hljs-number">5</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs assembly">_mc$ = 8                                    ; size = 12<br>int caller(Myclass) PROC<br>        push    ebp<br>        mov     ebp, esp<br>        push    2							; 参数从右向左压入栈<br>        push    1<br>        lea     ecx, DWORD PTR _mc$[ebp]	; this 指针通过 ECX 传递<br>        call    int Myclass::callee(int,int)<br>        add     eax, 5<br>        pop     ebp<br>        ret     0<br>int caller(Myclass) ENDP<br></code></pre></td></tr></table></figure>
+<h1 id="二x86-64-architecture">二、x86-64 Architecture</h1>
+<p>64位架构下的Ubuntu和Windows的函数调用约定，当然，Ubuntu对应的是Linux</p>
+<p>IA32下多种类的函数调用约定基本上被统一为了同一种方式。</p>
+<h2 id="system-v-amd64-abi">1 System V AMD64 ABI</h2>
+<p>采用的操作系统：Linux、macOS、BSD、Solaris</p>
+<h3 id="参数传递-1">参数传递</h3>
+<table>
+
+<thead>
+<tr class="header">
+<th>参数类型</th>
+<th>放入的地方</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>整数或指针（1~6）</td>
+<td>从左到右的整数分别放入：RDI, RSI, RDX, RCX, R8, R9</td>
+</tr>
+<tr class="even">
+<td>浮点数（1~8）</td>
+<td>从左到右的浮点数分别放入：XMM0 - XMM7</td>
+</tr>
+<tr class="odd">
+<td>更多的参数</td>
+<td>从右到左依次压入栈中</td>
+</tr>
+<tr class="even">
+<td><a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/oldnewthing/20231204-00/?p=109095">静态链指针</a>（用于嵌套函数）</td>
+<td>R10</td>
+</tr>
+<tr class="odd">
+<td>自定义结构体（不超过128且能分为两个64位，等等）</td>
+<td>RDI、RSI</td>
+</tr>
+<tr class="even">
+<td>其他不满足要求的自定义结构体</td>
+<td>指向调用者提供的空间的指针作为第1个参数添加到前面</td>
+</tr>
+</tbody>
+</table>
+<h3 id="返回值-1">返回值</h3>
+<ul>
+<li>不超过 64 位的整数返回值存储在 RAX 中</li>
+<li>大于 64 位但不超过128 位的值存储在 RAX 和 RDX 中。
+浮点返回值类似地存储在 XMM0 和 XMM1 中。</li>
+<li>自定义结构体（不超过128且能拆为两个64位，还有其他要求）也能够存储在RAX和RDX中</li>
+<li>其他的不满足要求的自定义结构体则返回保存在 RAX 的指针</li>
+</ul>
+<h3 id="示例代码1">示例代码1</h3>
+<p>C代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">callee</span><span class="hljs-params">(<span class="hljs-type">int</span>,<span class="hljs-type">float</span>,<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,<span class="hljs-type">float</span>,<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,<span class="hljs-type">int</span>)</span></span>;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">caller</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> </span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">callee</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5.0</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>) + <span class="hljs-number">5</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>汇编代码（在godbolt网站上使用x86-64 gcc 13.2）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs assembly">caller():<br>        pushq   %rbp<br>        movq    %rsp, %rbp<br>        subq    $8, %rsp<br>        pushq   $9					; 多余的整数参数压入栈中<br>        movl    $8, %r9d			; 整数的第6个参数存入 R9 中<br>        movl    $7, %r8d			; 整数的第5个参数存入 R8 中<br>        movl    $6, %ecx			; 整数的第4个参数存入 RCX 中<br>        movss   .LC0(%rip), %xmm1	; 浮点数的第2个参数存入 XMM1 中<br>        movl    $4, %edx			; 整数的第3个参数存入 RDX 中<br>        movl    $3, %esi			; 整数的第2个参数存入 RSI 中<br>        movl    .LC1(%rip), %eax	; 浮点数的第1个参数存入 XMM0 中<br>        movd    %eax, %xmm0		<br>        movl    $1, %edi			; 整数的第1个参数存入 RDI 中<br>        call    callee(int, float, int, int, float, int, int, int, int)<br>        addq    $16, %rsp<br>        addl    $5, %eax<br>        leave<br>        ret<br>.LC0:<br>        .long   1084227584<br>.LC1:<br>        .long   1073741824<br></code></pre></td></tr></table></figure>
+<h3 id="示例代码2">示例代码2</h3>
+<p>C代码（嵌套的函数）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">func</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> x = <span class="hljs-number">10</span>, y = <span class="hljs-number">20</span>;<br>    <span class="hljs-type">int</span> <span class="hljs-title function_">nested</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-type">int</span> c)</span> &#123;<br>        <span class="hljs-keyword">return</span> a + b + c + x + y;<br>    &#125;<br>    <span class="hljs-keyword">return</span> nested(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) + <span class="hljs-number">4</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可以从下面的汇编代码中看到R10寄存器的作用：用于支持嵌套函数访问父级函数的局部变量，它指向父级局部变量所在栈的最低起始地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs assembly">nested.0:<br>        pushq   %rbp<br>        movq    %rsp, %rbp<br>        movl    %edi, -4(%rbp)     	; 将第一个参数a存入基址指针-4处<br>        movl    %esi, -8(%rbp)     	; 将第二个参数b存入基址指针-8处<br>        movl    %edx, -12(%rbp)    	; 将第三个参数c存入基址指针-12处<br>        movq    %r10, %rax         	; 将r10寄存器的值（函数调用中的上下文）存入rax寄存器<br>        movq    %r10, -24(%rbp)    	; 将r10寄存器的值存入基址指针-24处<br>        movl    -4(%rbp), %ecx     	; 将基址指针-4处的值（a）存入ecx寄存器<br>        movl    -8(%rbp), %edx		; 将基址指针-8处的值（b）存入edx寄存器<br>        addl    %edx, %ecx			; ecx = edx + ecx（将b加到a上）<br>        movl    -12(%rbp), %edx		; 将基址指针-12处的值（c）存入edx寄存器<br>        addl    %edx, %ecx			; ecx = edx + ecx（将c加到之前的结果上）<br>        movl    4(%rax), %edx		; 将rax+4指向的值（在此为x）存入edx寄存器<br>        addl    %ecx, %edx			; edx = edx + ecx（将之前的结果加到x上）<br>        movl    (%rax), %eax		; 将rax指向的值（在此为y）存入eax寄存器<br>        addl    %edx, %eax			; eax = eax + edx（将之前的结果加到y上）<br>        popq    %rbp				; 弹出当前栈帧的基址指针<br>        ret							; 返回到调用nested函数的地方<br>func:<br>        pushq   %rbp               ; 将当前函数的基址指针压栈<br>        movq    %rsp, %rbp         ; 将当前栈指针存入基址指针，建立新的栈帧<br>        subq    $16, %rsp          ; 分配16字节的空间给局部变量<br>        leaq    16(%rbp), %rax<br>        movq    %rax, -8(%rbp)<br>        movl    $10, %eax          ; 局部变量 int x = 10<br>        movl    %eax, -12(%rbp)<br>        movl    $20, %eax		   ; 局部变量 int y = 20<br>        movl    %eax, -16(%rbp)<br>        leaq    -16(%rbp), %rax    ; 计算局部变量起始地址<br>        movq    %rax, %r10         ; 将上述地址存入r10寄存器<br>        movl    $3, %edx           ; 将值3存入edx寄存器<br>        movl    $2, %esi           ; 将值2存入esi寄存器<br>        movl    $1, %edi           ; 将值1存入edi寄存器<br>        call    nested.0           ; 调用nested函数<br>        addl    $4, %eax           ; 将值4加到eax寄存器中的结果上<br>        leave                      ; 释放当前栈帧，等效于movq %rbp, %rsp 和 popq %rbp<br>        ret                        ; 返回到函数调用点<br></code></pre></td></tr></table></figure>
+<h4 id="更多示例">更多示例</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mytype</span> &#123;</span> <span class="hljs-type">int</span> a, b, c, d; &#125;;<br><span class="hljs-comment">// mytype c 将存入RDI和RSI中，a和b分别存入RDX、RCX</span><br><span class="hljs-comment">// 返回的mytype分别放入RAX和RDX中</span><br><span class="hljs-keyword">struct</span> mytype <span class="hljs-title function_">callee</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, <span class="hljs-keyword">struct</span> mytype c)</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">caller</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mytype</span> <span class="hljs-title">tmp1</span>, <span class="hljs-title">tmp2</span>;</span><br>    tmp1 = callee(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,tmp2);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="microsoft-x64-calling-convention">2 Microsoft x64 calling
+convention</h2>
+<p>采用的操作系统：Windows x64、UEFI</p>
+<p>在Windows环境中为x64架构编译时（无论使用Microsoft还是非Microsoft工具），stdcall、thiscall、cdecl和fastcall都将解析为使用此约定。</p>
+<p>https://learn.microsoft.com/en-us/cpp/build/x64-calling-convention</p>
+<h3 id="参数传递-2">2.1 参数传递</h3>
+<p>默认情况下，x64
+调用约定将前四个参数传递给寄存器中的函数。用于这些参数的寄存器取决于参数的位置和类型。剩余的参数按从右到左的顺序压入堆栈。</p>
+<p>最左边四个位置的整数值参数分别在 RCX、RDX、R8 和 R9
+中按从左到右的顺序传递。第五个和更高的参数如前所述在堆栈上传递。寄存器中的所有整数参数都是右对齐的，因此被调用者可以忽略寄存器的高位并仅访问寄存器的必要部分。</p>
+<p>前四个参数中的任何浮点和双精度参数都在 XMM0 - XMM3
+中传递，具体取决于位置。 当存在可变参数参数时，浮点值仅放置在整数寄存器
+RCX、RDX、R8 和 R9 中。同样，当相应的参数是整数或指针类型时，XMM0 - XMM3
+寄存器将被忽略。</p>
+<table style="width:100%;">
+
+<thead>
+<tr class="header">
+<th>参数类型</th>
+<th>第五及以上</th>
+<th>第四</th>
+<th>第三</th>
+<th>第二</th>
+<th>最左边</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>浮点数</td>
+<td>stack</td>
+<td>XMM3</td>
+<td>XMM2</td>
+<td>XMM1</td>
+<td>XMM0</td>
+</tr>
+<tr class="even">
+<td>整数</td>
+<td>stack</td>
+<td>R9</td>
+<td>R8</td>
+<td>RDX</td>
+<td>RCX</td>
+</tr>
+<tr class="odd">
+<td>聚合类型 (8, 16, 32, or 64 bits)</td>
+<td>stack</td>
+<td>R9</td>
+<td>R8</td>
+<td>RDX</td>
+<td>RCX</td>
+</tr>
+<tr class="even">
+<td>其他聚合类型，比如指针</td>
+<td>stack</td>
+<td>R9</td>
+<td>R8</td>
+<td>RDX</td>
+<td>RCX</td>
+</tr>
+</tbody>
+</table>
+<p>例子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">func3</span>(<span class="hljs-type">int</span> a, <span class="hljs-type">double</span> b, <span class="hljs-type">int</span> c, <span class="hljs-type">float</span> d, <span class="hljs-type">int</span> e, <span class="hljs-type">float</span> f);<br><span class="hljs-comment">// a 放入 RCX, b 放入 XMM1, c 放入 R8, d 放入 XMM3, f 和 e 压入栈中（f先压栈）</span><br></code></pre></td></tr></table></figure>
+<h4 id="未完全原型化的函数可变参数">未完全原型化的函数（可变参数）</h4>
+<p>仅对于浮点值，整数寄存器和浮点寄存器都包含浮点值，以防被调用者期望整数寄存器中的值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">func1</span>();<br><span class="hljs-built_in">func2</span>() &#123;   <span class="hljs-comment">// RCX = 2, RDX = XMM1 = 1.0, and R8 = 7</span><br>   <span class="hljs-built_in">func1</span>(<span class="hljs-number">2</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">7</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>Shadow Space</strong></p>
+<p>在Microsoft
+x64调用约定中，调用者负责在调用函数之前在堆栈上分配32字节的“影子空间”（无论实际使用的参数数量如何），并在调用后弹出堆栈。影子空间用于备份RCX、RDX、R8和R9，但必须对所有函数（即使是参数少于四个的函数）都可用。</p>
+<p>例如，采用 5
+个整数参数的函数将采用寄存器中的第一个到第四个参数，第五个参数将被推送到影子空间上方的顶部。
+因此，当进入被调用函数时，栈（按升序）将由返回地址、后面的影子空间（32
+字节）和第五个参数组成。</p>
+</blockquote>
+<h3 id="返回值-2">2.2 返回值</h3>
+<h4 id="返回内置类型">返回内置类型</h4>
+<ul>
+<li>通过 RAX 返回值：可以容纳 64 位的标量返回值，包括
+<strong><code>__m64</code></strong>类型。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">__int64 <span class="hljs-title">func1</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">float</span> b, <span class="hljs-type">int</span> c, <span class="hljs-type">int</span> d, <span class="hljs-type">int</span> e)</span></span>;<br><span class="hljs-comment">// a 放入 RCX, b 放入 XMM1, c 放入 R8, d 放入 R9, e 压栈,</span><br><span class="hljs-comment">// 返回 __int64 在 RAX 中</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>通过 XMM0 返回值：非标量类型，包括浮点型、双精度型和向量类型，例如
+<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/cpp/m128?view=msvc-170"><code>__m128</code></a>,
+<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/cpp/m128i?view=msvc-170"><code>__m128i</code></a>,
+<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/cpp/cpp/m128d?view=msvc-170"><code>__m128d</code></a>。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function">__m128 <span class="hljs-title">func2</span><span class="hljs-params">(<span class="hljs-type">float</span> a, <span class="hljs-type">double</span> b, <span class="hljs-type">int</span> c, __m64 d)</span></span>;<br><span class="hljs-comment">// a 放入 XMM0, b 放入 XMM1, c 放入 R8, d 放入 R9,</span><br><span class="hljs-comment">// 返回 __m128 result 在 XMM0 中.</span><br></code></pre></td></tr></table></figure>
+<p>RAX 或 XMM0 返回值中未被使用的bit的状态则未定义。</p>
+<h4 id="返回用户定义类型">返回用户定义类型</h4>
+<ul>
+<li><p>在 RAX 中按值返回用户定义类型：</p>
+<p>该类型的长度必须为 1、2、4、8、16、32 或 64
+位。它还必须没有用户定义的构造函数、析构函数或复制赋值运算符。它不能有私有或受保护的非静态数据成员，也不能有引用类型的非静态数据成员。
+它不能有基类或虚函数。并且，它只能具有也满足这些要求的数据成员。</p></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Struct2</span> &#123;<br>   <span class="hljs-type">int</span> j, k;    <span class="hljs-comment">// Struct2 为 64 bits</span><br>&#125;;<br><span class="hljs-function">Struct2 <span class="hljs-title">func4</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">double</span> b, <span class="hljs-type">int</span> c, <span class="hljs-type">float</span> d)</span></span>;<br><span class="hljs-comment">// 将 a 放入 RCX, b 放入 XMM1, c 放入 R8, d 放入 XMM3;</span><br><span class="hljs-comment">// 返回 Struct2 的值，在 RAX.</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><p>在 RAX 中返回用户定义类型的指针：</p>
+<p>不符合按值返回的要求的时候，则为返回的用户定义类型分配内存，并将其指针作为函数的第1个参数传入，占用
+RCX 寄存器，剩余参数则往右移动一个参数的位置。</p>
+<p>最后在 RAX 中返回该相同的指针。</p></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Struct1</span> &#123;<br>   <span class="hljs-type">int</span> j, k, l;    <span class="hljs-comment">// Struct1 超过了 64 bits.</span><br>&#125;;<br><span class="hljs-function">Struct1 <span class="hljs-title">func3</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">double</span> b, <span class="hljs-type">int</span> c, <span class="hljs-type">float</span> d)</span></span>;<br><span class="hljs-comment">// 为 Struct1 分配内存，其指针存入 RCX</span><br><span class="hljs-comment">// a 存入 RDX, b 存入 XMM2, c 存入 R9, d 压入栈中;</span><br><span class="hljs-comment">// 返回值为 Struct1 的指针，放在 RAX 中</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【计算机系统】函数调用约定详解</div>
+      <div>https://qalxry.github.io/2024/04/16/【计算机系统】函数调用约定详解/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年4月16日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年4月16日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/15/%E3%80%90IDE%E3%80%91%E5%85%B3%E4%BA%8ESublime-Text-4-%E4%B8%AD%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E4%B8%80%E4%B8%AABUG%E7%9A%84%E4%BF%AE%E5%A4%8D/" title="【IDE】关于Sublime Text 4 中包管理器的一个BUG的修复">
+                        <span class="hidden-mobile">【IDE】关于Sublime Text 4 中包管理器的一个BUG的修复</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-sidebar side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href='https://hexo.io' target='_blank' rel='nofollow noopener'><span>Hexo</span></a> 
+<i class='iconfont icon-love'></i>
+<a href='https://github.com/fluid-dev/hexo-theme-fluid' target='_blank' rel='nofollow noopener'><span>Fluid</span></a>
+<div style='font-size: 0.85rem'>
+<span id='timeDate'>载入天数...</span>
+<span id='times'>载入时分秒...</span>
+<script src='/js/duration.js'></script>
+</div>
+
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              },
+              lazyAlwaysTypeset: (function() {
+                // 检查页面上是否存在 'mydetails' 元素
+                if (!document.querySelector('mydetails')) {
+                  return null; // 如果不存在，返回 null
+                } else {
+                  return ['mydetails']; // 如果存在，返回包含 'mydetails' 的数组
+                }
+                // 如果你直接给一个列表，那么如果页面上不存在这个元素，MathJax 将会崩溃
+              })(),
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/d3.v7.min.js"></script>
+<script src="/js/custom/mydetails.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
