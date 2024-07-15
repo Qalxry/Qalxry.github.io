@@ -1,0 +1,1737 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head><!-- hexo injector head_begin start --><script src="/js/custom/auto_generate/theme_config.js" defer></script><!-- hexo injector head_begin end -->
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.jpg">
+  <link rel="icon" href="/img/fluid.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#bbbbbb">
+  <meta name="author" content="しずり雪">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="深入理解计算机系统第三版笔记·上半 2024&#x2F;04&#x2F;19 —— Shizuri Yuki 第一章 计算机系统漫游 1 信息就是位+上下文  1234gcc -E hello.c -o hello.i	# Preprocess	预处理阶段gcc -S hello.i -o hello.s	# Complie		编译阶段gcc -c hello.s -o hello.o	# Assembl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【计算机系统】深入理解计算机系统第三版笔记·上半">
+<meta property="og:url" content="https://qalxry.github.io/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/index.html">
+<meta property="og:site_name" content="しずり雪 の Blog">
+<meta property="og:description" content="深入理解计算机系统第三版笔记·上半 2024&#x2F;04&#x2F;19 —— Shizuri Yuki 第一章 计算机系统漫游 1 信息就是位+上下文  1234gcc -E hello.c -o hello.i	# Preprocess	预处理阶段gcc -S hello.i -o hello.s	# Complie		编译阶段gcc -c hello.s -o hello.o	# Assembl">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
+<meta property="article:published_time" content="2024-04-24T16:44:52.000Z">
+<meta property="article:modified_time" content="2024-05-15T10:44:52.511Z">
+<meta property="article:author" content="しずり雪">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【计算机系统】深入理解计算机系统第三版笔记·上半 - しずり雪 の Blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/custom/mydetails.css">
+<link rel="stylesheet" href="/css/custom/fonts.css">
+<link rel="stylesheet" href="/css/custom/toc.css">
+<link rel="stylesheet" href="/css/custom/base.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"qalxry.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<!-- hexo injector head_end start -->
+            <script>
+            document.subthemes = {
+                default: "none",
+                list: [{"name":"none","path":"/"},{"name":"classic","path":"/subthemes/classic/"},{"name":"modern","path":"/subthemes/modern/"}]
+            };
+            </script>
+
+            <script src="/subthemes/subthemes.js" defer></script>
+            <style>
+                #theme-toggle-btn .nav-link {
+                    display: block;
+                    color: var(--navbar-text-color);
+                    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+                }
+                #theme-toggle-btn .nav-link svg {
+                    transition: fill 0.2s ease-in-out;
+                    fill: var(--navbar-text-color);
+                }
+                #theme-toggle-btn .nav-link:hover svg {
+                    fill: var(--link-hover-color);
+                }
+            </style>
+            <link rel="stylesheet" href="/subthemes/classic/css/main.css">
+<link rel="stylesheet" href="/subthemes/modern/css/main.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body><!-- hexo injector body_begin start -->
+        <script>
+        console.log('[Extend Features] running...');
+        document.extend_features = {"enable":false,"code_font":{"enable":false,"font_family":"SFMono-Regular,Menlo,Monaco,Consolas,\"Liberation Mono\",\"Courier New\",monospace","font_weight":400},"fixed_background":{"enable":false,"mask":{"enable":true,"list":[{"selector":"#web_bg","enable":true,"style":"background-color: rgba(0, 0, 0, 0.3);  border-radius: 1rem;"},{"selector":"#board","enable":true,"style":"background-color: rgba(0, 0, 0, 0);    border-radius: 1rem;"},{"selector":"#toc","enable":true,"style":"background-color: rgba(0, 0, 0, 0.15); border-radius: 1rem;"}]}}};
+        </script>
+        <script src="/extend_features/extend_features.js"></script>
+        <!-- hexo injector body_begin end -->
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>しずり雪 の Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/2024/02/26/%E6%88%91%E7%9A%84%E6%97%A5%E8%AE%B0%E4%B8%8E%E6%9C%AA%E6%9D%A5%E8%AE%A1%E5%88%92/">
+                <i class="iconfont icon-notebook"></i>
+                <span>日记</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【计算机系统】深入理解计算机系统第三版笔记·上半"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-04-25 00:44" pubdate>
+          2024年4月25日 凌晨 00:44
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          39 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="left-sidebar side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【计算机系统】深入理解计算机系统第三版笔记·上半</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年5月15日 晚上 18:44
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="深入理解计算机系统第三版笔记上半">深入理解计算机系统第三版笔记·上半</h1>
+<p>2024/04/19</p>
+<p>—— Shizuri Yuki</p>
+<h1 id="第一章-计算机系统漫游">第一章 计算机系统漫游</h1>
+<h2 id="信息就是位上下文">1 信息就是位+上下文</h2>
+<p><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419150948314.png" srcset="/img/loading.gif" lazyload alt="image-20240419150948314" style="zoom:67%;"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcc -E hello.c -o hello.i	<span class="hljs-comment"># Preprocess	预处理阶段</span><br>gcc -S hello.i -o hello.s	<span class="hljs-comment"># Complie		编译阶段</span><br>gcc -c hello.s -o hello.o	<span class="hljs-comment"># Assemble		汇编阶段</span><br>gcc hello.o -o hello		<span class="hljs-comment"># Link			链接阶段</span><br></code></pre></td></tr></table></figure>
+<h3 id="ascii码表">ASCII码表</h3>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">000</th>
+<th style="text-align: center;">001</th>
+<th style="text-align: center;">010</th>
+<th style="text-align: center;">011</th>
+<th style="text-align: center;">100</th>
+<th style="text-align: center;">101</th>
+<th style="text-align: center;">110</th>
+<th style="text-align: center;">111</th>
+<th style="text-align: center;">HIGH 3</th>
+<th style="text-align: center;"><em>BIN</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>0</strong></td>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"><strong><em>HEX</em></strong></td>
+<td style="text-align: center;"><strong>LOW 4</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>NUL(null,\0)</code></td>
+<td style="text-align: center;"><code>DLE</code></td>
+<td style="text-align: center;"><code>SP(Space)</code></td>
+<td style="text-align: center;"><code>0</code></td>
+<td style="text-align: center;"><code>@</code></td>
+<td style="text-align: center;"><code>P</code></td>
+<td style="text-align: center;"><code>|</code>p<code>|   **0**   | **0000**  | |</code>SOH<code>|</code>DC1<code>|</code>!<code>|</code>1<code>|</code>A<code>|</code>Q<code>|</code>a<code>|</code>q<code>|   **1**   | **0001**  | |</code>STX<code>|</code>DC2<code>|</code>"<code>|</code>2<code>|</code>B<code>|</code>R<code>|</code>b<code>|</code>r<code>|   **2**   | **0010**  | |</code>ETX<code>|</code>DC3<code>|</code>#<code>|</code>3<code>|</code>C<code>|</code>S<code>|</code>c<code>|</code>s<code>|   **3**   | **0011**  | |</code>EOT<code>|</code>DC4<code>|</code>$<code>|</code>4<code>|</code>D<code>|</code>T<code>|</code>d<code>|</code>t<code>|   **4**   | **0100**  | |</code>ENQ<code>|</code>NAK<code>|</code>%<code>|</code>5<code>|</code>E<code>|</code>U<code>|</code>e<code>|</code>u<code>|   **5**   | **0101**  | |</code>ACK<code>|</code>SYN<code>|</code>&amp;<code>|</code>6<code>|</code>F<code>|</code>V<code>|</code>f<code>|</code>v<code>|   **6**   | **0110**  | |</code>BEL(Bell,)<code>|</code>ETB<code>|</code>'<code>|</code>7<code>|</code>G<code>|</code>W<code>|</code>g<code>|</code>w<code>|   **7**   | **0111**  | |</code>BS(Backspace,<code>|</code>CAN<code>|</code>(<code>|</code>8<code>|</code>H<code>|</code>X<code>|</code>h<code>|</code>x<code>|   **8**   | **1000**  | |</code>HT(Horizontal
+Tab,<code>|</code>EM<code>|</code>)<code>|</code>9<code>|</code>I<code>|</code>Y<code>|</code>i<code>|</code>y<code>|   **9**   | **1001**  | |</code>LF(New
+Line,)<code>|</code>SUB<code>|</code>*<code>|</code>:<code>|</code>J<code>|</code>Z<code>|</code>j<code>|</code>z<code>|   **A**   | **1010**  | |</code>VT(Vertical
+Tab,<code>|</code>ESC(Escape)<code>|</code>+<code>|</code>;<code>|</code>K<code>|</code>[<code>|</code>k<code>|</code>{<code>|   **B**   | **1011**  | |</code>FF(<code>|</code>FS<code>|</code>,<code>|</code>&lt;<code>|</code>L<code>|</code>`</td>
+<td style="text-align: center;"><code>l</code></td>
+<td style="text-align: center;"><code>|</code></td>
+<td style="text-align: center;"><strong>C</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>CR(Carriage Return,\r)</code></td>
+<td style="text-align: center;"><code>GS</code></td>
+<td style="text-align: center;"><code>-</code></td>
+<td style="text-align: center;"><code>=</code></td>
+<td style="text-align: center;"><code>M</code></td>
+<td style="text-align: center;"><code>]</code></td>
+<td style="text-align: center;"><code>m</code></td>
+<td style="text-align: center;"><code>&#125;</code></td>
+<td style="text-align: center;"><strong>D</strong></td>
+<td style="text-align: center;"><strong>1101</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>SO</code></td>
+<td style="text-align: center;"><code>RS</code></td>
+<td style="text-align: center;"><code>.</code></td>
+<td style="text-align: center;"><code>&gt;</code></td>
+<td style="text-align: center;"><code>N</code></td>
+<td style="text-align: center;"><code>^</code></td>
+<td style="text-align: center;"><code>n</code></td>
+<td style="text-align: center;"><code>~</code></td>
+<td style="text-align: center;"><strong>E</strong></td>
+<td style="text-align: center;"><strong>1110</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>SI</code></td>
+<td style="text-align: center;"><code>US</code></td>
+<td style="text-align: center;"><code>/</code></td>
+<td style="text-align: center;"><code>?</code></td>
+<td style="text-align: center;"><code>O</code></td>
+<td style="text-align: center;"><code>_</code></td>
+<td style="text-align: center;"><code>o</code></td>
+<td style="text-align: center;"><code>DEL</code></td>
+<td style="text-align: center;"><strong>F</strong></td>
+<td style="text-align: center;"><strong>1111</strong></td>
+</tr>
+</tbody>
+</table>
+<p>速记：</p>
+<ul>
+<li><code>\t</code> 为 0x09，<code>\n</code> 为 0x0A，<code>\r</code> 为
+0x0D，<code>space</code> 为 0x20，<code>ESC</code> 为 0x1B。</li>
+<li><code>0</code> 为 0x30，数字以0开头。</li>
+<li><code>A</code> 为 0x41，<code>a</code> 为
+0x61。小写在大写后面。</li>
+</ul>
+<h2 id="处理器读执行指令流程">2 处理器读、执行指令流程</h2>
+<h2 id="系统硬件组成">3 系统硬件组成</h2>
+<ul>
+<li>总线：</li>
+<li>I/O 设备：每个I/O设备都通过一个
+<strong>控制器或适配器（两者不同）</strong> 与I/O总线相连
+<ul>
+<li>控制器：I/O设备本身或主板上的芯片组</li>
+<li>适配器：一块插在主板插槽上的卡</li>
+</ul></li>
+<li>主存：RAM</li>
+<li>处理器：</li>
+</ul>
+<blockquote>
+<p>外存：指磁盘。</p>
+</blockquote>
+<h2 id="储存设备层次">4 储存设备层次</h2>
+<p><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419152216403.png" srcset="/img/loading.gif" lazyload alt="image-20240419152216403" style="zoom: 50%;"></p>
+<h2 id="操作系统管理硬件">5 操作系统管理硬件</h2>
+<p>操作系统是应用程序和硬件之间插入的一层软件。</p>
+<p>所有应用程序对硬件的操作尝试都必须通过操作系统。</p>
+<p><strong>基本功能</strong></p>
+<ul>
+<li>防止硬件被失控的应用程序滥用</li>
+<li>向应用程序提供简单一致的机制来控制复杂而又通常大不相同的低级硬件设备</li>
+</ul>
+<p><strong>操作系统基本抽象概念</strong></p>
+<ul>
+<li>进程：对处理器、主存和I/O设备的抽象表示</li>
+<li>虚拟内存：对主存和磁盘I/O设备的抽象表示</li>
+<li>文件：对I/O设备的抽象表示</li>
+</ul>
+<figure>
+<img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240423232707916.png" srcset="/img/loading.gif" lazyload alt="image-20240423232707916">
+<figcaption aria-hidden="true">image-20240423232707916</figcaption>
+</figure>
+<p><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419160441119.png" srcset="/img/loading.gif" lazyload alt="image-20240419160441119" style="zoom: 50%;"></p>
+<h2 id="amdahl-定律">6 Amdahl 定律</h2>
+<h1 id="第二章-信息的表示和处理">第二章 信息的表示和处理</h1>
+<h2 id="信息存储">1 信息存储</h2>
+<h3 id="字">1.1 字</h3>
+<p>每台计算机都有一个<strong>字长</strong>（word
+size），指明整数和指针数据的标称大小（nominal
+size）。因为虚拟地址是以这样的一个字来编码的，所以字长决定的最重要的系统参数就是<strong>虚拟地址空间的最大大小</strong>。</p>
+<p>也就是说，对于一个字长为 <span class="math inline">\(w\)</span>
+位的机器而言，虚拟地址的范围为 <span class="math inline">\(0\)</span> ~
+<span class="math inline">\(2^{w-1}\)</span> ，程序最多访问 <span class="math inline">\(2^{w}\)</span> 个字节。</p>
+<p>x86-32架构字长是32，x86-64架构字长是64。</p>
+<h3 id="数据大小">1.2 数据大小</h3>
+<figure>
+<img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240423213537983.png" srcset="/img/loading.gif" lazyload alt="image-20240423213537983">
+<figcaption aria-hidden="true">image-20240423213537983</figcaption>
+</figure>
+<h2 id="寻址和字节顺序">2 寻址和字节顺序</h2>
+<ul>
+<li><p>小端模式（Little Endian）</p>
+<p>小端模式是指数据的低位字节存储在低地址上，而数据的高位字节则存放在高地址上。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">0x12345678</span>; <span class="hljs-comment">// --&gt; 78 56 34 12</span><br></code></pre></td></tr></table></figure>
+<p><strong>x86和x86-64都采用的小端模式</strong>。所以查看内存时，读到的多字节变量要反过来读。</p></li>
+<li><p>大端模式（Big Endian）</p>
+<p>大端模式则与小端相反，它是指数据的高位字节存储在低地址上，而数据的低位字节存放在高地址上。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> a = <span class="hljs-number">0x12345678</span>; <span class="hljs-comment">// --&gt; 12 34 56 78</span><br></code></pre></td></tr></table></figure>
+<p>ARM采用小端、大端可调的模式。不过一般使用小端模式。</p>
+<p>网络传输的字节序通常为<strong>大端模式</strong>。</p></li>
+</ul>
+<h2 id="整数">3 整数</h2>
+<p>注意事项：</p>
+<ul>
+<li><p>有符号数的符号扩展。</p></li>
+<li><p>当C语言执行一个运算时，如果它的一个运算数是有符号的而另一个是无符号的，那么C语言会隐式地<strong>将有符号参数强制类型转换为无符号数</strong>，并假设这两个数都是非负的，来执行这个运算。</p>
+<p><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419161647388.png" srcset="/img/loading.gif" lazyload alt="image-20240419161647388" style="zoom: 50%;"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> x = <span class="hljs-number">20</span>;<br>    <span class="hljs-type">int</span> y = <span class="hljs-number">-5</span>;<br>    <span class="hljs-keyword">if</span> (x &gt; y) <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;x &gt; y\n&quot;</span>);<br>    <span class="hljs-keyword">else</span>       <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;x &lt;= y\n&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ gcc if.c -o <span class="hljs-keyword">if</span> &amp;&amp; ./if<br>x &lt;= y<br></code></pre></td></tr></table></figure>
+<p>原因在于C语言在比较无符号数和有符号数时自动把所有数都看作无符号数，导致y变得很大。</p></li>
+<li><p>补码的相反数：<code>~x + 1</code></p></li>
+<li><p>补码乘法：视为无符号数进行乘法，然后直接截断再转为补码作为结果。</p></li>
+<li><p>乘以常数：</p>
+<p><code>x * 14 == x * (2^3 + 2^3 + 2^1) == (x &lt;&lt; 3) + (x &lt;&lt; 2) + (x &lt;&lt; 1)</code></p>
+<p><code>x * 14 == x * (2^4 - 2^1) == (x &lt;&lt; 4) - (x &lt;&lt; 1)</code></p></li>
+<li><p>补码除法（除以2的幂，<code>x/2^k</code>）：</p>
+<p>注意负数不能直接移位，需要加上偏置值 <span class="math inline">\(2^k-1\)</span>。</p>
+<p><code>x &lt; 0 ? (x+(1&lt;&lt;k)-1)&gt;&gt;k : x&gt;&gt;k</code></p></li>
+</ul>
+<h2 id="浮点数">4 浮点数</h2>
+<h3 id="二进制小数">4.1 二进制小数</h3>
+<p>转为十进制小数方法：先将小数点后的位全部左移到小数点前（共左移 <span class="math inline">\(k\)</span> 位），然后转为十进制整数，之后除以
+<span class="math inline">\(2^k\)</span> 即为十进制小数。</p>
+<p>十进制小数转为二进制方法：</p>
+<ol type="1">
+<li>将小数点前的整数部分按照常规的十进制整数转换为二进制的方法进行转换。</li>
+<li>对于小数部分，以下是转换方法：
+<ul>
+<li>乘以2，然后记录下整数部分作为一个bit。</li>
+<li>保留小数部分，再次乘以2，然后再次记录下整数部分。</li>
+<li>重复这个过程，直到小数部分变成0，或者获得了足够的精度。</li>
+</ul></li>
+</ol>
+<h3 id="ieee-浮点数表示">4.2 IEEE 浮点数表示</h3>
+<p>由于是科学计数法，所以数值越大，它的最小递增单位就越大，最大的递增单位是超级大的。</p>
+<p><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419170730774.png" srcset="/img/loading.gif" lazyload></p>
+<p>以float为例的给定位表示：</p>
+<p><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419165555937.png" srcset="/img/loading.gif" lazyload alt=" " style="zoom:40%;"></p>
+<ul>
+<li>规格化
+<ul>
+<li>尾数：<code>1.____frac(22:0)____</code> （小数点前有隐含的1）</li>
+<li>阶码：<code>E = e - Bias</code>
+。float的Bias为127，double的Bias为1023。</li>
+</ul></li>
+<li>非规格化
+<ul>
+<li>尾数：<code>0.____frac(22:0)____</code> （小数点前是0）</li>
+<li>阶码：<code>E = 1 - Bias</code>
+。float的E为-126，double的E为-1022。</li>
+</ul></li>
+<li>特殊值
+<ul>
+<li>无穷：用于表示溢出的结果</li>
+<li>NaN：（Not a Number）用作一些无法表示的结果，比如 <span class="math inline">\(\sqrt{-1}\)</span> 和 <span class="math inline">\(\infin - \infin\)</span> 。</li>
+</ul></li>
+</ul>
+<h3 id="浮点数数值范围">4.3 浮点数数值范围</h3>
+<p>要注意非规格和规划化数是恰好衔接的。</p>
+<p>规格化数的Step随着阶码的增加逐渐变大。非规格化数的Step不变，所以非规格化数区域数值变化是线性的。</p>
+<figure>
+<img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419220209080.png" srcset="/img/loading.gif" lazyload alt="image-20240419220209080">
+<figcaption aria-hidden="true">image-20240419220209080</figcaption>
+</figure>
+<h3 id="舍入">4.4 舍入</h3>
+<p>四舍六入五成双。（银行家算法）</p>
+<p>我们将最低有效位的值0认为是偶数，反之认为是奇数。</p>
+<h3 id="浮点运算">4.5 浮点运算</h3>
+<p>注意不同的计算顺序可能会导致最终的结果不同。因为精度损失的原因。</p>
+<h1 id="第三章-程序的机器级表示">第三章 程序的机器级表示</h1>
+<h2 id="寄存器">1 寄存器</h2>
+<figure>
+<img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419214649346.png" srcset="/img/loading.gif" lazyload alt="image-20240419214649346">
+<figcaption aria-hidden="true">image-20240419214649346</figcaption>
+</figure>
+<h3 id="通用寄存器">1.1 通用寄存器</h3>
+<figure>
+<img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419221538723.png" srcset="/img/loading.gif" lazyload alt="image-20240419221538723">
+<figcaption aria-hidden="true">image-20240419221538723</figcaption>
+</figure>
+<blockquote>
+<p>x86-64 仍然支持AH、BH、CH、DH寄存器的访问，但是具有一定限制。</p>
+<p>x86-64 中 Intel
+称R8<sub>R15的低8位寄存器为R8L</sub>R15L，而微软称为R8B~R15B。</p>
+</blockquote>
+<p><code>E</code>：<strong>E</strong>xtended</p>
+<p><code>R</code>：<strong>R</strong>egister</p>
+<p><code>X</code>：The <strong>placeholder</strong> of <code>H</code>
+and <code>L</code>, because AX can be divided into AH and AL.</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: left;">寄存器</th>
+<th style="text-align: left;">常用用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RAX (Accumulator Register)</td>
+<td style="text-align: left;">第1个返回值寄存器、累加器</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RBX (Base Register)</td>
+<td style="text-align: left;">内存指针、基址寄存器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RCX (Counter Register)</td>
+<td style="text-align: left;">第4个整数参数、this指针、循环控制、计数器</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RDX (Data Register)</td>
+<td style="text-align: left;">第3个整数参数、第2个返回值寄存器、整数乘除法</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RSI (Source Index)</td>
+<td style="text-align: left;">第2个整数参数、串指令源指针、索引寄存器</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RDI (Destination Index)</td>
+<td style="text-align: left;">第1个整数参数、串指令目标指针、索引寄存器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RBP (Base Pointer)</td>
+<td style="text-align: left;">栈顶指针</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RSP (Stack Pointer)</td>
+<td style="text-align: left;">栈帧基址指针</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R8</td>
+<td style="text-align: left;">第5个整数参数</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R9</td>
+<td style="text-align: left;">第6个整数参数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R10</td>
+<td style="text-align: left;">静态链指针（用于嵌套函数）</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R11</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R12</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R13</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R14</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R15</td>
+<td style="text-align: left;">\</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RIP (Instruction Pointer)</td>
+<td style="text-align: left;">指令指针。只读，且不可拆分。指向下一条需要执行的指令地址。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="段寄存器">1.2 段寄存器</h3>
+<p>（CS，DS，SS，ES，FS，GS）</p>
+<blockquote>
+<p>段寄存器源于Intel
+8086处理器，ALU的数据总线宽度只有16位，而为了更大的内存单元，Intel
+想到了一个折中的办法：把内存分段，并设计了4个段寄存器，CS，DS，ES和SS，分别用于指令、数据、其它和堆栈，这样地址总线为32位。</p>
+<p>CS：Code Segment 代码段寄存器</p>
+<p>DS：Data Segment 数据段寄存器</p>
+<p>SS：Stack Segment 堆栈段寄存器</p>
+<p>ES：Extra Segment 附加段寄存器（辅助段）</p>
+<p>FS：Flag Segment 标志段寄存器（辅助段，80386起增加）</p>
+<p>GS：Global Segment 全局段寄存器（辅助段，80386起增加）</p>
+<p>由于段寄存器总是和其他一些像指针寄存器，变址寄存器，控制寄存器一起使用，所以在这里，不单独介绍段寄存器，而是将段寄存器和一些其他的常用寄存器搭配介绍。</p>
+<ul>
+<li><p><strong>CS</strong> <strong>寄存器组合 IP</strong>
+<strong>寄存器</strong></p>
+<p>CS:IP 两个寄存器指示了 CPU 当前将要读取的指令的地址，其中 CS
+为代码段寄存器，而 IP 为指令指针寄存器
+。<strong>当一个可执行文件加载到内存中以后，CS:IP
+两个寄存器便指向了这个可执行文件的起始地址</strong>，然后 CPU
+就可以从这个起始地址开始往下读取指令，当读取完指令后，CS:IP
+将会自动的改变，基本上是改变
+IP，从而指向下一条要读取的指令，这样就可以执行这个可执行文件了。任何时候，CS:IP
+指向的地址中的内容都是 CPU 当前执行的指令。</p></li>
+<li><p><strong>SS</strong> <strong>寄存器组合</strong>
+<strong>SP</strong> <strong>寄存器</strong></p>
+<p>SS:SP 两个寄存器指向的是内存栈的栈顶元素。当使用 PUSH 指令向栈中压入
+1 个字节单元时，SP =SP - 1；即栈顶元素会发生变化；当使用 POP
+指令从栈中弹出 1 个字节单元时， SP =SP +
+1；即栈顶元素会发生变化。</p></li>
+<li><p><strong>DS</strong> <strong>寄存器和</strong> <strong>ES</strong>
+<strong>寄存器</strong></p>
+<p>DS 寄存器和 ES 寄存器都属于段寄存器，其实它们和 CS 寄存器以及 SS
+寄存器用起来区别不大，既然是段寄存器的话，自然它们存放的就是某个段地址了。我们知道，CPU
+要访问一个内存单元时，必须要提供一个指向这个内存单元的物理地址给 CPU
+，而<strong>在 8086 CPU中,物理地址是由段地址左移 4
+位(乘以16)后加上偏移地址形成的。</strong>我们也就只需要提供段地址和偏移地址即
+OK 。DS寄存器存放的就是数据段的段地址
+，除了BP基指针寄存器外，其余的寄存器都默认使用DS寄存器的值作为段地址。</p></li>
+<li><p><strong>FS 寄存器和 GS 寄存器</strong></p>
+<p>FS 寄存器用于指向 TIB（Thread Information
+Block）。该结构体包含进程中运行线程的各种信息，进程中的每个线程都对应着一个TIB结构体。</p>
+<p>Windows x86 使用FS寄存器，GS寄存器始终置为0。</p>
+<p>Windows x64
+使用FS寄存器支持32位程序运行，使用GS寄存器支持64位程序运行。</p>
+<p>程序只使用FS和GS其中一个，不会都使用。</p></li>
+</ul>
+</blockquote>
+<h3 id="eflags-寄存器">1.3 EFLAGS 寄存器</h3>
+<figure>
+<img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419232000230.png" srcset="/img/loading.gif" lazyload alt="image-20240419232000230">
+<figcaption aria-hidden="true">image-20240419232000230</figcaption>
+</figure>
+<p>重要的常用标志：</p>
+<ul>
+<li><strong>CF</strong> ：进位标志。</li>
+<li><strong>ZF</strong> ：零标志。</li>
+<li><strong>SF</strong> ：符号标志。</li>
+<li><strong>OF</strong> ：溢出标志。</li>
+<li>AF ：辅助进位标志。指示BCD加减法的进位或借位情况。</li>
+<li>PF
+：奇偶校验标志。统计最低有效字节（低8位）的奇偶性。（1=偶，0=奇）</li>
+<li>DF：方向标志。指示串指令执行时EDI和ESI寄存器的自动递增方向。（0=从低到高）</li>
+</ul>
+<h2 id="数据格式">2 数据格式</h2>
+<figure>
+<img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419230249516.png" srcset="/img/loading.gif" lazyload alt="image-20240419230249516">
+<figcaption aria-hidden="true">image-20240419230249516</figcaption>
+</figure>
+<blockquote>
+<p>注意：</p>
+<p>long在64位Windows下是4字节，在64位Linux下是8字节。</p>
+<p>32模式下的long
+long采用额外的操作软支持64位数值的运算。低32位存入EAX，高32位存入EDX。</p>
+</blockquote>
+<figure>
+<img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240419221247407.png" srcset="/img/loading.gif" lazyload alt="image-20240419221247407">
+<figcaption aria-hidden="true">image-20240419221247407</figcaption>
+</figure>
+<p><strong>注意区别系统的“字”和这里的“字”！！！</strong></p>
+<h2 id="操作数">3 操作数</h2>
+<h3 id="立即数">3.1 立即数</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">AT&amp;T</th>
+<th style="text-align: center;">Intel</th>
+<th style="text-align: center;">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>movq $1234567,%rax</code></td>
+<td style="text-align: center;"><code>movq rax,1234567</code></td>
+<td style="text-align: center;">rax=1234567</td>
+</tr>
+</tbody>
+</table>
+<h3 id="寄存器-1">3.2 寄存器</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">AT&amp;T</th>
+<th style="text-align: center;">Intel</th>
+<th style="text-align: center;">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>movq %rcx,%rax</code></td>
+<td style="text-align: center;"><code>movq rax,rcx</code></td>
+<td style="text-align: center;">rax=rcx</td>
+</tr>
+</tbody>
+</table>
+<h3 id="内存">3.3 内存</h3>
+<p><span class="math display">\[
+\text{Effective
+Address}=\text{BaseReg}+\text{IndexReg}*\text{ScaleFactor}+\text{Disp}
+\\
+\text{（实际地址=基址寄存器+索引寄存器*放大因子+位移）}
+\]</span></p>
+<h4 id="x86-32-内存寻址模式">3.3.1 x86-32 内存寻址模式</h4>
+<ul>
+<li><p>基址寄存器：可以使用任意通用寄存器。</p>
+<p><strong>（注意EIP不是通用寄存器！IA32通用寄存器只有EAX EBX ECX EDX
+EBP ESP ESI EDI ）</strong></p></li>
+<li><p>索引寄存器：可以使用<strong>除 ESP
+外</strong>的通用寄存器。用于访问数组中的某个元素。</p></li>
+<li><p>位移（Displacement）：常数值，被编码到指令中。</p></li>
+<li><p>放大因子：有效的放大因子为1、2、4、8。</p></li>
+</ul>
+<p>共8种寻址方式：</p>
+<table>
+
+<thead>
+<tr class="header">
+<th>寻址方式</th>
+<th style="text-align: left;">AT&amp;T示例</th>
+<th style="text-align: left;">Intel示例</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">常用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Disp</td>
+<td style="text-align: left;"><code>movl $0x123,0x804c010</code></td>
+<td style="text-align: left;"><code>mov ds:0x804c010,0x123</code></td>
+<td style="text-align: left;">绝对寻址</td>
+<td style="text-align: left;">访问全局变量</td>
+</tr>
+<tr class="even">
+<td>BaseReg</td>
+<td style="text-align: left;"><code>mov (%eax),$0x666</code></td>
+<td style="text-align: left;"><code>mov $0x666,[eax]</code></td>
+<td style="text-align: left;">间接寻址</td>
+<td style="text-align: left;">访问变量指针的值</td>
+</tr>
+<tr class="odd">
+<td>BaseReg+Disp</td>
+<td style="text-align: left;"><code>mov %eax,-0x8(%ebp)</code></td>
+<td style="text-align: left;"><code>mov [ebp-0x8],eax</code></td>
+<td style="text-align: left;">基址+偏移量寻址</td>
+<td style="text-align: left;">访问局部变量、函数参数</td>
+</tr>
+<tr class="even">
+<td>Disp+IndexReg*SF</td>
+<td style="text-align: left;"><code>mov 0x8(,%eax,4),%eax</code></td>
+<td style="text-align: left;"><code>mov eax,[eax*4+0x8]</code></td>
+<td style="text-align: left;">比例变址寻址</td>
+<td style="text-align: left;">访问全局数组元素</td>
+</tr>
+<tr class="odd">
+<td>BaseReg+IndexReg</td>
+<td style="text-align: left;"><code>movl (%ebx,%ecx),%eax</code></td>
+<td style="text-align: left;"><code>mov eax,[ebx+ecx]</code></td>
+<td style="text-align: left;">变址寻址</td>
+<td style="text-align: left;">访问BYTE数组</td>
+</tr>
+<tr class="even">
+<td>BaseReg+IndexReg+Disp</td>
+<td style="text-align: left;"><code>movl 10(%ebx,%ecx),%eax</code></td>
+<td style="text-align: left;"><code>mov eax,[ebx+ecx+10]</code></td>
+<td style="text-align: left;">变址寻址</td>
+<td style="text-align: left;">访问结构体成员</td>
+</tr>
+<tr class="odd">
+<td>BaseReg+IndexReg*SF</td>
+<td style="text-align: left;"><code>movl (%ebx,%ecx,4),%eax</code></td>
+<td style="text-align: left;"><code>mov eax,[ebx+ecx*4]</code></td>
+<td style="text-align: left;">比例变址寻址</td>
+<td style="text-align: left;">访问数组指针的元素</td>
+</tr>
+<tr class="even">
+<td>BaseReg+IndexReg*SF+Disp</td>
+<td style="text-align: left;"><code>movl 10(%ebx,%ecx,4),%eax</code></td>
+<td style="text-align: left;"><code>mov eax,[ebx+ecx*4+10]</code></td>
+<td style="text-align: left;">比例变址寻址</td>
+<td style="text-align: left;">访问结构体的数组成员、多维数组</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注：在32位下，<strong>基址寄存器是EBP或ESP时，默认的段寄存器是SS，否则，默认的段寄存器是DS</strong>。所以AT&amp;T汇编省略了段寄存器，但Intel风格的没有省略。</p>
+</blockquote>
+<h4 id="x86-64-内存寻址模式">3.3.2 x86-64 内存寻址模式</h4>
+<p><strong><em>特别注意事项</em></strong></p>
+<ul>
+<li><strong>在 x86-64
+禁止使用32位寄存器作为内存的地址！必须使用64位的寄存器！！！！</strong></li>
+</ul>
+<p>x86-64多了1种寻址方式，常用于替代x86-32的Disp绝对寻址：</p>
+<table>
+
+<thead>
+<tr class="header">
+<th>寻址方式</th>
+<th>AT&amp;T示例</th>
+<th>Intel示例</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RIP + Disp</td>
+<td><code>movl $0x123,0x2f00(%rip)</code></td>
+<td><code>mov [rip+0x2f00],0x123</code></td>
+<td>RIP相对寻址</td>
+</tr>
+</tbody>
+</table>
+<p>该寻址方式支持PIC（Position Independent
+Code）位置无关代码，对于加载动态库比较方便，因为动态库的全局变量可以通过相对寻址。如果使用绝对寻址的话，就必须多一次重定向，更麻烦。</p>
+<p>示例代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> i;	<span class="hljs-comment">// 全局变量</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">test</span><span class="hljs-params">()</span> &#123; i = <span class="hljs-number">0x123</span>; &#125;<br></code></pre></td></tr></table></figure>
+<p>AT&amp;T汇编（x86-64 gcc 13.2）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs assembly">        	_Z4testv:<br>0x401106		push   %rbp									# 55<br>0x401107		mov    %rsp,%rbp							# 48 89 e5<br>0x40110a		movl   $0x123,0x2f00(%rip)   # 0x404014&lt;i&gt;	# c7 05 00 2f 00 00 23 01 00 00<br>0x401114		nop											# 90<br>0x401115		pop    %rbp									# 5d<br>0x401116		ret											# c3<br></code></pre></td></tr></table></figure>
+<p>当执行到 <code>movl $0x123,0x2f00(%rip)</code>
+的时候，PC指向下一条指令的地址，即 <code>%rip==0x401114</code> 。</p>
+<p>此时 <code>%rip + Disp = 0x401114 + 0x2f00 == 0x404014</code>
+，该位置为全局变量 <code>i</code> 。</p>
+<p>启用 <code>-m32</code> 标志编译后：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs assembly">_Z4testv:<br>    push   %ebp<br>	mov    %esp,%ebp<br>	movl   $0x123,0x804c010<br>	nop<br>	pop    %ebp<br>	ret<br></code></pre></td></tr></table></figure>
+<p>可见全局变量 <code>i</code>
+变成了固定地址，也就是x86-32的绝对寻址。</p>
+<h2 id="数据传送指令">4 数据传送指令</h2>
+<h3 id="操作数组合">4.1 操作数组合</h3>
+<p><strong><em>注意：数据传送指令中没有内存到内存的操作数组合。</em></strong></p>
+<table>
+
+<thead>
+<tr class="header">
+<th>类型</th>
+<th>AT&amp;T</th>
+<th>Intel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\text{Reg}\leftarrow
+\text{Imm}\)</span></td>
+<td><code>movl $0x4050,%eax</code></td>
+<td><code>mov eax,0x4050</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\text{Reg}\leftarrow
+\text{Reg}\)</span></td>
+<td><code>movw %bp,%sp</code></td>
+<td><code>mov sp,bp</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\text{Mem}\leftarrow
+\text{Imm}\)</span></td>
+<td><code>movb $-17,(%rsp)</code></td>
+<td><code>mov [rsp],-17</code></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\text{Mem}\leftarrow
+\text{Reg}\)</span></td>
+<td><code>movq %rax,-12(%rbp)</code></td>
+<td><code>mov [rbp-12],rax</code></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\text{Reg}\leftarrow
+\text{Mem}\)</span></td>
+<td><code>movb (%rdi,%rcx),%al</code></td>
+<td><code>mov al,[rdi+rcx]</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="mov">4.2 MOV</h3>
+<p>把数据从源位置复制到目的位置 ，不做任何变化。</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">指令（AT&amp;T风格）</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>movb S,D</code></td>
+<td style="text-align: left;">传送字节</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>movw S,D</code></td>
+<td style="text-align: left;">传送字</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>movl S,D</code></td>
+<td style="text-align: left;">传送双字</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>movq S,D</code></td>
+<td style="text-align: left;">传送四字（S=IMM时是假的四字，实际上是双字）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>movabsq IMM,REG</code></td>
+<td style="text-align: left;">传送真正的64位立即数到寄存器</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>特别注意事项</em></strong></p>
+<ol type="1">
+<li><p><code>movl S,REG</code>
+会将32位寄存器<strong>外部的高4字节清零</strong>。而<strong>其他的</strong>
+<code>movb movw</code>
+<strong>只会更新指定的那些寄存器字节或内存位置</strong>！</p></li>
+<li><p><code>movq IMM, D</code>
+立即数只能是32位的，然后符号扩展到64位。</p>
+<p><code>movabsq IMM,REG</code>
+则支持64位的立即数，但是目的操作数只能是寄存器，不能是内存。</p></li>
+</ol>
+<h3 id="movz">4.3 MOVZ</h3>
+<p>零扩展方式从较小源操作数传送较大源操作数。</p>
+<p>以<strong>寄存器或内存地址</strong>作为源操作数，以<strong>寄存器</strong>作为目的操作数。</p>
+<table>
+<thead>
+<tr class="header">
+<th><strong><code>MOVZ S,D</code></strong></th>
+<th>以零扩展进行传送</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>movzbw REG/MEM,REG</code></td>
+<td>将 <strong>字节</strong> 零扩展传送到 <strong>字</strong></td>
+</tr>
+<tr class="even">
+<td><code>movzbl REG/MEM,REG</code></td>
+<td>将 <strong>字节</strong> 零扩展传送到 <strong>双字</strong></td>
+</tr>
+<tr class="odd">
+<td><code>movzbq REG/MEM,REG</code></td>
+<td>将 <strong>字节</strong> 零扩展传送到 <strong>四字</strong></td>
+</tr>
+<tr class="even">
+<td><code>movzwl REG/MEM,REG</code></td>
+<td>将 <strong>字</strong> 零扩展传送到 <strong>双字</strong></td>
+</tr>
+<tr class="odd">
+<td><code>movzwq REG/MEM,REG</code></td>
+<td>将 <strong>字</strong> 零扩展传送到 <strong>四字</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>特别注意事项</em></strong></p>
+<ol type="1">
+<li><strong>没有 <code>movzlq</code>！！！</strong>这个是用
+<strong><code>movl S,REG</code>
+将64位寄存器的高4字节清零</strong>实现的。</li>
+<li>一定注意这里源操作数不能是立即数，目的操作数只能是寄存器！！</li>
+</ol>
+<h3 id="movs">4.4 MOVS</h3>
+<p>符号扩展方式从较小源操作数传送较大源操作数。</p>
+<p>以<strong>寄存器或内存地址</strong>作为源操作数，以<strong>寄存器</strong>作为目的操作数。</p>
+<table>
+<thead>
+<tr class="header">
+<th><strong><code>MOVS S,D</code></strong></th>
+<th>以符号扩展进行传送</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>movsbw REG/MEM,REG</code></td>
+<td>将 <strong>字节</strong> 符号扩展传送到 <strong>字</strong></td>
+</tr>
+<tr class="even">
+<td><code>movsbl REG/MEM,REG</code></td>
+<td>将 <strong>字节</strong> 符号扩展传送到 <strong>双字</strong></td>
+</tr>
+<tr class="odd">
+<td><code>movsbq REG/MEM,REG</code></td>
+<td>将 <strong>字节</strong> 符号扩展传送到 <strong>四字</strong></td>
+</tr>
+<tr class="even">
+<td><code>movswl REG/MEM,REG</code></td>
+<td>将 <strong>字</strong> 符号扩展传送到 <strong>双字</strong></td>
+</tr>
+<tr class="odd">
+<td><code>movswq REG/MEM,REG</code></td>
+<td>将 <strong>字</strong> 符号扩展传送到 <strong>四字</strong></td>
+</tr>
+<tr class="even">
+<td><code>movslq REG/MEM,REG</code></td>
+<td>将 <strong>双字</strong> 符号扩展传送到 <strong>四字</strong></td>
+</tr>
+<tr class="odd">
+<td><code>cltq</code></td>
+<td>把 <strong>%eax</strong> 符号扩展到 <strong>%rax</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>注意事项</em></strong></p>
+<ol type="1">
+<li><code>cltq</code> 没有操作数。效果与 <code>movslq %eax,%rax</code>
+一样，但是编码更短。</li>
+</ol>
+<h3 id="push-pop-leave">4.5 PUSH / POP / LEAVE</h3>
+<p>栈指针 ％rsp 指向栈顶元素，帧指针 %rbp 指向保存调用者的 %rbp
+的值的地址。</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: left;">指令</th>
+<th>等效指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>pushq S</code></td>
+<td><span class="math inline">\(\begin{align}&amp;\texttt{subq
+\$8,\%rsp}\\&amp;\texttt{movq S,(\%rsp)}\end{align}\)</span></td>
+<td>将四字压入栈</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>popq D</code></td>
+<td><span class="math inline">\(\begin{align}&amp;\texttt{movq
+(\%rsp),D}\\&amp;\texttt{addq \$8,\%rsp}\end{align}\)</span></td>
+<td>将四字弹出栈</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>leave</code></td>
+<td><span class="math inline">\(\begin{align}&amp;\texttt{movq
+\%rbp,\%rsp}\\&amp;\texttt{popq \%rbp}\end{align}\)</span></td>
+<td>将帧指针恢复到它之前的值</td>
+</tr>
+</tbody>
+</table>
+<h2 id="算术和逻辑指令">5 算术和逻辑指令</h2>
+<h3 id="常用算术操作">5.1 常用算术操作</h3>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: left;">伪指令（AT&amp;T）</th>
+<th>效果</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>ADD  S,D</code></td>
+<td><code>D = D + S</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ADC  S,D</code></td>
+<td><code>D = D + S + CF</code></td>
+<td>配合两个32位组成的64位的高32加法</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>SUB  S,D</code></td>
+<td><code>D = D - S</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>SBB  S,D</code></td>
+<td><code>D = D - S - CF</code></td>
+<td>配合两个32位组成的64位的高32减法</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>IMUL S,D</code></td>
+<td><code>D = signed(D) * S</code></td>
+<td>有符号整数乘法</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>MUL  S,D</code></td>
+<td><code>D = unsigned(D) * S</code></td>
+<td>无符号整数乘法</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>IDIV S,D</code></td>
+<td><code>D = signed(D) / S</code></td>
+<td>有符号整数除法</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>DIV  S,D</code></td>
+<td><code>D = unsigned(D) / S</code></td>
+<td>无符号整数除法</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>INC D</code></td>
+<td><code>D++</code></td>
+<td>递增</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>DEC D</code></td>
+<td><code>D--</code></td>
+<td>递减</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>NEG D</code></td>
+<td><code>D = -D</code></td>
+<td>相反数</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>位运算</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>NOT D</code></td>
+<td><code>D = ~D</code></td>
+<td>按位取反</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>AND S,D</code></td>
+<td><code>D &amp;= S</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>OR S,D</code></td>
+<td><code>D |= S</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>XOR S,D</code></td>
+<td><code>D ^= S</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>SAL k,D</code></td>
+<td><code>D &lt;&lt;= k</code></td>
+<td>算术左移，同时设置CF为最后一个被移出操作数的bit，要求</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>SHL k,D</code></td>
+<td><code>D &lt;&lt;= k</code></td>
+<td>逻辑左移，效果和 <code>SAL k,D</code> 完全一致</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>SAR k,D</code></td>
+<td><code>D &gt;&gt;= k</code></td>
+<td>算术右移，同时设置CF为最后一个被移出操作数的bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>SHR k,D</code></td>
+<td><code>D = unsigned(D) &gt;&gt; k</code></td>
+<td>逻辑右移，同时设置CF为最后一个被移出操作数的bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>SHLD k,S,D</code></td>
+<td><code>D = (unsigned(D)&lt;&lt;k)|(S的高k位补D的低k位)</code></td>
+<td>逻辑左移，但使用源操作数来补，CF被设置</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>SHRD k,S,D</code></td>
+<td><code>D = (S的低k位补D的高k位)|(unsigned(D)&gt;&gt;k)</code></td>
+<td>逻辑右移，但使用源操作数来补，CF被设置</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ROL k,D</code></td>
+<td><code>左旋</code></td>
+<td><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240423112410310.png" srcset="/img/loading.gif" lazyload alt="image-20240423112410310"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ROR k,D</code></td>
+<td><code>右旋</code></td>
+<td><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240423112420392.png" srcset="/img/loading.gif" lazyload alt="image-20240423112420392"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>RCL k,D</code></td>
+<td><code>带有CF的左旋</code></td>
+<td><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240423112342747.png" srcset="/img/loading.gif" lazyload alt="image-20240423112342747"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>RCR k,D</code></td>
+<td><code>带有CF的右旋</code></td>
+<td><img src="/2024/04/25/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%94%E8%AE%B0%C2%B7%E4%B8%8A%E5%8D%8A/image-20240423112355664.png" srcset="/img/loading.gif" lazyload alt="image-20240423112355664"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="特殊算术指令">5.2 特殊算术指令</h3>
+<p><strong>x86-64</strong></p>
+<p><code>%rdx</code> 作为高64位， <code>%rax</code> 作为低64位。</p>
+<table>
+
+<thead>
+<tr class="header">
+<th>指令（ATT）</th>
+<th>效果</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>imulq S</code></td>
+<td>`</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【计算机系统】深入理解计算机系统第三版笔记·上半</div>
+      <div>https://qalxry.github.io/2024/04/25/【计算机系统】深入理解计算机系统第三版笔记·上半/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>しずり雪</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年4月25日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年5月15日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-nc"></i>
+                  </span>
+                </a>
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/07/15/%E3%80%90Clash%E3%80%91%E6%88%91%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84CFW%E7%89%B9%E6%80%A7%E7%9A%84%E7%9B%B8%E5%85%B3%E8%AE%B0%E5%BD%95/" title="【Clash】我使用到的CFW特性的相关记录">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">【Clash】我使用到的CFW特性的相关记录</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/04/16/%E3%80%90%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E3%80%91%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%BA%A6%E5%AE%9A%E8%AF%A6%E8%A7%A3/" title="【计算机系统】函数调用约定详解">
+                        <span class="hidden-mobile">【计算机系统】函数调用约定详解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-sidebar side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+      <a href='https://hexo.io' target='_blank' rel='nofollow noopener'><span>Hexo</span></a> 
+<i class='iconfont icon-love'></i>
+<a href='https://github.com/fluid-dev/hexo-theme-fluid' target='_blank' rel='nofollow noopener'><span>Fluid</span></a>
+<div style='font-size: 0.85rem'>
+<span id='timeDate'>载入天数...</span>
+<span id='times'>载入时分秒...</span>
+<script src='/js/duration.js'></script>
+</div>
+
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              },
+              lazyAlwaysTypeset: (function() {
+                // 检查页面上是否存在 'mydetails' 元素
+                if (!document.querySelector('mydetails')) {
+                  return null; // 如果不存在，返回 null
+                } else {
+                  return ['mydetails']; // 如果存在，返回包含 'mydetails' 的数组
+                }
+                // 如果你直接给一个列表，那么如果页面上不存在这个元素，MathJax 将会崩溃
+              })(),
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  
+<script src="/js/d3.v7.min.js"></script>
+<script src="/js/custom/mydetails.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
