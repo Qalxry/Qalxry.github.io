@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>小记：Windows 11 配置 Conda 环境</title>
+    <link href="/2024/10/07/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-11-%E9%85%8D%E7%BD%AE-Conda-%E7%8E%AF%E5%A2%83/"/>
+    <url>/2024/10/07/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-11-%E9%85%8D%E7%BD%AE-Conda-%E7%8E%AF%E5%A2%83/</url>
+    
+    <content type="html"><![CDATA[<h1 id="小记windows-11-配置-conda-环境">小记：Windows 11 配置 Conda环境</h1><h3 id="安装-miniconda3">安装 miniconda3</h3><ol type="1"><li><p>下载 miniconda3 安装包，<a href="https://docs.conda.io/en/latest/miniconda.html">官网地址</a></p></li><li><p>安装miniconda3，安装过程中除了选择安装路径外，其他默认即可</p></li><li><p>安装完成后，添加如下环境变量：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">\path\to\your\miniconda3<br>\path\to\your\miniconda3\Scripts<br>\path\to\your\miniconda3\Library\bin<br></code></pre></td></tr></table></figure></li><li><p>重启文件资源管理器，此时终端 <code>conda</code> 命令可用</p></li><li><p>输入 <code>conda init</code> 初始化 conda 环境</p></li><li><p>重启终端，此时 conda 环境显示在最前面</p></li></ol><h3 id="环境配置">环境配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda create -n gnn python=3.10 -y<br>conda activate gnn<br>pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https://download.pytorch.org/whl/cu121<br>pip install torch-scatter torch-sparse torch-cluster -f https://data.pyg.org/whl/torch-2.2.2+cu121.html<br>pip install dgl -f https://data.dgl.ai/wheels/torch-2.2/cu121/repo.html<br>pip install tensorboard torch_geometric scikit-learn pydantic xformers==0.0.25.post1 transformers<br>pip install seaborn umap pacmap plotly<br><br>conda install -c pytorch faiss-gpu<br>pip install pytorch-metric-learning<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>吐槽</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>环境配置</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Y9000x 2022 安装 Ubuntu 24.04.1 踩坑大全</title>
     <link href="/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/"/>
     <url>/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/</url>
