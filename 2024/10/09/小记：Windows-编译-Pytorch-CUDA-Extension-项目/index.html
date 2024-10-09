@@ -16,26 +16,26 @@
   <meta name="author" content="しずり雪">
   <meta name="keywords" content="">
   
-    <meta name="description" content="小记：Windows 11 配置 Conda 环境 安装 miniconda3  下载 miniconda3 安装包，官网地址 安装 miniconda3，安装过程中除了选择安装路径外，其他默认即可 安装完成后，添加如下环境变量： 123\path\to\your\miniconda3\path\to\your\miniconda3\Scripts\path\to\your\min">
+    <meta name="description" content="小记：Windows 编译 Pytorch CUDA Extension 项目 之前一直在 Windows 上编译不了，最近终于弄好了，故在此记录过程。 首先 CUDA 版本必须和安装的 Pytorch 所对应的 CUDA 版本完整对应！不能偷懒！ 这里我使用的是 CUDA 12.1 的 Pytorch 2.2.1 ，所以下载 CUDA 12.1 。  原来我装的是 12.2 ，哪怕">
 <meta property="og:type" content="article">
-<meta property="og:title" content="小记：Windows 11 配置 Conda 环境">
-<meta property="og:url" content="https://qalxry.github.io/2024/10/07/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-11-%E9%85%8D%E7%BD%AE-Conda-%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:title" content="小记：Windows 编译 Pytorch CUDA Extension 项目">
+<meta property="og:url" content="https://qalxry.github.io/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/index.html">
 <meta property="og:site_name" content="しずり雪 の Blog">
-<meta property="og:description" content="小记：Windows 11 配置 Conda 环境 安装 miniconda3  下载 miniconda3 安装包，官网地址 安装 miniconda3，安装过程中除了选择安装路径外，其他默认即可 安装完成后，添加如下环境变量： 123\path\to\your\miniconda3\path\to\your\miniconda3\Scripts\path\to\your\min">
+<meta property="og:description" content="小记：Windows 编译 Pytorch CUDA Extension 项目 之前一直在 Windows 上编译不了，最近终于弄好了，故在此记录过程。 首先 CUDA 版本必须和安装的 Pytorch 所对应的 CUDA 版本完整对应！不能偷懒！ 这里我使用的是 CUDA 12.1 的 Pytorch 2.2.1 ，所以下载 CUDA 12.1 。  原来我装的是 12.2 ，哪怕">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://qalxry.github.io/img/cata.webp">
-<meta property="article:published_time" content="2024-10-07T08:52:33.000Z">
-<meta property="article:modified_time" content="2024-10-07T09:02:56.948Z">
+<meta property="og:image" content="https://qalxry.github.io/img/piclib/94810352_p0.jpg">
+<meta property="article:published_time" content="2024-10-09T02:50:24.000Z">
+<meta property="article:modified_time" content="2024-10-09T03:06:22.083Z">
 <meta property="article:author" content="しずり雪">
-<meta property="article:tag" content="环境配置">
+<meta property="article:tag" content="CUDA">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://qalxry.github.io/img/cata.webp">
+<meta name="twitter:image" content="https://qalxry.github.io/img/piclib/94810352_p0.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>小记：Windows 11 配置 Conda 环境 - しずり雪 の Blog</title>
+  <title>小记：Windows 编译 Pytorch CUDA Extension 项目 - しずり雪 の Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -257,13 +257,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/cata.webp') no-repeat center center; background-size: cover;">
+     style="background: url('/img/piclib/94810352_p0.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="小记：Windows 11 配置 Conda 环境"></span>
+            <span id="subtitle" data-typed-text="小记：Windows 编译 Pytorch CUDA Extension 项目"></span>
           
         </div>
 
@@ -274,8 +274,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-10-07 16:52" pubdate>
-          2024年10月7日 下午 16:52
+        <time datetime="2024-10-09 10:50" pubdate>
+          2024年10月9日 上午 10:50
         </time>
       </span>
     
@@ -286,7 +286,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          778 字
+          492 字
         
       </span>
     
@@ -297,7 +297,7 @@
         
         
         
-          4 分钟
+          3 分钟
         
       </span>
     
@@ -343,12 +343,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">小记：Windows 11 配置 Conda 环境</h1>
+            <h1 style="display: none">小记：Windows 编译 Pytorch CUDA Extension 项目</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年10月7日 下午 17:02
+                    本文最后更新于：2024年10月9日 上午 11:06
                   
                 
               </p>
@@ -356,21 +356,35 @@
             
               <div class="markdown-body">
                 
-                <h1 id="小记windows-11-配置-conda-环境">小记：Windows 11 配置 Conda
-环境</h1>
-<h3 id="安装-miniconda3">安装 miniconda3</h3>
-<ol type="1">
-<li><p>下载 miniconda3 安装包，<a target="_blank" rel="noopener" href="https://docs.conda.io/en/latest/miniconda.html">官网地址</a></p></li>
-<li><p>安装
-miniconda3，安装过程中除了选择安装路径外，其他默认即可</p></li>
-<li><p>安装完成后，添加如下环境变量：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">\path\to\your\miniconda3<br>\path\to\your\miniconda3\Scripts<br>\path\to\your\miniconda3\Library\bin<br></code></pre></td></tr></table></figure></li>
-<li><p>重启文件资源管理器，此时终端 <code>conda</code> 命令可用</p></li>
-<li><p>输入 <code>conda init</code> 初始化 conda 环境</p></li>
-<li><p>重启终端，此时 conda 环境显示在最前面</p></li>
-</ol>
-<h3 id="环境配置">环境配置</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">conda create -n gnn python=3.10 -y<br>conda activate gnn<br>pip install torch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 --index-url https://download.pytorch.org/whl/cu121<br>pip install torch-scatter torch-sparse torch-cluster -f https://data.pyg.org/whl/torch-2.2.2+cu121.html<br>pip install dgl -f https://data.dgl.ai/wheels/torch-2.2/cu121/repo.html<br>pip install tensorboard torch_geometric scikit-learn pydantic xformers==0.0.25.post1 transformers<br>pip install seaborn umap pacmap plotly<br><br>conda install -c pytorch faiss-gpu<br>pip install pytorch-metric-learning<br></code></pre></td></tr></table></figure>
+                <h1 id="小记windows-编译-pytorch-cuda-extension-项目">小记：Windows 编译
+Pytorch CUDA Extension 项目</h1>
+<p>之前一直在 Windows 上编译不了，最近终于弄好了，故在此记录过程。</p>
+<p>首先 CUDA 版本<strong><em>必须</em></strong>和安装的 Pytorch 所对应的
+CUDA 版本完整对应！不能偷懒！</p>
+<p>这里我使用的是 CUDA 12.1 的 Pytorch 2.2.1 ，所以下载 CUDA 12.1 。</p>
+<blockquote>
+<p>原来我装的是 12.2 ，哪怕只差了一个版本也无法编译。</p>
+<p>而且编译提供的信息也看不出是哪的问题，只能知道是在
+<code>run build_ext</code> 这个步骤的错误。</p>
+</blockquote>
+<p>GCC 编译器也很重要，从 Linux
+上编译的教训可知，<strong><em>不要顶格安装</em></strong>该 CUDA
+支持的最高编译器版本。我原先装的是 GCC 13.1 ，这个肯定不行， CUDA 12.1
+最高支持 GCC 12.3 。于是参考我在 Linux 使用 GCC 11.4
+，也下了个同样版本的。</p>
+<p>最终编译成功！！！</p>
+<figure>
+<img src="/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/image-20241009110152042.png" srcset="/img/loading.gif" lazyload alt="image-20241009110152042">
+<figcaption aria-hidden="true">image-20241009110152042</figcaption>
+</figure>
+<p>报错：
+<code>arch_list[-1] += '+PTX'  IndexError: list index out of range</code></p>
+<figure>
+<img src="/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/image-20241009105656921.png" srcset="/img/loading.gif" lazyload alt="image-20241009105656921">
+<figcaption aria-hidden="true">image-20241009105656921</figcaption>
+</figure>
+<p>这个是因为开了核显模式，GPU
+断开连接了，导致设备列表为空。把显卡连上就能编译了。</p>
 
                 
               </div>
@@ -389,7 +403,7 @@ miniconda3，安装过程中除了选择安装路径外，其他默认即可</p>
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%90%90%E6%A7%BD/" class="category-chain-item">吐槽</a>
+  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="category-chain-item">深度学习</a>
   
   
 
@@ -404,7 +418,7 @@ miniconda3，安装过程中除了选择安装路径外，其他默认即可</p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">#环境配置</a>
+        <a href="/tags/CUDA/">#CUDA</a>
       
     </div>
   
@@ -416,8 +430,8 @@ miniconda3，安装过程中除了选择安装路径外，其他默认即可</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>小记：Windows 11 配置 Conda 环境</div>
-      <div>https://qalxry.github.io/2024/10/07/小记：Windows-11-配置-Conda-环境/</div>
+      <div>小记：Windows 编译 Pytorch CUDA Extension 项目</div>
+      <div>https://qalxry.github.io/2024/10/09/小记：Windows-编译-Pytorch-CUDA-Extension-项目/</div>
     </div>
     <div class="license-meta">
       
@@ -429,13 +443,13 @@ miniconda3，安装过程中除了选择安装路径外，其他默认即可</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年10月7日</div>
+          <div>2024年10月9日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年10月7日</div>
+          <div>2024年10月9日</div>
         </div>
       
       
@@ -478,18 +492,12 @@ miniconda3，安装过程中除了选择安装路径外，其他默认即可</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/" title="小记：Windows 编译 Pytorch CUDA Extension 项目">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">小记：Windows 编译 Pytorch CUDA Extension 项目</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/" title="Y9000x 2022 安装 Ubuntu 24.04.1 踩坑大全">
-                        <span class="hidden-mobile">Y9000x 2022 安装 Ubuntu 24.04.1 踩坑大全</span>
+                      <a href="/2024/10/07/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-11-%E9%85%8D%E7%BD%AE-Conda-%E7%8E%AF%E5%A2%83/" title="小记：Windows 11 配置 Conda 环境">
+                        <span class="hidden-mobile">小记：Windows 11 配置 Conda 环境</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

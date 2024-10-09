@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>小记：Windows 编译 Pytorch CUDA Extension 项目</title>
+    <link href="/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/"/>
+    <url>/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/</url>
+    
+    <content type="html"><![CDATA[<h1 id="小记windows-编译-pytorch-cuda-extension-项目">小记：Windows 编译Pytorch CUDA Extension 项目</h1><p>之前一直在 Windows 上编译不了，最近终于弄好了，故在此记录过程。</p><p>首先 CUDA 版本<strong><em>必须</em></strong>和安装的 Pytorch 所对应的CUDA 版本完整对应！不能偷懒！</p><p>这里我使用的是 CUDA 12.1 的 Pytorch 2.2.1 ，所以下载 CUDA 12.1 。</p><blockquote><p>原来我装的是 12.2 ，哪怕只差了一个版本也无法编译。</p><p>而且编译提供的信息也看不出是哪的问题，只能知道是在<code>run build_ext</code> 这个步骤的错误。</p></blockquote><p>GCC 编译器也很重要，从 Linux上编译的教训可知，<strong><em>不要顶格安装</em></strong>该 CUDA支持的最高编译器版本。我原先装的是 GCC 13.1 ，这个肯定不行， CUDA 12.1最高支持 GCC 12.3 。于是参考我在 Linux 使用 GCC 11.4，也下了个同样版本的。</p><p>最终编译成功！！！</p><figure><img src="/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/image-20241009110152042.png" alt="image-20241009110152042"><figcaption aria-hidden="true">image-20241009110152042</figcaption></figure><p>报错：<code>arch_list[-1] += '+PTX'  IndexError: list index out of range</code></p><figure><img src="/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/image-20241009105656921.png" alt="image-20241009105656921"><figcaption aria-hidden="true">image-20241009105656921</figcaption></figure><p>这个是因为开了核显模式，GPU断开连接了，导致设备列表为空。把显卡连上就能编译了。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>深度学习</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CUDA</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>小记：Windows 11 配置 Conda 环境</title>
     <link href="/2024/10/07/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-11-%E9%85%8D%E7%BD%AE-Conda-%E7%8E%AF%E5%A2%83/"/>
     <url>/2024/10/07/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-11-%E9%85%8D%E7%BD%AE-Conda-%E7%8E%AF%E5%A2%83/</url>
