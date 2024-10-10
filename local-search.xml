@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>【算法】计算除数函数的和</title>
+    <link href="/2024/10/11/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E8%AE%A1%E7%AE%97%E9%99%A4%E6%95%B0%E5%87%BD%E6%95%B0%E7%9A%84%E5%92%8C/"/>
+    <url>/2024/10/11/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E8%AE%A1%E7%AE%97%E9%99%A4%E6%95%B0%E5%87%BD%E6%95%B0%E7%9A%84%E5%92%8C/</url>
+    
+    <content type="html"><![CDATA[<p>计算除数函数 <span class="math inline">\(\sigma_{0}(n)\)</span>求和： <span class="math display">\[T(n)=\sum_{i=1}^{n} \sigma_{0}(i)=\sum_{i=1}^{n}\sum_{d~|~i}1\]</span> 注意到 <span class="math inline">\(\sum_{i=1}^{n}\sum_{d~|~i}1\)</span> 代表计算<span class="math inline">\(1\)</span> 到 <span class="math inline">\(n\)</span>的所有数的约数个数之和，则可以转变思路，对于每个约数 <span class="math inline">\(d\in [1,n]\)</span> ，计算 <span class="math inline">\([1,n]\)</span> 中具有约数 <span class="math inline">\(d\)</span>的个数，对此结果进行求和即可等价于原问题： <span class="math display">\[\sum_{i=1}^{n}\sum_{d~|~i}1 = \sum_{d=1}^{n} \left\lfloor \frac{n}{d}\right\rfloor\le\sum_{d=1}^{n} \frac{n}{d}=n\sum_{d=1}^{n}\frac1d=nH(n)\]</span> 其中 <span class="math inline">\(H(n)\)</span> 为调和级数：<span class="math display">\[H(n)=\sum_{i=1}^{n}\frac{1}{i}\]</span></p><p>考虑构造调和级数的上界函数来计算调和级数的渐进上界。</p><p>注意到 <span class="math inline">\(H(n)-1\)</span>绘制为矩形并向左平移 0.5 后具有上界 <span class="math inline">\(\frac1x\)</span> ，则通过积分计算可得： <span class="math display">\[H(n)-1=\sum_{i=2}^{n}\frac{1}{i} &lt;\int_{1}^{n}\frac{1}{x}dx=\log n\]</span> <img src="/2024/10/11/%E3%80%90%E7%AE%97%E6%B3%95%E3%80%91%E8%AE%A1%E7%AE%97%E9%99%A4%E6%95%B0%E5%87%BD%E6%95%B0%E7%9A%84%E5%92%8C/image-20241010112716421.png" alt="image-20241010112716421"></p><p>因此时间复杂度为： <span class="math display">\[T(n)=\sum_{i=1}^{n} \sigma_{0}(i)=\sum_{i=1}^{n}\sum_{d~|~i}1=\sum_{d=1}^{n} \left\lfloor \frac{n}{d} \right\rfloor\le \sum_{d=1}^{n} \frac{n}{d}=nH(n)&lt; n(\log n + 1)= O(n\log n)\]</span></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>算法</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>算法</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>小记：Windows 编译 Pytorch CUDA Extension 项目</title>
     <link href="/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/"/>
     <url>/2024/10/09/%E5%B0%8F%E8%AE%B0%EF%BC%9AWindows-%E7%BC%96%E8%AF%91-Pytorch-CUDA-Extension-%E9%A1%B9%E7%9B%AE/</url>
