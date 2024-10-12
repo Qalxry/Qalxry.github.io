@@ -16,16 +16,16 @@
   <meta name="author" content="しずり雪">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Y9000x 2022 安装 Ubuntu 24.04.1 踩坑大全 动机 我的 Ubuntu 22.04 双系统用着用着 3.5mm 耳机突然不好使了，遂无法在编程的时候听音乐，严重影响效率。 考虑到后期想把 Linux 作为开发主力平台使用，遂决定重装。 （并且受到 Ubuntu 24.04 精美的 Gnome 46 的诱惑😍、以及对 Nvidia 驱动更好的适配🤗） 系统">
+    <meta name="description" content="Y9000x 2022 安装 Ubuntu 24.04.1 踩坑大全 动机 我的 Ubuntu 22.04 双系统用着用着 3.5mm 耳机突然不好使了，遂无法在编程的时候听音乐，严重影响效率。 考虑到后期想把 Linux 作为开发主力平台使用，遂决定重装。 （并且受到 Ubuntu 24.04 精美的 Gnome 46 的诱惑😍、以及对 Nvidia 驱动更好的适配🤗） 系统安装 前期准备">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Y9000x 2022 安装 Ubuntu 24.04.1 踩坑大全">
 <meta property="og:url" content="https://qalxry.github.io/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/index.html">
 <meta property="og:site_name" content="しずり雪 の Blog">
-<meta property="og:description" content="Y9000x 2022 安装 Ubuntu 24.04.1 踩坑大全 动机 我的 Ubuntu 22.04 双系统用着用着 3.5mm 耳机突然不好使了，遂无法在编程的时候听音乐，严重影响效率。 考虑到后期想把 Linux 作为开发主力平台使用，遂决定重装。 （并且受到 Ubuntu 24.04 精美的 Gnome 46 的诱惑😍、以及对 Nvidia 驱动更好的适配🤗） 系统">
+<meta property="og:description" content="Y9000x 2022 安装 Ubuntu 24.04.1 踩坑大全 动机 我的 Ubuntu 22.04 双系统用着用着 3.5mm 耳机突然不好使了，遂无法在编程的时候听音乐，严重影响效率。 考虑到后期想把 Linux 作为开发主力平台使用，遂决定重装。 （并且受到 Ubuntu 24.04 精美的 Gnome 46 的诱惑😍、以及对 Nvidia 驱动更好的适配🤗） 系统安装 前期准备">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/piclib/EkZly2_U0AEN8yt.webp">
 <meta property="article:published_time" content="2024-10-06T08:17:11.000Z">
-<meta property="article:modified_time" content="2024-10-10T16:14:02.806Z">
+<meta property="article:modified_time" content="2024-10-12T15:11:08.133Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary_large_image">
@@ -286,7 +286,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          14k 字
+          16k 字
         
       </span>
     
@@ -297,7 +297,7 @@
         
         
         
-          60 分钟
+          68 分钟
         
       </span>
     
@@ -348,7 +348,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年10月11日 凌晨 00:14
+                    本文最后更新于：2024年10月12日 晚上 23:11
                   
                 
               </p>
@@ -485,6 +485,15 @@ fcitx5的简约风格皮肤——烛光</a></p>
 <p>安装 Jetbrains Mono 和 0xProto Nerd Mono 字体。</p>
 <h3 id="typora-配置">Typora 配置：</h3>
 <p>自己看着设置去配就行了。</p>
+<h3 id="git-和-github-配置">Git 和 Github 配置</h3>
+<p>配置 Git：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;Qalxry&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;qalxry@qq.com&quot;</span><br>git config --global --list<br></code></pre></td></tr></table></figure>
+<p>生成密钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">ls</span> -al ~/.ssh<br>ssh-keygen -t ed25519 -C <span class="hljs-string">&quot;qalxry@qq.com&quot;</span><br><span class="hljs-built_in">eval</span> <span class="hljs-string">&quot;<span class="hljs-subst">$(ssh-agent -s)</span>&quot;</span><br>ssh-add ~/.ssh/id_ed25519<br></code></pre></td></tr></table></figure>
+<p>复制公钥到 Github：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> ~/.ssh/id_ed25519.pub<br></code></pre></td></tr></table></figure>
+<p>测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">ssh -T git@github.com<br></code></pre></td></tr></table></figure>
 <h2 id="使用需求">使用需求</h2>
 <h3 id="开机自动启动qq等软件">开机自动启动QQ等软件：</h3>
 <p>可在 Tweaks（优化） 里面加入。然后 QQ
@@ -615,7 +624,24 @@ GPU 问题：</h3>
 <h3 id="解决-vscode-和-chrome-初次启动时显示您登录计算机时您的登录密钥环未被解锁的问题">解决
 VSCode 和 Chrome
 初次启动时显示“您登录计算机时，您的登录密钥环未被解锁”的问题：</h3>
-<p>去 <code>密码与密钥</code> 软件里把那些密钥都删了。</p>
+<p>参考解决方案： <a target="_blank" rel="noopener" href="https://www.yydnas.cn/2023/08/2023.08.19-%E8%A7%A3%E5%86%B3%EF%BC%9A%E6%82%A8%E7%99%BB%E5%BD%95%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%97%B6%EF%BC%8C%E6%82%A8%E7%9A%84%E7%99%BB%E5%BD%95%E5%AF%86%E9%92%A5%E7%8E%AF%E6%9C%AA%E8%A2%AB%E8%A7%A3%E9%94%81/index.html">解决：您登录计算机时，您的登录密钥环未被解锁</a></p>
+<p>在使用Ubuntu
+Desktop的时候，自行安装的软件，在打开应用时会出现提示：“您登录计算机时，您的登录密钥环未被解锁”。</p>
+<p><img src="/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/2023.08.19-ubuntu.app_.verify.01.png" srcset="/img/loading.gif" lazyload></p>
+<ol type="1">
+<li><p>终端输入 <code>seahorse</code></p></li>
+<li><p>点击 <code>+</code> ，添加“密码密钥环”</p>
+<p><img src="/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/2023.08.19-ubuntu.app_.verify.02.png" srcset="/img/loading.gif" lazyload></p></li>
+<li><p>名称任意</p>
+<p><img src="/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/2023.08.19-ubuntu.app_.verify.03.png" srcset="/img/loading.gif" lazyload></p></li>
+<li><p>不输入密码，直接继续</p>
+<p><img src="/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/2023.08.19-ubuntu.app_.verify.04.png" srcset="/img/loading.gif" lazyload></p></li>
+<li><p>继续</p>
+<p><img src="/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/2023.08.19-ubuntu.app_.verify.05.png" srcset="/img/loading.gif" lazyload></p></li>
+<li><p>设为默认</p>
+<p><img src="/2024/10/06/Y9000x-2022-%E5%AE%89%E8%A3%85-Ubuntu-24-04-1-%E8%B8%A9%E5%9D%91%E5%A4%A7%E5%85%A8/2023.08.19-ubuntu.app_.verify.06.png" srcset="/img/loading.gif" lazyload></p></li>
+</ol>
+<p>完成后重启。</p>
 <h3 id="解决-linuxqq-由于启动快于-clash-导致-qq-登陆失败的问题">解决
 LinuxQQ 由于启动快于 Clash 导致 QQ 登陆失败的问题：</h3>
 <p>在 <code>启动应用程序</code> 软件里修改 QQ 的自启动命令为：
@@ -630,7 +656,9 @@ LinuxQQ 由于启动快于 Clash 导致 QQ 登陆失败的问题：</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt remove xdg-desktop-portal-gnome<br>sudo apt install dbus-broker<br>sudo systemctl <span class="hljs-built_in">enable</span> --global dbus-broker.service<br>sudo systemctl <span class="hljs-built_in">enable</span> dbus-broker.service<br></code></pre></td></tr></table></figure>
 <p>重启后问题解决，但是引发了 fcitx5 不再开机自启动的问题，可以手动把
 fcitx5 添加到启动应用程序里面即可。</p>
-<p>PS：这个也是导致</p>
+<p>PS：这个也是导致 <code>fix_theme.sh</code> 需要长时间（
+<code>sleep 60</code> ）才能生效的问题，修复了这个后只需要
+<code>sleep 5</code> 就可以了。</p>
 <h3 id="解决firefox浏览器鼠标中间没有自动滚动">解决Firefox浏览器鼠标中间没有自动滚动：</h3>
 <p>去Firefox的设置里面找 <code>自动滚动</code>
 。Chrome似乎没有这个设置，不知道flag里面有没有。<del>反正我一直使用firefox，不管了</del></p>
@@ -722,6 +750,19 @@ GitHub.com 的任何连接均通过该服务器和端口运行。</p>
 编辑该文件，并添加以下部分：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">Host github.com<br>    Hostname ssh.github.com<br>    Port 443<br>    User git<br></code></pre></td></tr></table></figure>
 <p>再次连接到 GitHub.com 来测试这是否有效。</p>
+<h3 id="解决终端以及认证弹窗没有指纹解锁的问题">解决终端以及认证弹窗没有指纹解锁的问题：</h3>
+<p>此处假设开机登录的时候能够使用指纹。</p>
+<ol type="1">
+<li><p>打开<code>/etc/pam.d/common-auth</code>文件进行编辑：
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo nano /etc/pam.d/common-auth<br></code></pre></td></tr></table></figure></p></li>
+<li><p>在文件顶部的添加以下行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">auth    sufficient   pam_fprintd.so<br></code></pre></td></tr></table></figure>
+<p>完整的文件内容应如下所示： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#</span><br><span class="hljs-comment"># /etc/pam.d/common-auth - authentication settings common to all services</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># This file is included from other service-specific PAM config files,</span><br><span class="hljs-comment"># and should contain a list of the authentication modules that define</span><br><span class="hljs-comment"># the central authentication scheme for use on the system</span><br><span class="hljs-comment"># (e.g., /etc/shadow, LDAP, Kerberos, etc.).  The default is to use the</span><br><span class="hljs-comment"># traditional Unix authentication mechanisms.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># As of pam 1.0.1-6, this file is managed by pam-auth-update by default.</span><br><span class="hljs-comment"># To take advantage of this, it is recommended that you configure any</span><br><span class="hljs-comment"># local modules either before or after the default block, and use</span><br><span class="hljs-comment"># pam-auth-update to manage selection of other modules.  See</span><br><span class="hljs-comment"># pam-auth-update(8) for details.</span><br>auth    sufficient   pam_fprintd.so<br><span class="hljs-comment"># here are the per-package modules (the &quot;Primary&quot; block)</span><br>auth    [success=2 default=ignore]      pam_unix.so nullok<br>auth    [success=1 default=ignore]      pam_sss.so use_first_pass<br><span class="hljs-comment"># here&#x27;s the fallback if no module succeeds</span><br>auth    requisite                       pam_deny.so<br><span class="hljs-comment"># prime the stack with a positive return value if there isn&#x27;t one already;</span><br><span class="hljs-comment"># this avoids us returning an error just because nothing sets a success code</span><br><span class="hljs-comment"># since the modules above will each just jump around</span><br>auth    required                        pam_permit.so<br><span class="hljs-comment"># and here are more per-package modules (the &quot;Additional&quot; block)</span><br>auth    optional                        pam_cap.so<br><span class="hljs-comment"># end of pam-auth-update config</span><br></code></pre></td></tr></table></figure></p></li>
+</ol>
+<h3 id="解决grub选择选项后背景不清空的问题">解决GRUB选择选项后背景不清空的问题：</h3>
+<p>为每个 menuentry 添加：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> background_image ; <span class="hljs-keyword">then</span><br>    clear<br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
+<p>建议到 grub-customizer 里编辑。</p>
 
                 
               </div>
@@ -786,7 +827,7 @@ GitHub.com 的任何连接均通过该服务器和端口运行。</p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年10月11日</div>
+          <div>2024年10月12日</div>
         </div>
       
       
