@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/piclib/EkZly2_U0AEN8yt.webp">
 <meta property="article:published_time" content="2024-10-06T08:17:11.000Z">
-<meta property="article:modified_time" content="2024-10-12T16:20:43.599Z">
+<meta property="article:modified_time" content="2025-01-02T14:09:46.005Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary_large_image">
@@ -286,7 +286,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          16k 字
+          18k 字
         
       </span>
     
@@ -297,7 +297,7 @@
         
         
         
-          69 分钟
+          75 分钟
         
       </span>
     
@@ -348,7 +348,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年10月13日 凌晨 00:20
+                    本文最后更新于：2025年1月2日 晚上 22:09
                   
                 
               </p>
@@ -768,6 +768,59 @@ GitHub.com 的任何连接均通过该服务器和端口运行。</p>
 <p>为每个 menuentry 添加：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> background_image ; <span class="hljs-keyword">then</span><br>    clear<br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
 <p>建议到 grub-customizer 里编辑。</p>
+<h3 id="解决外接无线键盘-f1-f12-变成调亮度等功能的问题">解决外接无线键盘
+F1 ～ F12 变成调亮度等功能的问题：</h3>
+<p>参考解决方法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Happy__gai/article/details/126416074">Ubuntu_部分键盘F1~F12强制为功能键</a></p>
+<p>有点奇怪，2.4G模式下会出现这个问题，但如果改为有线连接就没问题了。</p>
+<p>为了避免对系统的不当修改，还是放弃 2.4G
+直接使用有线模式比较保险吧。</p>
+<h3 id="解决-pkexec-没传递环境变量的问题">解决 pkexec
+没传递环境变量的问题</h3>
+<p>法1：</p>
+<p>使用
+<code>alias gsudo='pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY GTK_THEME=$GTK_THEME QT_STYLE_OVERRIDE=$QT_STYLE_OVERRIDE XDG_CURRENT_DESKTOP=$XDG_CURRENT_DESKTOP'</code></p>
+<p>法2：</p>
+<p>将 <code>gsudo.sh</code> 脚本放在
+<code>/usr/local/bin/gsudo.sh</code>
+并且直接使用是一种可行的方法，尤其是在你希望通过命令 <code>gsudo</code>
+来执行该脚本时。</p>
+<p>这种方式将会创建一个更为灵活的解决方案，避免在每个用户的
+<code>.bashrc</code> 或 <code>.zshrc</code>
+中添加别名。你可以按以下方式处理：</p>
+<blockquote>
+<h3 id="步骤-1-创建脚本文件">步骤 1: 创建脚本文件</h3>
+<ol type="1">
+<li><p>使用你提供的内容创建脚本 <code>gsudo.sh</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo nano /usr/local/bin/gsudo.sh<br></code></pre></td></tr></table></figure>
+<p>然后将以下内容粘贴到文件中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br>pkexec <span class="hljs-built_in">env</span> \<br>    DISPLAY=<span class="hljs-string">&quot;<span class="hljs-variable">$DISPLAY</span>&quot;</span> \<br>    XAUTHORITY=<span class="hljs-string">&quot;<span class="hljs-variable">$XAUTHORITY</span>&quot;</span> \<br>    GTK_THEME=<span class="hljs-string">&quot;<span class="hljs-variable">$GTK_THEME</span>&quot;</span> \<br>    QT_STYLE_OVERRIDE=<span class="hljs-string">&quot;<span class="hljs-variable">$QT_STYLE_OVERRIDE</span>&quot;</span> \<br>    XDG_CURRENT_DESKTOP=<span class="hljs-string">&quot;<span class="hljs-variable">$XDG_CURRENT_DESKTOP</span>&quot;</span> \<br>    DBUS_SESSION_BUS_ADDRESS=<span class="hljs-string">&quot;<span class="hljs-variable">$DBUS_SESSION_BUS_ADDRESS</span>&quot;</span> \<br>    XDG_RUNTIME_DIR=<span class="hljs-string">&quot;<span class="hljs-variable">$XDG_RUNTIME_DIR</span>&quot;</span> \<br>    DBUS_SESSION_BUS_PID=<span class="hljs-string">&quot;<span class="hljs-variable">$DBUS_SESSION_BUS_PID</span>&quot;</span> \<br>    <span class="hljs-string">&quot;<span class="hljs-variable">$@</span>&quot;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>保存并关闭文件。</p></li>
+</ol>
+<h3 id="步骤-2-赋予执行权限">步骤 2: 赋予执行权限</h3>
+<p>确保 <code>gsudo.sh</code> 脚本具有执行权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">chmod</span> +x /usr/local/bin/gsudo.sh<br></code></pre></td></tr></table></figure>
+<h3 id="步骤-3-创建-gsudo-的别名">步骤 3: 创建 <code>gsudo</code>
+的别名</h3>
+<p>你可以通过创建一个符号链接来让 <code>gsudo</code>
+命令指向这个脚本。这样，你只需要在任何地方执行 <code>gsudo</code>
+即可调用脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">ln</span> -s /usr/local/bin/gsudo.sh /usr/local/bin/gsudo<br></code></pre></td></tr></table></figure>
+<h3 id="步骤-4-测试命令">步骤 4: 测试命令</h3>
+<p>执行 <code>gsudo</code> 命令来确认它是否按预期工作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">gsudo your-command<br></code></pre></td></tr></table></figure>
+<h3 id="为什么这样做">为什么这样做</h3>
+<ol type="1">
+<li><strong>全局可用</strong>：将脚本放在 <code>/usr/local/bin/</code>
+目录下，意味着它对系统中的所有用户都可用。</li>
+<li><strong>无需修改配置文件</strong>：不需要修改 <code>.bashrc</code>
+或 <code>.zshrc</code> 文件，因此不会干扰现有的用户配置。</li>
+<li><strong>灵活性</strong>：这种方法让你能够根据需要调整脚本的内容，并且可以通过符号链接调整命令名称。</li>
+</ol>
+<p>这种方法比直接在用户的 <code>.bashrc</code> 或 <code>.zshrc</code>
+文件中添加别名更加灵活，也更符合脚本和命令的常规管理方式。如果你在系统范围内管理多个用户，使用这种方法通常是推荐的做法。</p>
+</blockquote>
+<h3 id="解决双系统切换导致windows时间错乱的问题">解决双系统切换导致windows时间错乱的问题</h3>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo apt-get install ntpdate <span class="hljs-comment"># 在Ubuntu下更新本地时间</span><br>sudo ntpdate time.windows.com<br>sudo apt install util-linux-extra<br>sudo hwclock --localtime --systohc <span class="hljs-comment"># 将本地时间更新到硬件上</span><br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -832,7 +885,7 @@ GitHub.com 的任何连接均通过该服务器和端口运行。</p>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2024年10月13日</div>
+          <div>2025年1月2日</div>
         </div>
       
       
