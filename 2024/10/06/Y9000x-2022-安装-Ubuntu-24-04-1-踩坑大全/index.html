@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/piclib/EkZly2_U0AEN8yt.webp">
 <meta property="article:published_time" content="2024-10-06T08:17:11.000Z">
-<meta property="article:modified_time" content="2025-01-02T14:09:46.005Z">
+<meta property="article:modified_time" content="2025-01-25T13:49:04.793Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary_large_image">
@@ -286,7 +286,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          18k 字
+          19k 字
         
       </span>
     
@@ -297,7 +297,7 @@
         
         
         
-          75 分钟
+          81 分钟
         
       </span>
     
@@ -348,7 +348,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2025年1月2日 晚上 22:09
+                    本文最后更新于：2025年1月25日 晚上 21:49
                   
                 
               </p>
@@ -821,6 +821,33 @@ F1 ～ F12 变成调亮度等功能的问题：</h3>
 </blockquote>
 <h3 id="解决双系统切换导致windows时间错乱的问题">解决双系统切换导致windows时间错乱的问题</h3>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo apt-get install ntpdate <span class="hljs-comment"># 在Ubuntu下更新本地时间</span><br>sudo ntpdate time.windows.com<br>sudo apt install util-linux-extra<br>sudo hwclock --localtime --systohc <span class="hljs-comment"># 将本地时间更新到硬件上</span><br></code></pre></td></tr></table></figure>
+<h3 id="解决alttab切换到vscode后vscode异常滚动的问题">解决Alt+Tab切换到VSCode后，VSCode异常滚动的问题</h3>
+<p>安装 imwheel</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install imwheel<br>imwheel  <span class="hljs-comment"># 启动</span><br></code></pre></td></tr></table></figure>
+<p>必须在每次开机时启动它（或者在应用程序中添加它来开机启动）。</p>
+<p>可以用 <code>pgrep -lf imwheel</code> 来看它是否在运行；可以用
+<code>pkill imwheel</code> 停止它。</p>
+<p>如果只是这样做，还会有无法 <kbd>Ctrl+滚轮</kbd>
+的问题，以及鼠标侧键都用不了了。</p>
+<p>进一步配置 imwheel ：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">nano ~/.imwheelrc<br></code></pre></td></tr></table></figure>
+<p>输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-string">&quot;.*&quot;</span><br>None,      Thumb1,   Alt_L|Left<br>None,      Thumb2,   Alt_L|Right<br>Control_L, Up,       Control_L|Button4<br>Control_L, Down,     Control_L|Button5<br>Control_R, Up,       Control_R|Button4<br>Control_R, Down,     Control_R|Button5<br>Shift_L,   Up,       Shift_L|Button4<br>Shift_L,   Down,     Shift_L|Button5<br>Alt_L,     Up,       Button4,3<br>Alt_L,     Down,     Button5,3<br>Alt_R,     Up,       Button4,3<br>Alt_R,     Down,     Button5,3<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>（以上是我弄的配置，还另外加了 <kbd>Alt+滚轮</kbd>
+高速滚动的效果，全部窗口有效）</p>
+<p>含义：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs mathematica"><span class="hljs-operator">&lt;</span><span class="hljs-built_in">Key</span> <span class="hljs-variable">Modifiers</span> <span class="hljs-built_in">Input</span><span class="hljs-operator">&gt;,</span> <span class="hljs-operator">&lt;</span><span class="hljs-variable">Mouse</span> <span class="hljs-variable">Action</span> <span class="hljs-built_in">Input</span><span class="hljs-operator">&gt;,</span> <span class="hljs-operator">&lt;</span><span class="hljs-built_in">Key</span> <span class="hljs-variable">Action</span> <span class="hljs-variable">Output</span><span class="hljs-operator">&gt;</span><br><br> <span class="hljs-built_in">Key</span> <span class="hljs-variable">Modifiers</span> <span class="hljs-built_in">Input</span><span class="hljs-operator">:</span><br>  <span class="hljs-type">Alt_L</span><span class="hljs-operator">,</span> <span class="hljs-type">Alt_R</span><span class="hljs-operator">,</span> <span class="hljs-type">Meta_L</span><span class="hljs-operator">,</span> <span class="hljs-type">Meta_R</span><span class="hljs-operator">,</span> <span class="hljs-type">Control_L</span><span class="hljs-operator">,</span> <span class="hljs-type">Control_R</span><span class="hljs-operator">,</span> <span class="hljs-type">Shift_L</span><span class="hljs-operator">,</span> <span class="hljs-type">Shift_R</span> <span class="hljs-variable">or</span> <span class="hljs-built_in">None</span><br> <span class="hljs-variable">Mouse</span> <span class="hljs-variable">Action</span> <span class="hljs-built_in">Input</span><span class="hljs-operator">:</span><br>  <span class="hljs-built_in">Up</span><span class="hljs-operator">,</span> <span class="hljs-built_in">Down</span><span class="hljs-operator">,</span> <span class="hljs-built_in">Left</span><span class="hljs-operator">,</span> <span class="hljs-built_in">Right</span><span class="hljs-operator">,</span> <span class="hljs-variable">Thumb</span><br> <span class="hljs-built_in">Key</span> <span class="hljs-variable">Action</span> <span class="hljs-variable">Output</span><span class="hljs-operator">:</span><br>  <span class="hljs-variable">KeySym</span> <span class="hljs-punctuation">[</span><span class="hljs-operator">,</span> <span class="hljs-variable">Output</span> <span class="hljs-variable">Repetitions</span><span class="hljs-punctuation">[</span><span class="hljs-operator">,</span> <span class="hljs-variable">Delay</span> <span class="hljs-built_in">Before</span> <span class="hljs-variable">KeyUp</span> <span class="hljs-variable">Event</span> <span class="hljs-punctuation">[</span><span class="hljs-operator">,</span> <span class="hljs-variable">Delay</span> <span class="hljs-built_in">Before</span> <span class="hljs-built_in">Next</span> <span class="hljs-variable">KeyPress</span> <span class="hljs-variable">Event</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br><br><span class="hljs-variable">Index</span>   <span class="hljs-variable">Interpreted</span> <span class="hljs-variable">As</span>    <span class="hljs-built_in">Button</span> <span class="hljs-built_in">Number</span><br><span class="hljs-number">1</span>       <span class="hljs-variable">Wheel</span> <span class="hljs-built_in">Up</span>          <span class="hljs-number">4</span><br><span class="hljs-number">2</span>       <span class="hljs-variable">Wheel</span> <span class="hljs-built_in">Down</span>        <span class="hljs-number">5</span><br><span class="hljs-number">3</span>       <span class="hljs-variable">Wheel</span> <span class="hljs-built_in">Left</span>        <span class="hljs-number">6</span><br><span class="hljs-number">4</span>       <span class="hljs-variable">Wheel</span> <span class="hljs-built_in">Right</span>       <span class="hljs-number">7</span><br><span class="hljs-number">5</span>       <span class="hljs-variable">Thumb</span> <span class="hljs-built_in">Button</span> <span class="hljs-number">1</span>    <span class="hljs-number">8</span><br><span class="hljs-number">6</span>       <span class="hljs-variable">Thumb</span> <span class="hljs-built_in">Button</span> <span class="hljs-number">2</span>    <span class="hljs-number">9</span><br></code></pre></td></tr></table></figure>
+<p>https://wiki.archlinux.org/title/IMWheel</p>
+<p>https://man.archlinux.org/man/imwheel.1</p>
+</blockquote>
+<p>保存后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">killall imwheel &amp;&amp; imwheel<br></code></pre></td></tr></table></figure>
+<p>为了确保开机启动，可以：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;killall imwheel; imwheel&quot;</span> &gt;&gt; ~/.bashrc<br></code></pre></td></tr></table></figure>
+<p>参考：</p>
+<p>https://blog.csdn.net/qq_33512762/article/details/128985799</p>
+<p>https://github.com/freeplane/freeplane/issues/134#issuecomment-1567664447</p>
 
                 
               </div>
@@ -885,7 +912,7 @@ F1 ～ F12 变成调亮度等功能的问题：</h3>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2025年1月2日</div>
+          <div>2025年1月25日</div>
         </div>
       
       
