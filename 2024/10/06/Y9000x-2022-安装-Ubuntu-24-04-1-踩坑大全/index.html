@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://qalxry.github.io/img/piclib/EkZly2_U0AEN8yt.webp">
 <meta property="article:published_time" content="2024-10-06T08:17:11.000Z">
-<meta property="article:modified_time" content="2025-01-25T13:49:04.793Z">
+<meta property="article:modified_time" content="2025-04-18T13:31:02.035Z">
 <meta property="article:author" content="しずり雪">
 <meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary_large_image">
@@ -299,7 +299,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          19k 字
+          20k 字
         
       </span>
     
@@ -310,7 +310,7 @@
         
         
         
-          81 分钟
+          84 分钟
         
       </span>
     
@@ -361,7 +361,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2025年1月25日 晚上 21:49
+                    本文最后更新于：2025年4月18日 晚上 21:31
                   
                 
               </p>
@@ -861,6 +861,17 @@ F1 ～ F12 变成调亮度等功能的问题：</h3>
 <p>参考：</p>
 <p>https://blog.csdn.net/qq_33512762/article/details/128985799</p>
 <p>https://github.com/freeplane/freeplane/issues/134#issuecomment-1567664447</p>
+<h3 id="设置断电时自动开启节电模式">设置断电时自动开启节电模式</h3>
+<p>可以将电池模式下的低电量阈值调为 99（不能是
+100，否则不启用），这样只要断开电源，就会马上因为低电量事件开启节电模式。</p>
+<p>而插电模式下不会有低电量时间，插上电后 Ubuntu
+会自动恢复成原来的模式。</p>
+<p>命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo nano /etc/UPower/UPower.conf<br></code></pre></td></tr></table></figure>
+<p>将 <code>PercentageLow</code> 设置为 99：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># When UsePercentageForPolicy is true, the levels at which UPower will</span><br><span class="hljs-comment"># consider the battery low, critical, or take action for the critical</span><br><span class="hljs-comment"># battery level.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># This will also be used for batteries which don&#x27;t have time information</span><br><span class="hljs-comment"># such as that of peripherals.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># If any value is invalid, or not in descending order, the defaults</span><br><span class="hljs-comment"># will be used.</span><br><span class="hljs-comment">#</span><br><span class="hljs-comment"># Defaults:</span><br><span class="hljs-comment"># PercentageLow=20</span><br><span class="hljs-comment"># PercentageCritical=5</span><br><span class="hljs-comment"># PercentageAction=2</span><br>PercentageLow=99	<span class="hljs-comment"># 把这里的值改为99</span><br>PercentageCritical=5<br>PercentageAction=2<br></code></pre></td></tr></table></figure>
+<p>重启UPower服务后即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl restart upower<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -925,7 +936,7 @@ F1 ～ F12 变成调亮度等功能的问题：</h3>
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2025年1月25日</div>
+          <div>2025年4月18日</div>
         </div>
       
       
